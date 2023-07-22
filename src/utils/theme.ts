@@ -1,4 +1,7 @@
-import { type ThemeConfig, extendTheme, theme } from "@chakra-ui/react";
+import { type ThemeConfig, type CustomThemeTypings, extendTheme, theme } from "@chakra-ui/react";
+
+interface CustomThemeType extends CustomThemeTypings, ThemeConfig {
+}
 
 const config: ThemeConfig = {
     initialColorMode: "light",
@@ -7,18 +10,19 @@ const config: ThemeConfig = {
 
 const colors = Object.freeze({
     bg: {
-        light: "#F7FAFC",
+        main: "#EBEBF5",
+        light: "#F4F4FF",
         dark: "#171923",
     },
     brand: {
-        main: "#171923",
+        main: "#3E3FCD;",
         light: "#171923",
         dark: "#F7FAFC",
+        orange: "#DF6A12",
     },
     typography: {
-        main: "#171923",
         light: "#171923",
-        dark: "#F7FAFC",
+        dark: "#161616",
     },
 })
 
@@ -48,7 +52,7 @@ const styles = Object.freeze({
             fontSize: "65%",
         },
         body: {
-            color: colors.typography.main,
+            color: colors.typography.dark,
             backgroundColor: colors.bg.light,
             fontSize: "1.2rem",
             lineHeight: 1.6,
@@ -67,7 +71,7 @@ const styles = Object.freeze({
     },
 });
 
-const customTheme = extendTheme({
+const customTheme: CustomThemeType = extendTheme({
     config,
     colors,
     breakPoints,
