@@ -1,7 +1,6 @@
 import { type ThemeConfig, type CustomThemeTypings, extendTheme, theme } from "@chakra-ui/react";
 
-interface CustomThemeType extends CustomThemeTypings, ThemeConfig {
-}
+interface CustomThemeType extends CustomThemeTypings, ThemeConfig {}
 
 const config: ThemeConfig = {
     initialColorMode: "light",
@@ -15,17 +14,17 @@ const colors = Object.freeze({
         dark: "#171923",
     },
     brand: {
-        main: "#3E3FCD;",
-        light: "#171923",
-        dark: "#F7FAFC",
+        main: "#3E3FCD",
+        light: "#F7FAFC",
+        dark: "#171923",
         orange: "#DF6A12",
     },
     typography: {
         light: "#171923",
         dark: "#161616",
+        red: "#CD0000",
     },
-})
-
+});
 
 const breakPoints = Object.freeze({
     xs: "320px",

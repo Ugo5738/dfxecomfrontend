@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginFormType, signUpSchema, SignUpFormType } from "./schema";
 
-const useLoginForm = (onSubmit: (arg0: LoginFormType) => Promise<void>) => {
+const useLoginForm = (onSubmit: (arg0: LoginFormType) => void) => {
     const {
         register,
         handleSubmit,
@@ -11,8 +11,8 @@ const useLoginForm = (onSubmit: (arg0: LoginFormType) => Promise<void>) => {
         resolver: yupResolver(loginSchema),
     });
 
-    const handleFormSubmit = handleSubmit(async (data) => {
-        await onSubmit(data);
+    const handleFormSubmit = handleSubmit((data) => {
+        onSubmit(data);
     });
 
     return {
@@ -22,7 +22,7 @@ const useLoginForm = (onSubmit: (arg0: LoginFormType) => Promise<void>) => {
     };
 };
 
-const useSignUpForm = (onSubmit: (arg0: SignUpFormType) => Promise<void>) => {
+const useSignUpForm = (onSubmit: (arg0: SignUpFormType) => void) => {
     const {
         register,
         handleSubmit,
@@ -31,8 +31,8 @@ const useSignUpForm = (onSubmit: (arg0: SignUpFormType) => Promise<void>) => {
         resolver: yupResolver(signUpSchema),
     });
 
-    const handleFormSubmit = handleSubmit(async (data) => {
-        await onSubmit(data);
+    const handleFormSubmit = handleSubmit((data) => {
+        onSubmit(data);
     });
 
     return {

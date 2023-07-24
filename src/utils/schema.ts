@@ -1,7 +1,8 @@
 import { object, string, ref } from "yup";
 
 export const signUpSchema = object({
-    fullName: string().trim().required("Name is required"),
+    first_name: string().trim().required("Last Name is required"),
+    last_name: string().trim().required("First Name is required"),
     email: string().trim().email("Email must be a valid email").required("Email is required"),
     password: string()
         .trim()
@@ -12,8 +13,7 @@ export const signUpSchema = object({
         .min(8, "Password must be a minimum of 8 characters")
         .oneOf([ref("password"), undefined], "Passwords must match")
         .required("Password is required"),
-    location: string().trim().required("Select an option"),
-});
+}).required();
 
 export const loginSchema = object({
     email: string().trim().email("Must be a valid email").required("Email is required"),
@@ -41,18 +41,14 @@ export const resetPasswordSchema = object({
 }).required();
 
 export interface SignUpFormType {
-    fullName: string;
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
     confirmPassword: string;
-    location: string;
 }
 
 export interface LoginFormType {
     email: string;
     password: string;
-}
-
-export interface FormHookProps {
-    onSubmit: (arg0: LoginFormType | SignUpFormType) => Promise<void> | React.FormEventHandler<HTMLFormElement> | undefined;
 }

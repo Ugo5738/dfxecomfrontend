@@ -8,6 +8,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
+    'eslint-config-prettier',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'tailwind.config.js', 'postcss.config.js'],
   parser: '@typescript-eslint/parser',
@@ -16,8 +17,9 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
-   },
-  plugins: ['react-refresh'],
+  },
+  settings: { react: { version: '18.2' } },
+  plugins: ['react-refresh', 'prettier'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -29,5 +31,10 @@ module.exports = {
         "checksVoidReturn": false
       }
     ],
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-implicit-any': 'off',
+    "prettier/prettier": "warn",
+    "no-console": "warn",
   },
-}
+};
