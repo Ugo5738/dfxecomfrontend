@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaGoogle, FaLinkedin } from "react-icons/fa";
+import { footerProducts, footerCompany, footerSupport } from "../utils/staticData";
 const Footer = () => {
     return (
         <Flex
@@ -8,10 +9,6 @@ const Footer = () => {
             bg="white"
             flexDir="column"
             gap={{ base: "2rem", sm: 0 }}
-            position="fixed"
-            bottom="0"
-            left="0"
-            right="0"
             py="2rem"
             px={{ base: "1rem", sm: "2rem", md: "4rem" }}
         >
@@ -32,30 +29,31 @@ const Footer = () => {
                     <Text fontSize="1.5rem" mb="1rem">
                         Products
                     </Text>
-                    <Link to="/">Brands</Link>
-                    <Link to="/">Smart Phones</Link>
-                    <Link to="/">Laptops</Link>
-                    <Link to="/">Tablets</Link>
-                    <Link to="/">Smart Watches</Link>
-                    <Link to="/">Head Phones</Link>
+                    {footerProducts.map((item) => (
+                        <Link key={item.id} to={item.title} className="link">
+                            {item.title}
+                        </Link>
+                    ))}
                 </Flex>
                 <Flex flexDir="column" gap="1rem">
                     <Text fontSize="1.5rem" mb="1rem">
                         Company
                     </Text>
-                    <Link to="/">Blog</Link>
-                    <Link to="/">Location</Link>
-                    <Link to="/">Privacy</Link>
-                    <Link to="/">Terms</Link>
-                    <Link to="/">Coupons</Link>
+                    {footerCompany.map((item) => (
+                        <Link key={item.id} to={item.title} className="link">
+                            {item.title}
+                        </Link>
+                    ))}
                 </Flex>
                 <Flex flexDir="column" gap="1rem">
                     <Text fontSize="1.5rem" mb="1rem">
                         Support
                     </Text>
-                    <Link to="/">FAQS</Link>
-                    <Link to="/">Contact Info</Link>
-                    <Link to="/">Shipping & Returns</Link>
+                    {footerSupport.map((item) => (
+                        <Link key={item.id} to={item.title} className="link">
+                            {item.title}
+                        </Link>
+                    ))}
                 </Flex>
                 <Flex flexDir="column" gap="1rem" align={{ base: "start", md: "center" }}>
                     <Text fontSize="1.5rem" mb="1rem">

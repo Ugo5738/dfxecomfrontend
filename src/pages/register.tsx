@@ -1,4 +1,4 @@
-import { Flex, Text, Center, Button } from "@chakra-ui/react";
+import { Flex, Text, Center, Button, Box } from "@chakra-ui/react";
 import AppInput from "../components/input";
 import { SignUpFormType } from "../utils/schema";
 import { useSignUpForm } from "../utils/form";
@@ -45,135 +45,145 @@ const Register = () => {
     const { register, handleFormSubmit, errors } = useSignUpForm(onRegister);
 
     return (
-        <Center h="100vh" my="5rem">
-            <Flex
-                bg="white"
-                rounded="2xl"
-                shadow="inner"
-                p="2rem"
-                width={{ base: "90%", sm: "80%", md: "60%" }}
-                mx="auto"
-                flexDir="column"
-            >
-                <Text fontSize="2rem" fontWeight="bold" mb="3rem">
-                    Create Your Account
-                </Text>
-                <form onSubmit={handleFormSubmit}>
-                    <Flex
-                        alignItems="center"
-                        justifyContent="center"
-                        flexDir="column"
-                        w={{ base: "96%", md: "80%" }}
-                        mx="auto"
-                    >
-                        <AppInput
-                            // label="First Name"
-                            name="first_name"
-                            placeholder="First Name"
-                            type="text"
-                            autoComplete="name"
-                            register={register}
-                            errors={errors}
-                        />
-                        <AppInput
-                            // label="Last Name"
-                            name="last_name"
-                            placeholder="Last Name"
-                            type="text"
-                            autoComplete="name"
-                            register={register}
-                            errors={errors}
-                        />
-                        <AppInput
-                            // label="Email"
-                            name="email"
-                            placeholder="Email Address"
-                            type="email"
-                            autoComplete="email"
-                            register={register}
-                            errors={errors}
-                        />
-                        <AppInput
-                            // label="Password"
-                            name="password"
-                            placeholder="Password"
-                            type="password"
-                            autoComplete="new-password"
-                            register={register}
-                            errors={errors}
-                            size="md"
-                        />
-                        <AppInput
-                            // label="Confirm Password"
-                            name="confirmPassword"
-                            placeholder="Confirm Password"
-                            type="password"
-                            autoComplete="new-password"
-                            register={register}
-                            errors={errors}
-                            size="md"
-                        />
-                        <ReactFlagsSelect
-                            selected={country}
-                            onSelect={(code) => setCountry(code)}
-                            placeholder="Select Country"
-                            searchable={true}
-                            searchPlaceholder="Search countries"
-                            className="w-full"
-                            id="country"
-                        />
-                        {!country.trim() && (
-                            <Text role="alert" color={"red"} fontSize="1.2rem">
-                                Please Select Your Country
-                            </Text>
-                        )}
-                        <AppButton
-                            type="submit"
-                            variant="primary"
-                            width="100%"
-                            mt="2rem"
-                            isLoading={loading}
-                            loadingText="Creating Account"
-                            onClick={handleFormSubmit}
+        <Box bg="bg.light">
+            <Center py="5rem" h="100vh">
+                <Flex
+                    bg="white"
+                    rounded="2xl"
+                    shadow="inner"
+                    p="2rem"
+                    width={{ base: "90%", sm: "80%", md: "60%" }}
+                    mx="auto"
+                    flexDir="column"
+                >
+                    <Text fontSize="2rem" fontWeight="bold" mb="3rem">
+                        Create Your Account
+                    </Text>
+                    <form onSubmit={handleFormSubmit}>
+                        <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            flexDir="column"
+                            w={{ base: "96%", md: "80%" }}
+                            mx="auto"
                         >
-                            Create Account
-                        </AppButton>
+                            <Flex
+                                alignItems="center"
+                                flexDir={{ base: "column", sm: "row" }}
+                                gap={{ base: "0", sm: "3rem" }}
+                                justifyContent="space-between"
+                                w="full"
+                            >
+                                <AppInput
+                                    // label="First Name"
+                                    name="first_name"
+                                    placeholder="First Name"
+                                    type="text"
+                                    autoComplete="name"
+                                    register={register}
+                                    errors={errors}
+                                />
+                                <AppInput
+                                    // label="Last Name"
+                                    name="last_name"
+                                    placeholder="Last Name"
+                                    type="text"
+                                    autoComplete="name"
+                                    register={register}
+                                    errors={errors}
+                                />
+                            </Flex>
+                            <AppInput
+                                // label="Email"
+                                name="email"
+                                placeholder="Email Address"
+                                type="email"
+                                autoComplete="email"
+                                register={register}
+                                errors={errors}
+                            />
+                            <AppInput
+                                // label="Password"
+                                name="password"
+                                placeholder="Password"
+                                type="password"
+                                autoComplete="new-password"
+                                register={register}
+                                errors={errors}
+                                size="md"
+                            />
+                            <AppInput
+                                // label="Confirm Password"
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                type="password"
+                                autoComplete="new-password"
+                                register={register}
+                                errors={errors}
+                                size="md"
+                            />
+                            <ReactFlagsSelect
+                                selected={country}
+                                onSelect={(code) => setCountry(code)}
+                                placeholder="Select Country"
+                                searchable={true}
+                                searchPlaceholder="Search countries"
+                                className="w-full"
+                                id="country"
+                            />
+                            {!country.trim() && (
+                                <Text role="alert" color={"red"} fontSize="1.2rem">
+                                    Please Select Your Country
+                                </Text>
+                            )}
+                            <AppButton
+                                type="submit"
+                                variant="primary"
+                                width="100%"
+                                mt="2rem"
+                                isLoading={loading}
+                                loadingText="Creating Account"
+                                onClick={handleFormSubmit}
+                            >
+                                Create Account
+                            </AppButton>
+                        </Flex>
+                    </form>
+                    <Flex alignItems="center" justifyContent="center" mt="1rem">
+                        <Text>Already have an account?</Text>
+                        <Link to="/login" className="text-[#3E3FCD] pl-2">
+                            Login
+                        </Link>
                     </Flex>
-                </form>
-                <Flex alignItems="center" justifyContent="center" mt="1rem">
-                    <Text>Already have an account?</Text>
-                    <Link to="/login" className="text-[#3E3FCD] pl-2">
-                        Login
-                    </Link>
+                    <Flex flexDir="column" mt="3rem">
+                        <Flex alignItems="center">
+                            <hr className="flex-1 border-t-2" />
+                            <p className="mx-auto px-8">Or Sign In with</p>
+                            <hr className="flex-1 border-t-2" />
+                        </Flex>
+                        <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            gap={{ base: "1rem", sm: "3rem" }}
+                            my="3rem"
+                        >
+                            <Button>
+                                <img src={"src/assets/facebook-logo.png"} alt="facebook" />
+                            </Button>
+                            <Button>
+                                <img src={"src/assets/twitter-logo.png"} alt="twitter" />
+                            </Button>
+                            <Button>
+                                <img src={"src/assets/google-logo.png"} alt="google" />
+                            </Button>
+                            <Button>
+                                <img src={"src/assets/linkedin-logo.png"} alt="linkedin" />
+                            </Button>
+                        </Flex>
+                    </Flex>
                 </Flex>
-                <Flex flexDir="column" mt="3rem">
-                    <Flex alignItems="center">
-                        <hr className="flex-1 border-t-2" />
-                        <p className="mx-auto px-8">Or Sign In with</p>
-                        <hr className="flex-1 border-t-2" />
-                    </Flex>
-                    <Flex
-                        alignItems="center"
-                        justifyContent="center"
-                        gap={{ base: "1rem", sm: "3rem" }}
-                        mt="3rem"
-                    >
-                        <Button>
-                            <img src={"src/assets/facebook-logo.png"} alt="facebook" />
-                        </Button>
-                        <Button>
-                            <img src={"src/assets/twitter-logo.png"} alt="twitter" />
-                        </Button>
-                        <Button>
-                            <img src={"src/assets/google-logo.png"} alt="google" />
-                        </Button>
-                        <Button>
-                            <img src={"src/assets/linkedin-logo.png"} alt="linkedin" />
-                        </Button>
-                    </Flex>
-                </Flex>
-            </Flex>
-        </Center>
+            </Center>
+        </Box>
     );
 };
 
