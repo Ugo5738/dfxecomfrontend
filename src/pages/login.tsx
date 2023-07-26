@@ -43,7 +43,7 @@ const Login = () => {
                     rounded="2xl"
                     shadow="inner"
                     p="2rem"
-                    width={{ base: "90%", sm: "80%", md: "60%" }}
+                    width={{ base: "90%", sm: "60%", md: "40%" }}
                     mx="auto"
                     flexDir="column"
                 >
@@ -116,16 +116,16 @@ const Login = () => {
                             my="3rem"
                         >
                             <Button>
-                                <img src={"src/assets/facebook-logo.png"} alt="facebook" />
+                                <img src={"/facebook-logo.png"} alt="facebook" />
                             </Button>
                             <Button>
-                                <img src={"src/assets/twitter-logo.png"} alt="twitter" />
+                                <img src={"/twitter-logo.png"} alt="twitter" />
                             </Button>
                             <Button>
-                                <img src={"src/assets/google-logo.png"} alt="google" />
+                                <img src={"/google-logo.png"} alt="google" />
                             </Button>
                             <Button>
-                                <img src={"src/assets/linkedin-logo.png"} alt="linkedin" />
+                                <img src={"/linkedin-logo.png"} alt="linkedin" />
                             </Button>
                         </Flex>
                     </Flex>

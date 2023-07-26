@@ -4,21 +4,21 @@ export const homeCarousel = [
         title: "Welcome To",
         header: "DFX Gadgets Hub",
         text: "Your one-stop to everything gadget! Have a look around.",
-        imgSrc: "src/assets/hero-bg1.png",
+        imgSrc: "/hero-bg1.png",
     },
     {
         id: 2,
         title: "Welcome To",
         header: "DFX Gadgets Hub",
         text: "Your one-stop to everything gadget! Have a look around.",
-        imgSrc: "src/assets/hero-bg2.png",
+        imgSrc: "/hero-bg2.png",
     },
     {
         id: 3,
         title: "Welcome To",
         header: "DFX Gadgets Hub",
         text: "Your one-stop to everything gadget! Have a look around.",
-        imgSrc: "src/assets/hero-bg3.png",
+        imgSrc: "/hero-bg3.png",
     },
 ];
 

@@ -115,7 +115,6 @@ const Home = () => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-                B
             </Box>
             <Box bg="bg.light">
                 <Box py="5rem" mx="auto" w={{ base: "90%", md: "80%" }} color="typography.dark">
