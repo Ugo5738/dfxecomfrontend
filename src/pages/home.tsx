@@ -80,7 +80,6 @@ const Home = () => {
                                     <Image
                                         src={item.imgSrc}
                                         alt={item.title}
-                                        loading="lazy"
                                         display={{ base: "block", sm: "none" }}
                                         position="absolute"
                                         top="0"
@@ -104,7 +103,6 @@ const Home = () => {
                                     <Image
                                         src={item.imgSrc}
                                         alt={item.title}
-                                        loading="lazy"
                                         minH="40rem"
                                         minW="40rem"
                                         className="object-contain"

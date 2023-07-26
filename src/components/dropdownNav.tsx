@@ -34,7 +34,7 @@ const DropdownNav = () => {
                 fontSize="1.25rem"
                 zIndex={10000}
             >
-                <Menu isLazy closeOnSelect={false}>
+                <Menu isLazy>
                     <MenuButton
                         as={Button}
                         rightIcon={<AiFillCaretDown className="text-white" />}
@@ -79,7 +79,7 @@ const DropdownNav = () => {
                         </Grid>
                     </MenuList>
                 </Menu>
-                <Menu isLazy closeOnSelect={false}>
+                <Menu isLazy>
                     <MenuButton
                         as={Button}
                         rightIcon={<AiFillCaretDown className="text-white" />}
@@ -124,7 +124,7 @@ const DropdownNav = () => {
                         </Grid>
                     </MenuList>
                 </Menu>
-                <Menu isLazy closeOnSelect={false}>
+                <Menu isLazy>
                     <MenuButton
                         as={Button}
                         rightIcon={<AiFillCaretDown className="text-white" />}
@@ -169,7 +169,7 @@ const DropdownNav = () => {
                         </Grid>
                     </MenuList>
                 </Menu>
-                <Menu isLazy closeOnSelect={false}>
+                <Menu isLazy>
                     <MenuButton
                         as={Button}
                         rightIcon={<AiFillCaretDown className="text-white" />}
@@ -214,7 +214,7 @@ const DropdownNav = () => {
                         </Grid>
                     </MenuList>
                 </Menu>
-                <Menu isLazy closeOnSelect={false}>
+                <Menu isLazy>
                     <MenuButton
                         as={Button}
                         rightIcon={<AiFillCaretDown className="text-white" />}

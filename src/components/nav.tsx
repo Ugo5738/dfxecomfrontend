@@ -4,9 +4,12 @@ import NavBar from "./navBar";
 import { BsCart3 } from "react-icons/bs";
 import { IoSearchSharp } from "react-icons/io5";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
     const [searchInput, setSearchInput] = useState("");
+    const navigate = useNavigate();
+
     return (
         <Box>
             <Box mx="auto" w={{ base: "98%", sm: "96%" }}>
@@ -40,10 +43,10 @@ const Nav = () => {
                         </InputGroup>
                     </Flex>
                     <Flex justifyContent="space-between" alignItems="center" gap="1rem">
-                        <AppButton variant="primary" borderRadius=".3rem" height="3.5rem">
+                        <AppButton variant="primary" borderRadius=".3rem" height="3.5rem" onClick={() => navigate("/register")}>
                             Register
                         </AppButton>
-                        <AppButton variant="outline" borderRadius=".3rem" height="3.5rem">
+                        <AppButton variant="outline" borderRadius=".3rem" height="3.5rem" onClick={() => navigate("/login")}>
                             Sign In
                         </AppButton>
                         <Flex as="button">
