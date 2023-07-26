@@ -8,9 +8,11 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+    const queryClient = new QueryClient();
+
     return (
         <React.StrictMode>
-            <QueryClientProvider client={new QueryClient()}>
+            <QueryClientProvider client={queryClient}>
                 <ChakraProvider theme={customTheme}>
                     <RouterProvider router={router} fallbackElement={<Loading />} />
                     <ToastContainer theme="colored" />
