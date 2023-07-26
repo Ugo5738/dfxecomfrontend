@@ -1,7 +1,6 @@
 import { Flex, Text, Box, Grid, GridItem, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FiExternalLink } from "react-icons/fi";
-import WaitList from "../components/waitList";
 import Footer from "../components/footer";
 // import { useGetUser } from "../services/auth";
 import { seamLessShopping, shopCategories, hotDeals } from "../utils/dummyData";
@@ -13,6 +12,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import AppButton from "../components/button";
 import Nav from "../components/nav";
+import WaitList from "../components/waitlist";
 
 const Home = () => {
     // const { data: user, error, isLoading, isSuccess } = useGetUser();
