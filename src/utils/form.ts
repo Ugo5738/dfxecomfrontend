@@ -27,6 +27,7 @@ const useSignUpForm = (onSubmit: (arg0: SignUpFormType) => void) => {
         register,
         handleSubmit,
         formState: { errors },
+        control,
     } = useForm<SignUpFormType>({
         resolver: yupResolver(signUpSchema),
     });
@@ -39,6 +40,7 @@ const useSignUpForm = (onSubmit: (arg0: SignUpFormType) => void) => {
         register,
         handleFormSubmit,
         errors,
+        control,
     };
 };
 

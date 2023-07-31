@@ -36,7 +36,7 @@ const Login = () => {
     const { register, handleFormSubmit, errors } = useLoginForm(onLogin);
 
     return (
-        <Box bg="bg.light">
+        <Box bg="bg.opaque">
             <Center h="100vh" py="5rem">
                 <Flex
                     bg="white"

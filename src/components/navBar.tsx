@@ -14,6 +14,7 @@ import {
 import DropdownNav from "./dropdownNav";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect } from "react";
+
 const NavBar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isLargerThan480] = useMediaQuery("(min-width: 480px)");

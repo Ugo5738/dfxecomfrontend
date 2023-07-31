@@ -1,9 +1,8 @@
 import { Flex, Text, Box, Grid, GridItem, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { FiExternalLink } from "react-icons/fi";
 import Footer from "../components/footer";
 // import { useGetUser } from "../services/auth";
-import { seamLessShopping, shopCategories, hotDeals } from "../utils/dummyData";
+import { shopCategories, hotDeals } from "../utils/dummyData";
 import { homeCarousel } from "../utils/staticData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay, Keyboard } from "swiper/modules";
@@ -13,6 +12,7 @@ import "swiper/css/autoplay";
 import AppButton from "../components/button";
 import Nav from "../components/nav";
 import WaitList from "../components/waitlist";
+import Seamless from "../components/seamless";
 
 const Home = () => {
     // const { data: user, error, isLoading, isSuccess } = useGetUser();
@@ -227,56 +227,7 @@ const Home = () => {
                     ))}
                 </Grid>
             </Box>
-            <Box py="3rem" mx="auto" w={{ base: "96%", md: "80%" }} color="typography.dark">
-                <Text
-                    textAlign="center"
-                    color="typography.dark"
-                    fontSize={{ base: "2rem", sm: "2.5rem" }}
-                    fontWeight="700"
-                >
-                    Seamless Shopping Through DFX Gadgets Hub
-                </Text>
-                <Flex
-                    mt="4rem"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="3rem"
-                    flexWrap={{ base: "wrap", sm: "nowrap" }}
-                >
-                    {seamLessShopping.map((item) => (
-                        <Flex
-                            key={item.id}
-                            flexDir="column"
-                            gap=".5rem"
-                            justifyContent="center"
-                            alignItems="center"
-                        >
-                            <img src={item.imgSrc} alt={item.title} className="w-[8rem] h-[6rem]" />
-                            <Text
-                                textAlign="center"
-                                fontSize={{ base: "1.5rem", sm: "2rem" }}
-                                fontWeight="600"
-                                mt="1rem"
-                            >
-                                {item.title}
-                            </Text>
-                            <Text
-                                textAlign="center"
-                                fontSize={{ base: "1.2rem", sm: "1.5rem" }}
-                                lineHeight="2rem"
-                            >
-                                {item.description}
-                            </Text>
-                            <Link
-                                to="/shop"
-                                className="text-[1.5rem] font-semibold mt-1 sm:mt-4 flex items-center flex-nowrap gap-2 hover:underline"
-                            >
-                                Learn More <FiExternalLink />
-                            </Link>
-                        </Flex>
-                    ))}
-                </Flex>
-            </Box>
+            <Seamless />
             <WaitList />
             <Footer />
         </Box>

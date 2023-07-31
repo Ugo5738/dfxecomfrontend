@@ -366,3 +366,30 @@ export const wearablesDropdownMenu = [
         ],
     },
 ];
+
+export const cartsItems = {
+    nodes: [
+        {
+            id: 1,
+            name: "Apple IPhone 14 Pro",
+            price: "199.99",
+            imgSrc: "/iphone-14.png",
+            quantity: 1,
+        },
+        {
+            id: 2,
+            name: "AirPods",
+            price: "129.99",
+            imgSrc: "/accessories.png",
+            quantity: 1,
+        },
+        {
+            id: 3,
+            name: "Apple MacBook Pro 2023",
+            price: "239.99",
+            imgSrc: "/macbook-pro.png",
+            quantity: 1,
+        },
+    ],
+    shippingFee: "0.00",
+};

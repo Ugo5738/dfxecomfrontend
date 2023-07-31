@@ -13,6 +13,7 @@ export const signUpSchema = object({
         .min(8, "Password must be a minimum of 8 characters")
         .oneOf([ref("password"), undefined], "Passwords must match")
         .required("Password is required"),
+    country: string().trim().required("Please select your country"),
 }).required();
 
 export const loginSchema = object({
@@ -46,6 +47,7 @@ export interface SignUpFormType {
     email: string;
     password: string;
     confirmPassword: string;
+    country: string;
 }
 
 export interface LoginFormType {

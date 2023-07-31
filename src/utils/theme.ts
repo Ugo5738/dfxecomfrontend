@@ -11,6 +11,7 @@ const colors = Object.freeze({
         light: "#F4F4FF",
         dark: "#171923",
         nav: "#ADADD3",
+        opaque: "#88888880",
     },
     brand: {
         main: "#3E3FCD",

@@ -1,4 +1,5 @@
 import { Flex, Text, Center, Button, Box } from "@chakra-ui/react";
+import { Controller } from "react-hook-form";
 import AppInput from "../components/input";
 import { SignUpFormType } from "../utils/schema";
 import { useSignUpForm } from "../utils/form";
@@ -6,7 +7,6 @@ import AppButton from "../components/button";
 import { Link } from "react-router-dom";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
-// import { RegisterPayloadType } from '../utils/types';
 import { UseRegisterMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
 
@@ -16,17 +16,14 @@ const mapDataToRegister = (data: SignUpFormType) => {
 };
 
 const Register = () => {
-    const [country, setCountry] = useState("");
     const [loading, setLoading] = useState(false);
     const { mutateAsync: reg } = UseRegisterMutation();
 
     const onRegister = async (data: SignUpFormType) => {
         setLoading(true);
-        if (!country.trim()) return;
         const mappedData = mapDataToRegister(data);
-        const registerData = { ...mappedData, profile: { country: country } };
+        const registerData = { ...mappedData, profile: { country: data.country } };
         const regResult = await reg(registerData);
-        // console.log("regResult", regResult);
         try {
             if (!regResult) {
                 return;
@@ -42,10 +39,10 @@ const Register = () => {
         }
     };
 
-    const { register, handleFormSubmit, errors } = useSignUpForm(onRegister);
+    const { register, handleFormSubmit, errors, control } = useSignUpForm(onRegister);
 
     return (
-        <Box bg="bg.light">
+        <Box bg="bg.opaque">
             <Center py="5rem" h="100vh">
                 <Flex
                     bg="white"
@@ -122,18 +119,29 @@ const Register = () => {
                                 errors={errors}
                                 size="md"
                             />
-                            <ReactFlagsSelect
-                                selected={country}
-                                onSelect={(code) => setCountry(code)}
-                                placeholder="Select Country"
-                                searchable={true}
-                                searchPlaceholder="Search countries"
-                                className="w-full"
-                                id="country"
+                            <Controller
+                                control={control}
+                                name="country"
+                                render={({ field: { onChange, value } }) => (
+                                    <ReactFlagsSelect
+                                        selected={value}
+                                        onSelect={onChange}
+                                        searchable={true}
+                                        placeholder="Select Country"
+                                        searchPlaceholder="Search countries"
+                                        className="w-full"
+                                        id="country"
+                                    />
+                                )}
                             />
-                            {!country.trim() && (
-                                <Text role="alert" color={"red"} fontSize="1.2rem">
-                                    Please Select Your Country
+                            {errors?.country && (
+                                <Text
+                                    role="alert"
+                                    color={"red"}
+                                    fontSize="1.2rem"
+                                    alignSelf="flex-start"
+                                >
+                                    {errors?.country?.message}
                                 </Text>
                             )}
                             <AppButton
