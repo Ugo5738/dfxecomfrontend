@@ -11,14 +11,14 @@ function App() {
     const queryClient = new QueryClient();
 
     return (
-        <React.StrictMode>
+        <React.Fragment>
             <QueryClientProvider client={queryClient}>
                 <ChakraProvider theme={customTheme}>
                     <RouterProvider router={router} fallbackElement={<Loading />} />
                     <ToastContainer theme="colored" />
                 </ChakraProvider>
             </QueryClientProvider>
-        </React.StrictMode>
+        </React.Fragment>
     );
 }
 

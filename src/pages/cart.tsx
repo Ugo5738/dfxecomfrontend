@@ -5,6 +5,7 @@ import { cartsItems } from "../utils/dummyData";
 import AppButton from "../components/button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ScrollNav from "../components/scrollNav";
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Cart = () => {
     return (
         <Box>
             <MainNav />
+            <ScrollNav />
             <Box className="mx-auto w-[98%]">
                 <Text textAlign="right" fontWeight="600" fontSize="2.25rem" py="1rem">
                     Your Cart

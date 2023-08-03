@@ -1,4 +1,5 @@
 import { object, string, ref } from "yup";
+import { isValidPhoneNumber, isPossiblePhoneNumber } from "react-phone-number-input";
 
 export const signUpSchema = object({
     first_name: string().trim().required("Last Name is required"),
@@ -14,6 +15,15 @@ export const signUpSchema = object({
         .oneOf([ref("password"), undefined], "Passwords must match")
         .required("Password is required"),
     country: string().trim().required("Please select your country"),
+    phone: string()
+        .trim()
+        .test("isValidPhone", "Invalid phone number", (value) => {
+            return isValidPhoneNumber(value!);
+        })
+        .test("isPossibleNumber", "Invalid phone number", (value) => {
+            return isPossiblePhoneNumber(value!);
+        })
+        .required("Phone number is required"),
 }).required();
 
 export const loginSchema = object({
@@ -48,6 +58,7 @@ export interface SignUpFormType {
     password: string;
     confirmPassword: string;
     country: string;
+    phone: string;
 }
 
 export interface LoginFormType {

@@ -25,7 +25,8 @@ const colors = Object.freeze({
     },
 });
 
-const breakPoints = Object.freeze({
+const breakpoints = Object.freeze({
+    ...theme.breakpoints,
     xs: "320px",
     sm: "480px",
     md: "768px",
@@ -68,7 +69,7 @@ const styles = Object.freeze({
 const customTheme = extendTheme({
     config,
     colors,
-    breakPoints,
+    breakpoints,
     fontWeight,
     styles,
 });

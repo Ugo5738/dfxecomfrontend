@@ -1,23 +1,26 @@
 import { Flex, Text, Center, Button, Box } from "@chakra-ui/react";
 import { Controller } from "react-hook-form";
-import AppInput from "../components/input";
+import AppInput, { CustomPhoneInput } from "../components/input";
 import { SignUpFormType } from "../utils/schema";
 import { useSignUpForm } from "../utils/form";
 import AppButton from "../components/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
 import { UseRegisterMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 const mapDataToRegister = (data: SignUpFormType) => {
-    const { email, password, first_name, last_name } = data;
-    return { email, password, first_name, last_name };
+    const { email, password, first_name, last_name, phone } = data;
+    return { email, password, first_name, last_name, phone };
 };
 
 const Register = () => {
     const [loading, setLoading] = useState(false);
     const { mutateAsync: reg } = UseRegisterMutation();
+    const navigate = useNavigate();
 
     const onRegister = async (data: SignUpFormType) => {
         setLoading(true);
@@ -30,6 +33,7 @@ const Register = () => {
             }
             if (regResult.status === 200 || regResult.status === 201) {
                 SuccessToast("Registration Successful!");
+                navigate("/login");
             }
         } catch (error) {
             ErrorToast("An error occurred");
@@ -43,7 +47,7 @@ const Register = () => {
 
     return (
         <Box bg="bg.opaque">
-            <Center py="5rem" h="100vh">
+            <Center py="5rem">
                 <Flex
                     bg="white"
                     rounded="2xl"
@@ -72,7 +76,6 @@ const Register = () => {
                                 w="full"
                             >
                                 <AppInput
-                                    // label="First Name"
                                     name="first_name"
                                     placeholder="First Name"
                                     type="text"
@@ -81,7 +84,6 @@ const Register = () => {
                                     errors={errors}
                                 />
                                 <AppInput
-                                    // label="Last Name"
                                     name="last_name"
                                     placeholder="Last Name"
                                     type="text"
@@ -91,7 +93,6 @@ const Register = () => {
                                 />
                             </Flex>
                             <AppInput
-                                // label="Email"
                                 name="email"
                                 placeholder="Email Address"
                                 type="email"
@@ -100,7 +101,6 @@ const Register = () => {
                                 errors={errors}
                             />
                             <AppInput
-                                // label="Password"
                                 name="password"
                                 placeholder="Password"
                                 type="password"
@@ -110,7 +110,6 @@ const Register = () => {
                                 size="md"
                             />
                             <AppInput
-                                // label="Confirm Password"
                                 name="confirmPassword"
                                 placeholder="Confirm Password"
                                 type="password"
@@ -121,6 +120,31 @@ const Register = () => {
                             />
                             <Controller
                                 control={control}
+                                name="phone"
+                                render={({ field: { onChange, value } }) => (
+                                    <PhoneInput
+                                        id="phone"
+                                        placeholder="Enter phone number"
+                                        value={value}
+                                        onChange={onChange}
+                                        defaultCountry="NG"
+                                        className="w-full px-2"
+                                        inputComponent={CustomPhoneInput as never}
+                                    />
+                                )}
+                            />
+                            {errors?.phone && (
+                                <Text
+                                    role="alert"
+                                    color={"red"}
+                                    fontSize="1.2rem"
+                                    alignSelf="flex-start"
+                                >
+                                    {errors?.phone?.message}
+                                </Text>
+                            )}
+                            <Controller
+                                control={control}
                                 name="country"
                                 render={({ field: { onChange, value } }) => (
                                     <ReactFlagsSelect
@@ -129,7 +153,7 @@ const Register = () => {
                                         searchable={true}
                                         placeholder="Select Country"
                                         searchPlaceholder="Search countries"
-                                        className="w-full"
+                                        className="w-full mt-8"
                                         id="country"
                                     />
                                 )}

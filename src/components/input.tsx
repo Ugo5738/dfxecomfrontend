@@ -1,7 +1,12 @@
-import { CSSProperties } from "react";
+import { CSSProperties, forwardRef } from "react";
 import { FormControl, FormHelperText, FormLabel, Input, InputProps } from "@chakra-ui/react";
 import type { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form";
 import { LoginFormType, SignUpFormType } from "../utils/schema";
+
+interface CustomPhoneInputProps {
+    value?: string | number | readonly string[];
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+}
 
 type FormRegisterType<T extends FieldValues> = UseFormRegister<T>;
 type FormErrorsType<T extends FieldValues> = FieldErrors<T>;
@@ -76,3 +81,22 @@ const AppInput = <T extends SignUpFormType | LoginFormType>({
 };
 
 export default AppInput;
+
+export const CustomPhoneInput = forwardRef<HTMLInputElement, CustomPhoneInputProps>(
+    ({ value, onChange }, ref) => (
+        <Input
+            type="tel"
+            name="phone"
+            value={value}
+            onChange={onChange}
+            ref={ref}
+            placeholder="Enter phone number"
+            className="w-full p-4"
+            height={{ base: "3.5rem", sm: "4.5" }}
+            padding={{ base: "1rem", sm: "2rem" }}
+            fontSize="1.5rem"
+        />
+    ),
+);
+
+CustomPhoneInput.displayName = CustomPhoneInput as unknown as string;

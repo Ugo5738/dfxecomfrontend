@@ -393,3 +393,61 @@ export const cartsItems = {
     ],
     shippingFee: "0.00",
 };
+
+export const products = {
+    nodes: [
+        {
+            id: 1,
+            name: "Apple IPhone 14 Pro",
+            current_price: "199.99",
+            old_price: "299.99",
+            imgSrc: "/iphone-14.png",
+        },
+        {
+            id: 2,
+            name: "AirPods",
+            current_price: "129.99",
+            old_price: "199.99",
+            imgSrc: "/accessories.png",
+        },
+        {
+            id: 3,
+            name: "Apple MacBook Pro 2023",
+            current_price: "239.99",
+            old_price: "299.99",
+            imgSrc: "/macbook-pro.png",
+        },
+        {
+            id: 4,
+            name: "Lenovo IdeaPad Gaming 3",
+            current_price: "159.99",
+            old_price: "199.99",
+            imgSrc: "/lenovo.png",
+        },
+    ],
+    brands: [
+        "Apple",
+        "Samsung",
+        "Google",
+        "Lenovo",
+        "Dell",
+        "HP",
+        "Microsoft",
+        "Sony",
+        "Sennheiser",
+    ],
+    categories: {
+        Accessories: ["Protectors", "Chargers", "Photography"],
+        Computing: ["Storage", "Monitors", "Audio", "Input Devices"],
+        Gaming: ["Controllers", "Gaming Headsets", "Gaming Keyboards", "Gaming Microphones"],
+        Mobile: ["Android", "iPhone", "Techno", "Infinix"],
+        "Wearable Technology": ["Smart Watches", "Smart Glasses"],
+    },
+    priceRange: [
+        { min: 50, max: 100 },
+        { min: 100, max: 500 },
+        { min: 500, max: 1000 },
+        { min: 1000, max: 5000 },
+        { min: 5000, max: 100000 },
+    ],
+};

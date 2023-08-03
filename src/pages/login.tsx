@@ -59,7 +59,6 @@ const Login = () => {
                             mx="auto"
                         >
                             <AppInput
-                                // label="Email"
                                 name="email"
                                 placeholder="Email Address"
                                 type="email"
@@ -68,7 +67,6 @@ const Login = () => {
                                 errors={errors}
                             />
                             <AppInput
-                                // label="Password"
                                 name="password"
                                 placeholder="Password"
                                 type="password"

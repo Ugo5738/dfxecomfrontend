@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Home, Login, Register, Cart, Error } from "./route";
+import { Home, Login, Register, Cart, ProductDetail, Shop, Error } from "./route";
 import { Suspense } from "react";
 import Loading from "../components/loading";
 
@@ -34,6 +34,22 @@ const router = createBrowserRouter([
         element: (
             <Suspense fallback={<Loading />}>
                 <Cart />
+            </Suspense>
+        ),
+    },
+    {
+        path: "/product-detail",
+        element: (
+            <Suspense fallback={<Loading />}>
+                <ProductDetail />
+            </Suspense>
+        ),
+    },
+    {
+        path: "/shop",
+        element: (
+            <Suspense fallback={<Loading />}>
+                <Shop />
             </Suspense>
         ),
     },

@@ -133,7 +133,6 @@ const Home = () => {
                         mt="4rem"
                         justifyContent="center"
                         gap="3rem"
-                        flexWrap={{ base: "wrap", md: "nowrap" }}
                     >
                         {hotDeals.map((item) => (
                             <GridItem
@@ -141,39 +140,35 @@ const Home = () => {
                                 className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
                                 boxShadow="lg"
                             >
-                                <Link to={`/${item.name}`}>
+                                <Flex
+                                    flexDir="column"
+                                    gap="3rem"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    as={Link}
+                                    to={`/${item.name}`}
+                                >
                                     <Flex
                                         flexDir="column"
-                                        gap="3rem"
-                                        justifyContent="center"
-                                        alignItems="center"
+                                        alignSelf="flex-start"
+                                        alignItems="flex-start"
                                     >
-                                        <Flex
-                                            flexDir="column"
-                                            alignSelf="flex-start"
-                                            alignItems="flex-start"
+                                        <Text
+                                            fontSize="1.2rem"
+                                            fontWeight="600"
+                                            color="brand.orange"
                                         >
-                                            <Text
-                                                fontSize="1.2rem"
-                                                fontWeight="600"
-                                                color="brand.orange"
-                                            >
-                                                New
-                                            </Text>
-                                            <Text fontSize="1.5rem" fontWeight="600">
-                                                {item.name}
-                                            </Text>
-                                            <Text fontSize="1.35rem" fontWeight="500">
-                                                {item.price}
-                                            </Text>
-                                        </Flex>
-                                        <img
-                                            src={item.imgSrc}
-                                            alt={item.name}
-                                            className="h-[21rem]"
-                                        />
+                                            New
+                                        </Text>
+                                        <Text fontSize="1.5rem" fontWeight="600">
+                                            {item.name}
+                                        </Text>
+                                        <Text fontSize="1.35rem" fontWeight="500">
+                                            {item.price}
+                                        </Text>
                                     </Flex>
-                                </Link>
+                                    <img src={item.imgSrc} alt={item.name} className="h-[21rem]" />
+                                </Flex>
                             </GridItem>
                         ))}
                     </Grid>
@@ -205,24 +200,24 @@ const Home = () => {
                             className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
                             boxShadow="lg"
                         >
-                            <Link to={`/${item.title}`}>
-                                <Flex
-                                    flexDir="column"
-                                    gap="3rem"
-                                    justifyContent="center"
-                                    alignItems="center"
+                            <Flex
+                                flexDir="column"
+                                gap="3rem"
+                                justifyContent="center"
+                                alignItems="center"
+                                as={Link}
+                                to={`/${item.title}`}
+                            >
+                                <Text
+                                    textAlign="center"
+                                    fontSize={{ base: "1.5rem", sm: "2rem" }}
+                                    fontWeight="600"
+                                    mt="1rem"
                                 >
-                                    <Text
-                                        textAlign="center"
-                                        fontSize={{ base: "1.5rem", sm: "2rem" }}
-                                        fontWeight="600"
-                                        mt="1rem"
-                                    >
-                                        {item.title}
-                                    </Text>
-                                    <img src={item.imgSrc} alt={item.title} className="h-[21rem]" />
-                                </Flex>
-                            </Link>
+                                    {item.title}
+                                </Text>
+                                <img src={item.imgSrc} alt={item.title} className="h-[21rem]" />
+                            </Flex>
                         </GridItem>
                     ))}
                 </Grid>
