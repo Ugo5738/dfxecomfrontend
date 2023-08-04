@@ -19,10 +19,8 @@ const Home = () => {
     // console.log("user", user, "error", error, "isLoading", isLoading, "isSuccess", isSuccess);
     return (
         <Box>
-            <Box>
-                <Nav />
-            </Box>
-            <Box bg="bg.main" py="5rem" pl={{ base: "1.5rem", sm: "3rem" }} color="typography.dark">
+            <Nav />
+            <Box bg="bg.main" py="5rem" color="typography.dark">
                 <Swiper
                     modules={[Pagination, A11y, Autoplay, Keyboard]}
                     spaceBetween={600}
@@ -40,12 +38,16 @@ const Home = () => {
                 >
                     {homeCarousel.map((item) => (
                         <SwiperSlide key={item.id}>
-                            <Flex justifyContent="space-between">
+                            <Flex
+                                justifyContent="space-between"
+                                flexDir={{ base: "column", md: "row" }}
+                            >
                                 <Flex
                                     flexDir="column"
                                     gap="1rem"
                                     mb={{ base: "5rem", sm: "10rem" }}
-                                    position={{ base: "relative", sm: "static" }}
+                                    order={{ base: 2, md: 1 }}
+                                    pl={{ base: "1.5rem", sm: "3rem" }}
                                 >
                                     <Text color="brand.orange" fontSize="1.5rem" fontWeight="600">
                                         {"New"}
@@ -73,40 +75,19 @@ const Home = () => {
                                         variant="primary"
                                         colorScheme="brand"
                                         w="12rem"
-                                        mt="10rem"
+                                        mt={{ base: "2rem", md: "10rem" }}
                                     >
                                         Shop Now
                                     </AppButton>
-                                    <Image
-                                        src={item.imgSrc}
-                                        alt={item.title}
-                                        display={{ base: "block", sm: "none" }}
-                                        position="absolute"
-                                        top="0"
-                                        right="0"
-                                        bottom="5%"
-                                        left="0"
-                                        minH="30rem"
-                                        minW="30rem"
-                                        maxH="50rem"
-                                        width="100%"
-                                        height="100%"
-                                        objectFit="contain"
-                                        zIndex="-10"
-                                    />
                                 </Flex>
-                                <Flex
-                                    maxH={"50rem"}
-                                    justifyContent="flex-end"
-                                    display={{ base: "none", sm: "flex" }}
-                                >
+                                <Flex order={{ base: 1, md: 2 }}>
                                     <Image
                                         src={item.imgSrc}
                                         alt={item.title}
-                                        minH="40rem"
-                                        minW="40rem"
-                                        className="object-contain"
-                                        zIndex="-10"
+                                        minH={{ base: "15rem", sm: "25rem", md: "30rem" }}
+                                        minW={{ base: "15rem", sm: "25rem", md: "30rem" }}
+                                        objectFit="contain"
+                                        zIndex="10"
                                     />
                                 </Flex>
                             </Flex>

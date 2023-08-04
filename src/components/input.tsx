@@ -1,7 +1,7 @@
 import { CSSProperties, forwardRef } from "react";
 import { FormControl, FormHelperText, FormLabel, Input, InputProps } from "@chakra-ui/react";
 import type { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form";
-import { LoginFormType, SignUpFormType } from "../utils/schema";
+import { LoginFormType, SignUpFormType, CheckoutType } from "../utils/types";
 
 interface CustomPhoneInputProps {
     value?: string | number | readonly string[];
@@ -25,7 +25,7 @@ type InputType<T extends FieldValues> = Omit<InputProps, "name" | "register" | "
     value?: string;
 };
 
-const AppInput = <T extends SignUpFormType | LoginFormType>({
+const AppInput = <T extends SignUpFormType | LoginFormType | CheckoutType>({
     label,
     name,
     placeholder,
@@ -38,8 +38,12 @@ const AppInput = <T extends SignUpFormType | LoginFormType>({
     ...props
 }: InputType<T>) => {
     return (
-        <FormControl className="flex flex-col gap-1 mb-8">
-            {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        <FormControl className="flex flex-col gap-1 mb-8" maxHeight="8rem">
+            {label && (
+                <FormLabel htmlFor={name} color="bg.opaque" fontSize="1.5rem">
+                    {label}
+                </FormLabel>
+            )}
             <Input
                 type={type}
                 id={name}
@@ -53,6 +57,8 @@ const AppInput = <T extends SignUpFormType | LoginFormType>({
                 autoSave="true"
                 autoCorrect="on"
                 spellCheck="true"
+                isInvalid={errors?.[name]?.message ? true : false}
+                errorBorderColor="red.300"
                 _placeholder={{ color: "gray.400", fontSize: "1.25rem", verticalAlign: "middle" }}
                 {...register(name, {
                     required: true,

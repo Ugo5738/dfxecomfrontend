@@ -1,7 +1,7 @@
-import { Flex, Text, Center, Button, Box } from "@chakra-ui/react";
+import { Flex, Text, Center, Button, Box, useTheme } from "@chakra-ui/react";
 import { Controller } from "react-hook-form";
 import AppInput, { CustomPhoneInput } from "../components/input";
-import { SignUpFormType } from "../utils/schema";
+import { ColorObject, SignUpFormType } from "../utils/types";
 import { useSignUpForm } from "../utils/form";
 import AppButton from "../components/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ const mapDataToRegister = (data: SignUpFormType) => {
 };
 
 const Register = () => {
+    const color = useTheme().colors as ColorObject;
     const [loading, setLoading] = useState(false);
     const { mutateAsync: reg } = UseRegisterMutation();
     const navigate = useNavigate();
@@ -51,9 +52,10 @@ const Register = () => {
                 <Flex
                     bg="white"
                     rounded="2xl"
-                    shadow="inner"
+                    shadow={color.shadow.main}
                     p="2rem"
-                    width={{ base: "90%", sm: "60%", md: "40%" }}
+                    w="90%"
+                    maxW="50rem"
                     mx="auto"
                     flexDir="column"
                 >
@@ -65,7 +67,7 @@ const Register = () => {
                             alignItems="center"
                             justifyContent="center"
                             flexDir="column"
-                            w={{ base: "96%", md: "80%" }}
+                            w={{ base: "96%", md: "90%" }}
                             mx="auto"
                         >
                             <Flex

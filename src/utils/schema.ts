@@ -1,5 +1,8 @@
-import { object, string, ref } from "yup";
+import { object, string, ref, number, ObjectSchema } from "yup";
 import { isValidPhoneNumber, isPossiblePhoneNumber } from "react-phone-number-input";
+import { CheckoutType } from "./types";
+import { formatDateToMonthYear } from "./format";
+// import { useCreditCardValidator } from 'react-creditcard-validator';
 
 export const signUpSchema = object({
     first_name: string().trim().required("Last Name is required"),
@@ -51,17 +54,29 @@ export const resetPasswordSchema = object({
         .required("Password is required"),
 }).required();
 
-export interface SignUpFormType {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    country: string;
-    phone: string;
-}
-
-export interface LoginFormType {
-    email: string;
-    password: string;
-}
+export const checkoutSchema: ObjectSchema<CheckoutType> = object({
+    email: string().trim().email("Must be a valid email").required("Email is required"),
+    card_number: number()
+        .min(16, "Card Number should be 16 or more integers")
+        .positive("Card Number should be positive")
+        .integer("Card Number should be an integer")
+        .required("Card number is required")
+        .typeError("Input a valid card number"),
+    expiry_date: string()
+        .trim()
+        .required("Expiry date is required")
+        .test("is-valid-date", "Invalid date", (value) => {
+            return formatDateToMonthYear(value) === "";
+        })
+        .transform((value: string) => {
+            return formatDateToMonthYear(value);
+        }),
+    cvv: number()
+        .min(3, "CVV should be 3 integers")
+        .max(999, "CVV should be 3 integers")
+        .positive()
+        .integer()
+        .required("CVV is required")
+        .typeError("Input a valid CVV"),
+    promo_code: string().trim(),
+}).required();

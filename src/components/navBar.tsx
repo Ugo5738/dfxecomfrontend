@@ -26,38 +26,36 @@ const NavBar = () => {
     }, [isLargerThan480, onClose]);
 
     return (
-        <Flex bg="bg.nav">
+        <Flex bg={{ base: "white", md: "bg.nav" }}>
             <Button
                 aria-label="Options"
-                rightIcon={<RxHamburgerMenu />}
+                leftIcon={<RxHamburgerMenu />}
                 m="1rem"
-                p="1rem"
-                display={{ base: "flex", sm: "none" }}
+                display={{ base: "flex", md: "none" }}
                 onClick={onOpen}
-                fontSize="1.5rem"
-            >
-                Shopping Categories
-            </Button>
-            <Flex display={{ base: "flex", sm: "none" }}>
+                fontSize="2rem"
+                bg="white"
+            />
+            <Flex display={{ base: "flex", md: "none" }}>
                 <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
                     <DrawerOverlay />
                     <DrawerContent>
                         <DrawerCloseButton />
-                        <DrawerHeader borderBottomWidth="1px" py="2rem">
+                        <DrawerHeader borderBottomWidth="1px" py="1.5rem">
                             Shopping Categories
                         </DrawerHeader>
                         <DrawerBody bg="bg.nav">
                             <DropdownNav />
                         </DrawerBody>
                         <DrawerFooter borderTopWidth="1px">
-                            <Button variant="outline" mr={3} onClick={onClose}>
+                            <Button variant="outline" mr={3} onClick={onClose} title="Close">
                                 DFX LOGO
                             </Button>
                         </DrawerFooter>
                     </DrawerContent>
                 </Drawer>
             </Flex>
-            <Flex display={{ base: "none", sm: "flex" }}>
+            <Flex display={{ base: "none", md: "flex" }}>
                 <DropdownNav />
             </Flex>
         </Flex>

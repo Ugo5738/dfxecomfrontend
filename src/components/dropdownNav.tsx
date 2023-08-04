@@ -79,7 +79,7 @@ const DropdownNav = () => {
                         </Grid>
                     </MenuList>
                 </Menu>
-                <Menu isLazy>
+                <Menu isLazy offset={[0, -20]}>
                     <MenuButton
                         as={Button}
                         rightIcon={<AiFillCaretDown className="text-white" />}

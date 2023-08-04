@@ -1,6 +1,6 @@
-import { Flex, Text, Center, Button, Box } from "@chakra-ui/react";
+import { Flex, Text, Center, Button, Box, useTheme } from "@chakra-ui/react";
 import AppInput from "../components/input";
-import { LoginFormType } from "../utils/schema";
+import { ColorObject, LoginFormType } from "../utils/types";
 import { useLoginForm } from "../utils/form";
 import AppButton from "../components/button";
 import { UseLoginMutation } from "../services/mutation";
@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const color = useTheme().colors as ColorObject;
     const { mutateAsync: login } = UseLoginMutation();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -41,9 +42,10 @@ const Login = () => {
                 <Flex
                     bg="white"
                     rounded="2xl"
-                    shadow="inner"
+                    shadow={color.shadow.main}
                     p="2rem"
-                    width={{ base: "90%", sm: "60%", md: "40%" }}
+                    w="90%"
+                    maxW="50rem"
                     mx="auto"
                     flexDir="column"
                 >

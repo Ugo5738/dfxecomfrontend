@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { loginSchema, LoginFormType, signUpSchema, SignUpFormType } from "./schema";
+import { loginSchema, signUpSchema, checkoutSchema } from "./schema";
+import { LoginFormType, SignUpFormType, CheckoutType } from "./types";
 
 const useLoginForm = (onSubmit: (arg0: LoginFormType) => void) => {
     const {
@@ -44,4 +45,28 @@ const useSignUpForm = (onSubmit: (arg0: SignUpFormType) => void) => {
     };
 };
 
-export { useLoginForm, useSignUpForm };
+const useCheckoutForm = (onSubmit: (arg0: CheckoutType) => void) => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        control,
+        unregister,
+    } = useForm<CheckoutType>({
+        resolver: yupResolver(checkoutSchema),
+    });
+
+    const handleFormSubmit = handleSubmit((data) => {
+        onSubmit(data);
+    });
+
+    return {
+        register,
+        handleFormSubmit,
+        errors,
+        control,
+        unregister,
+    };
+};
+
+export { useLoginForm, useSignUpForm, useCheckoutForm };
