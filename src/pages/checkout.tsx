@@ -14,7 +14,7 @@ const Checkout = () => {
     const [isChecked, setIsChecked] = useState(false);
     const onCheckout = (data: CheckoutType) => {
         setLoading(true);
-        // console.log("data", data);
+        console.log("data", data.email.slice(0, 2));
         setLoading(false);
     };
 
