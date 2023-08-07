@@ -6,13 +6,12 @@ import AppButton from "../components/button";
 import { UseLoginMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 const Login = () => {
     const color = useTheme().colors as ColorObject;
     const { mutateAsync: login } = UseLoginMutation();
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
 
     const onLogin = async (data: LoginFormType) => {
         setLoading(true);
@@ -25,7 +24,7 @@ const Login = () => {
                 SuccessToast("Login Successful!");
             }
             sessionStorage.setItem("dfx-token", loginResult.data?.access as string);
-            navigate("/");
+            redirect("/");
         } catch (error) {
             ErrorToast("An error occurred");
             throw new Error(error as string);
@@ -78,10 +77,12 @@ const Login = () => {
                                 size="md"
                             />
                             <Button
-                                color={"typography.red"}
+                                color={"brand.orange"}
                                 alignSelf={"start"}
                                 mb="1rem"
                                 bg="white"
+                                as={Link}
+                                to="/forgot-password"
                             >
                                 Forgot Password?
                             </Button>

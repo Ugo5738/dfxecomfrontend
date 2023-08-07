@@ -140,8 +140,9 @@ const Shop = () => {
                     </Flex>
                     <Flex>
                         <Button
-                            colorScheme="brand"
                             variant="outline"
+                            bg={"typography.ash"}
+                            color="white"
                             fontSize="1.5rem"
                             fontWeight="bold"
                             w="full"
@@ -216,9 +217,9 @@ const Shop = () => {
                     >
                         {productItems.slice(skip, skip + itemsPerPage).map((item) => (
                             <Flex
-                                key={item.id}
+                                key={item.id + Math.random() * 20}
                                 as={Link}
-                                to={`/carts${item.id}`}
+                                to={`/carts/${item.id}`}
                                 flexDir="column"
                                 className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
                                 boxShadow="lg"

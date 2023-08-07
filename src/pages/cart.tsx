@@ -3,12 +3,12 @@ import Footer from "../components/footer";
 import MainNav from "../components/mainNav";
 import { cartsItems } from "../utils/dummyData";
 import AppButton from "../components/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 import { useState } from "react";
 import ScrollNav from "../components/scrollNav";
 
 const Cart = () => {
-    const navigate = useNavigate();
+    const navigation = useNavigation();
     const [carts, setCarts] = useState(cartsItems.nodes);
     const subTotal = carts.reduce((acc, curr) => acc + Number(curr.price), 0);
     const shippingFee = Number(cartsItems.shippingFee) || 0;
@@ -107,9 +107,9 @@ const Cart = () => {
                                 type="button"
                                 variant="primary"
                                 width="100%"
-                                isLoading={false}
+                                isLoading={navigation.state === "loading"}
                                 loadingText="Proceeding to Checkout"
-                                onClick={() => navigate("/checkout")}
+                                to="/checkout"
                             >
                                 Proceed to Checkout
                             </AppButton>

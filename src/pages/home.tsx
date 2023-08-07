@@ -76,6 +76,7 @@ const Home = () => {
                                         colorScheme="brand"
                                         w="12rem"
                                         mt={{ base: "2rem", md: "10rem" }}
+                                        to="/shop"
                                     >
                                         Shop Now
                                     </AppButton>
@@ -127,7 +128,7 @@ const Home = () => {
                                     justifyContent="center"
                                     alignItems="center"
                                     as={Link}
-                                    to={`/${item.name}`}
+                                    to={`/product-detail/${item.name}`}
                                 >
                                     <Flex
                                         flexDir="column"
@@ -187,7 +188,7 @@ const Home = () => {
                                 justifyContent="center"
                                 alignItems="center"
                                 as={Link}
-                                to={`/${item.title}`}
+                                to={`/shop/${item.title}`}
                             >
                                 <Text
                                     textAlign="center"

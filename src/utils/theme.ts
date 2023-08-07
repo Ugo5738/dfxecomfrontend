@@ -22,6 +22,7 @@ const colors = Object.freeze({
     typography: {
         dark: "#161616",
         red: "#CD0000",
+        ash: "#9F9F9F",
     },
     shadow: {
         main: "0px 4px 20px 0px rgba(0, 0, 0, 0.25)",

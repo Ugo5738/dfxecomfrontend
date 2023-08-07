@@ -20,6 +20,7 @@ const router = createBrowserRouter([
                 <Login />
             </Suspense>
         ),
+        errorElement: <Error />,
     },
     {
         path: "/register",
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
                 <Register />
             </Suspense>
         ),
+        errorElement: <Error />,
     },
     {
         path: "/cart",
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
                 <Cart />
             </Suspense>
         ),
+        errorElement: <Error />,
     },
     {
         path: "/product-detail",
@@ -44,6 +47,7 @@ const router = createBrowserRouter([
                 <ProductDetail />
             </Suspense>
         ),
+        errorElement: <Error />,
     },
     {
         path: "/shop",
@@ -52,6 +56,7 @@ const router = createBrowserRouter([
                 <Shop />
             </Suspense>
         ),
+        errorElement: <Error />,
     },
     {
         path: "/checkout",
@@ -60,6 +65,16 @@ const router = createBrowserRouter([
                 <Checkout />
             </Suspense>
         ),
+        errorElement: <Error />,
+    },
+    {
+        path: "*",
+        element: (
+            <Suspense fallback={<Loading />}>
+                <Home />
+            </Suspense>
+        ),
+        errorElement: <Error />,
     },
 ]);
 

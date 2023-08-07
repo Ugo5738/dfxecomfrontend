@@ -13,6 +13,8 @@ import {
     PopoverBody,
     PopoverArrow,
     PopoverCloseButton,
+    Slide,
+    CloseButton,
 } from "@chakra-ui/react";
 import AppButton from "./button";
 import { Link } from "react-router-dom";
@@ -20,12 +22,10 @@ import { BsCart3 } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { PiSignInLight } from "react-icons/pi";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const MainNav = () => {
     const [searchInput, setSearchInput] = useState("");
     const [toggleSearch, setToggleSearch] = useState(false);
-    const navigate = useNavigate();
 
     return (
         <Box mx="auto" w={{ base: "98%", sm: "96%" }}>
@@ -42,6 +42,8 @@ const MainNav = () => {
                     fontWeight="bold"
                     color="brand.dark"
                     whiteSpace="nowrap"
+                    as={Link}
+                    to="/"
                 >
                     DFX Logo
                 </Text>
@@ -79,7 +81,42 @@ const MainNav = () => {
                     >
                         <CiSearch className="text-[#171923] h-10 w-12" />
                     </Box>
-                    {toggleSearch && (
+                    <Slide direction="top" in={toggleSearch} style={{ zIndex: 20 }} unmountOnExit>
+                        <Flex
+                            w="full"
+                            p="1rem"
+                            pb="2rem"
+                            bg="bg.light"
+                            rounded="2xl"
+                            shadow="2xl"
+                            flexDir="column"
+                            gap="1rem"
+                        >
+                            <CloseButton
+                                size="lg"
+                                color="black"
+                                onClick={() => setToggleSearch(false)}
+                            />
+                            <InputGroup>
+                                <Input
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    placeholder="Search DFX"
+                                    _placeholder={{ fontsize: "1.25rem" }}
+                                    w="full"
+                                    rounded="2xl"
+                                    p="1.5rem"
+                                    color="brand.dark"
+                                    fontSize="1.5rem"
+                                    border="2px"
+                                />
+                                <InputRightElement pt=".8rem" pr=".5rem">
+                                    <CiSearch className="text-[#171923] h-8 w-8" />
+                                </InputRightElement>
+                            </InputGroup>
+                        </Flex>
+                    </Slide>
+                    {/* {toggleSearch && (
                         <Flex
                             w="full"
                             p="2rem"
@@ -110,8 +147,8 @@ const MainNav = () => {
                                 </InputRightElement>
                             </InputGroup>
                         </Flex>
-                    )}
-                    <Popover placement="bottom" closeOnBlur>
+                    )} */}
+                    <Popover placement="bottom">
                         <PopoverTrigger>
                             <Image
                                 alt="Profile"
@@ -162,20 +199,15 @@ const MainNav = () => {
                         variant="primary"
                         borderRadius=".3rem"
                         height="3.5rem"
-                        onClick={() => navigate("/register")}
+                        to="/register"
                     >
                         Register
                     </AppButton>
-                    <AppButton
-                        variant="outline"
-                        borderRadius=".3rem"
-                        height="3.5rem"
-                        onClick={() => navigate("/login")}
-                    >
+                    <AppButton variant="outline" borderRadius=".3rem" height="3.5rem" to="/login">
                         Sign In
                     </AppButton>
                 </Flex>
-                <Flex as="button" ml={{ xs: "-1rem", md: "0" }}>
+                <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/checkout">
                     <BsCart3 className="text-[#171923] h-12 w-12" />
                     <Text
                         rounded="full"

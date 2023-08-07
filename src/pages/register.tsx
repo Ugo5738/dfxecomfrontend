@@ -4,7 +4,7 @@ import AppInput, { CustomPhoneInput } from "../components/input";
 import { ColorObject, SignUpFormType } from "../utils/types";
 import { useSignUpForm } from "../utils/form";
 import AppButton from "../components/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
 import { UseRegisterMutation } from "../services/mutation";
@@ -21,7 +21,6 @@ const Register = () => {
     const color = useTheme().colors as ColorObject;
     const [loading, setLoading] = useState(false);
     const { mutateAsync: reg } = UseRegisterMutation();
-    const navigate = useNavigate();
 
     const onRegister = async (data: SignUpFormType) => {
         setLoading(true);
@@ -34,7 +33,7 @@ const Register = () => {
             }
             if (regResult.status === 200 || regResult.status === 201) {
                 SuccessToast("Registration Successful!");
-                navigate("/login");
+                redirect("/login");
             }
         } catch (error) {
             ErrorToast("An error occurred");
