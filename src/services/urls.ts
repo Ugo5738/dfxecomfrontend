@@ -2,12 +2,16 @@ const API_URL = import.meta.env.VITE_API_URL as string;
 
 const URLS = {
     API_URL,
-    LOGIN: `${API_URL}/login/token/`,
-    REFRESH: `${API_URL}/login/token/refresh/`,
-    LOGOUT: `${API_URL}/logout`,
-    REGISTER: `${API_URL}/register`,
-    USERS: `${API_URL}/users/`,
-    USER: (id: string) => `${API_URL}/users/${id}`,
+    LOGIN: `/auth/login/token/`,
+    REFRESH: `/auth/login/token/refresh/`,
+    LOGOUT: `/auth/logout/`,
+    REGISTER: `/auth/register/`,
+    USERS: `/auth/users/`,
+    CURRENT_USER: `/auth/current-user/`,
+    USER: (id: string) => `/auth/users/${id}`,
+    TRENDING_INVENTORY: `/inventory/trending-categories/`,
+    PRODUCTS: `/inventory/products/`,
+    PRODUCTS_INVENTORY: `/inventory/product-inventory-sales/`,
 };
 
 export default URLS;

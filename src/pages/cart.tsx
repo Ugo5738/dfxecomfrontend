@@ -74,7 +74,7 @@ const Cart = () => {
                                                 boxSize="3rem"
                                                 borderRadius="full"
                                                 mr="12px"
-                                                src={cart.imgSrc}
+                                                src={cart.image}
                                                 alt={cart.name}
                                             />
                                             <Text fontSize="1.5rem">
@@ -128,7 +128,7 @@ const Cart = () => {
                                 gap="2rem"
                             >
                                 <Flex alignItems="center" gap="3rem" flexGrow="1">
-                                    <Image height="12rem" src={cart.imgSrc} alt={cart.name} />
+                                    <Image height="12rem" src={cart.image} alt={cart.name} />
                                     <Text fontSize="1.5rem">{cart.name}</Text>
                                 </Flex>
                                 <Flex>

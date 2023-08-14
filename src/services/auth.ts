@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "./axios";
+import URLS from "./urls";
 
 export interface User {
     id: string;
@@ -14,14 +15,9 @@ export interface User {
     last_login: string;
 }
 
-export const removeEmpty = (obj: never) => {
-    Object.keys(obj).forEach((key) => obj[key] == null || (!obj[key] && delete obj[key]));
-    return obj;
-};
-
 export const useGetUser = () => {
-    const { data, error, isLoading, isSuccess } = useQuery(["users"], async () => {
-        const res = await axios.get("/current-user/");
+    const { data, error, isLoading, isSuccess } = useQuery(["current-users"], async () => {
+        const res = await axios.get(URLS.CURRENT_USER);
         return res;
     });
 

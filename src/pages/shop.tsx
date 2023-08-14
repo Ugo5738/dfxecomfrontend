@@ -21,26 +21,47 @@ import Seamless from "../components/seamless";
 import ScrollNav from "../components/scrollNav";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { products } from "../utils/dummyData";
-
-const itemsPerPage = 14;
+import { useGetInventoryProducts } from "../services/products";
+import LoadingSpinner from "../components/loading";
+import { ErrorPropsType, ProductResultType } from "../utils/types";
+import Error404 from "../components/error";
 
 const Shop = () => {
+    const {
+        data: productsInventory,
+        error: productsInventoryError,
+        isLoading: productsInventoryLoading,
+        isSuccess: productsInventorySuccess,
+    } = useGetInventoryProducts();
+
+    // console.log("productsInventory", productsInventory);
+
     const [page, setPage] = useState(1);
-    // const [price, setPrice] = useState({ min: 0, max: 0 });
-    const duplicatedProductItems = Array.from({ length: 15 }, () => products?.nodes).flat();
-    const [productItems, setProductItems] = useState(duplicatedProductItems);
+    const [productItems, setProductItems] = useState<ProductResultType[] | undefined>(
+        productsInventory?.results,
+    );
     const [currentCategory, setCurrentCategory] = useState<string | null>(null);
+    // const [price, setPrice] = useState({ min: 0, max: 0 });
     // const [filteredCategories, setFilteredCategories] = useState({});
     // const [filteredBrands, setFilteredBrands] = useState([]);
     // const [filteredPrices, setFilteredPrices] = useState([]);
     const pages = [...Array(5).keys()].map((num) => num + 1);
 
     // Paginate the filtered products
-    const skip = page * itemsPerPage - itemsPerPage;
 
     useEffect(() => {
-        setProductItems(duplicatedProductItems);
-    }, [duplicatedProductItems]);
+        if (productsInventory && productsInventory?.results.length > 0) {
+            setProductItems(productsInventory?.results);
+        }
+    }, [productsInventory]);
+
+    if (productsInventoryLoading) {
+        return <LoadingSpinner />;
+    }
+
+    if (productsInventoryError || !productsInventory?.results) {
+        return <Error404 error={productsInventoryError as ErrorPropsType} />;
+    }
 
     return (
         <Box>
@@ -215,47 +236,48 @@ const Shop = () => {
                         justifyContent="center"
                         gap="3rem"
                     >
-                        {productItems.slice(skip, skip + itemsPerPage).map((item) => (
-                            <Flex
-                                key={item.id + Math.random() * 20}
-                                as={Link}
-                                to={`/carts/${item.id}`}
-                                flexDir="column"
-                                className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
-                                boxShadow="lg"
-                                justifyContent="space-between"
-                            >
-                                <Image
-                                    src={item.imgSrc}
-                                    alt={item.name}
-                                    height="20rem"
-                                    objectFit="contain"
-                                    mb="3rem"
-                                />
-                                <Text color="typography.dark" fontSize="1.5rem" h="4rem">
-                                    {item.name}
-                                </Text>
-                                <Flex alignItems="baseline">
-                                    <Text
-                                        color="typography.dark"
-                                        fontSize="2.2rem"
-                                        fontWeight="600"
-                                    >
-                                        {item.current_price}
+                        {productsInventorySuccess &&
+                            productItems?.map((item) => (
+                                <Flex
+                                    key={item.sku + Math.random() * 1000}
+                                    as={Link}
+                                    to={`/carts/${item.sku}`}
+                                    flexDir="column"
+                                    className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
+                                    boxShadow="lg"
+                                    justifyContent="space-between"
+                                >
+                                    <Image
+                                        src={item.default_image}
+                                        alt={item.product_name}
+                                        height="20rem"
+                                        objectFit="contain"
+                                        mb="3rem"
+                                    />
+                                    <Text color="typography.dark" fontSize="1.5rem" h="4rem">
+                                        {item.product_name}
                                     </Text>
-                                    {item.old_price && (
+                                    <Flex alignItems="baseline">
                                         <Text
-                                            color="typography.red"
-                                            fontSize="1.2rem"
-                                            px="2"
-                                            textDecoration="line-through"
+                                            color="typography.dark"
+                                            fontSize="2.2rem"
+                                            fontWeight="600"
                                         >
-                                            {item.old_price}
+                                            {item.store_price}
                                         </Text>
-                                    )}
+                                        {item.discount_store_price && (
+                                            <Text
+                                                color="typography.red"
+                                                fontSize="1.2rem"
+                                                px="2"
+                                                textDecoration="line-through"
+                                            >
+                                                {item.discount_store_price}
+                                            </Text>
+                                        )}
+                                    </Flex>
                                 </Flex>
-                            </Flex>
-                        ))}
+                            ))}
                     </Grid>
                     <Flex
                         alignItems="center"

@@ -2,64 +2,20 @@ export const seamLessShopping = [
     {
         id: 1,
         title: "On-site Pickup",
-        imgSrc: "/pickup-icon.png",
+        image: "/pickup-icon.png",
         description: "Pick up your online order at an DFX Store near you.",
     },
     {
         id: 2,
         title: "Easy Returns",
-        imgSrc: "/returns-icon.png",
+        image: "/returns-icon.png",
         description: "Return eligible items to Apple within 14 days of receipt.",
     },
     {
         id: 3,
         title: "Fast and free delivery",
-        imgSrc: "/delivery-icon.png",
+        image: "/delivery-icon.png",
         description: "Enjoy free two-day delivery on most in-stock items.",
-    },
-];
-
-export const shopCategories = [
-    {
-        id: 1,
-        title: "Phones",
-        imgSrc: "/iphone-14.png",
-    },
-    {
-        id: 2,
-        title: "Computing",
-        imgSrc: "/computing.png",
-    },
-    {
-        id: 3,
-        title: "Accessories",
-        imgSrc: "/accessories.png",
-    },
-    {
-        id: 4,
-        title: "Tablets",
-        imgSrc: "/tablets.png",
-    },
-];
-
-export const hotDeals = [
-    {
-        id: 1,
-        name: "Apple MacBook Pro 2023",
-        price: "$189.99",
-        imgSrc: "/macbook-pro.png",
-    },
-    {
-        id: 2,
-        name: "Apple IPhone 14 Pro",
-        price: "$139.99",
-        imgSrc: "/iphone-14.png",
-    },
-    {
-        id: 3,
-        name: "Lenovo IdeaPad Gaming 3",
-        price: "$159.99",
-        imgSrc: "/lenovo.png",
     },
 ];
 
@@ -71,17 +27,17 @@ export const mobileDropdownMenu = [
             {
                 id: 11,
                 title: "Apple",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 12,
                 title: "Samsung",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 13,
                 title: "Google",
-                imgSrc: "/accessories.png",
+                image: "/accessories.png",
             },
         ],
     },
@@ -92,12 +48,12 @@ export const mobileDropdownMenu = [
             {
                 id: 21,
                 title: "Android",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 22,
                 title: "iPhone",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -108,22 +64,22 @@ export const mobileDropdownMenu = [
             {
                 id: 31,
                 title: "iOS",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 32,
                 title: "Android",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 33,
                 title: "Windows",
-                imgSrc: "/accessories.png",
+                image: "/accessories.png",
             },
             {
                 id: 34,
                 title: "Chrome OS",
-                imgSrc: "/tablets.png",
+                image: "/tablets.png",
             },
         ],
     },
@@ -134,17 +90,17 @@ export const mobileDropdownMenu = [
             {
                 id: 41,
                 title: "Protectors",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 42,
                 title: "Chargers",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 43,
                 title: "Photography",
-                imgSrc: "/accessories.png",
+                image: "/accessories.png",
             },
         ],
     },
@@ -158,17 +114,17 @@ export const computingDropdownMenu = [
             {
                 id: 11,
                 title: "MacOS",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 12,
                 title: "Windows",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 13,
                 title: "Linux",
-                imgSrc: "/accessories.png",
+                image: "/accessories.png",
             },
         ],
     },
@@ -179,22 +135,22 @@ export const computingDropdownMenu = [
             {
                 id: 21,
                 title: "Storage",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 22,
                 title: "Monitors",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 23,
                 title: "Audio",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 24,
                 title: "Input Devices",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
         ],
     },
@@ -205,27 +161,27 @@ export const computingDropdownMenu = [
             {
                 id: 31,
                 title: "Apple",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 32,
                 title: "Dell",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 33,
                 title: "HP",
-                imgSrc: "/accessories.png",
+                image: "/accessories.png",
             },
             {
                 id: 34,
                 title: "Lenovo",
-                imgSrc: "/tablets.png",
+                image: "/tablets.png",
             },
             {
                 id: 35,
                 title: "Microsoft",
-                imgSrc: "/tablets.png",
+                image: "/tablets.png",
             },
         ],
     },
@@ -239,12 +195,12 @@ export const accessoriesDropdownMenu = [
             {
                 id: 11,
                 title: "Bluetooth",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 12,
                 title: "Wireless",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -255,17 +211,17 @@ export const accessoriesDropdownMenu = [
             {
                 id: 21,
                 title: "Sony",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 22,
                 title: "Sennheiser",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 23,
                 title: "Others",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -279,17 +235,17 @@ export const gamingDropdownMenu = [
             {
                 id: 11,
                 title: "Playstation",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 12,
                 title: "Xbox",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 13,
                 title: "Nintendo Switch",
-                imgSrc: "/accessories.png",
+                image: "/accessories.png",
             },
         ],
     },
@@ -300,17 +256,17 @@ export const gamingDropdownMenu = [
             {
                 id: 21,
                 title: "Controllers",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 22,
                 title: "Gaming Headsets",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
             {
                 id: 23,
                 title: "Gaming Keyboards",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -321,12 +277,12 @@ export const gamingDropdownMenu = [
             {
                 id: 41,
                 title: "Gaming Headsets",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 42,
                 title: "Gaming Microphones",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -340,12 +296,12 @@ export const wearablesDropdownMenu = [
             {
                 id: 11,
                 title: "Apple Watch",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 12,
                 title: "Wear OS",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -356,12 +312,12 @@ export const wearablesDropdownMenu = [
             {
                 id: 21,
                 title: "Augmented Reality",
-                imgSrc: "/iphone-14.png",
+                image: "/iphone-14.png",
             },
             {
                 id: 22,
                 title: "Virtual Reality",
-                imgSrc: "/computing.png",
+                image: "/computing.png",
             },
         ],
     },
@@ -373,21 +329,21 @@ export const cartsItems = {
             id: 1,
             name: "Apple IPhone 14 Pro",
             price: "199.99",
-            imgSrc: "/iphone-14.png",
+            image: "/iphone-14.png",
             quantity: 1,
         },
         {
             id: 2,
             name: "AirPods",
             price: "129.99",
-            imgSrc: "/accessories.png",
+            image: "/accessories.png",
             quantity: 1,
         },
         {
             id: 3,
             name: "Apple MacBook Pro 2023",
             price: "239.99",
-            imgSrc: "/macbook-pro.png",
+            image: "/macbook-pro.png",
             quantity: 1,
         },
     ],
@@ -395,34 +351,34 @@ export const cartsItems = {
 };
 
 export const products = {
-    nodes: [
+    results: [
         {
-            id: 1,
-            name: "Apple IPhone 14 Pro",
-            current_price: "199.99",
-            old_price: "299.99",
-            imgSrc: "/iphone-14.png",
+            sku: 1,
+            product_name: "Apple IPhone 14 Pro",
+            store_price: "199.99",
+            discount_store_price: "299.99",
+            default_image: "/iphone-14.png",
         },
         {
-            id: 2,
-            name: "AirPods",
-            current_price: "129.99",
-            old_price: "199.99",
-            imgSrc: "/accessories.png",
+            sku: 2,
+            product_name: "AirPods",
+            store_price: "129.99",
+            discount_store_price: "199.99",
+            default_image: "/accessories.png",
         },
         {
-            id: 3,
-            name: "Apple MacBook Pro 2023",
-            current_price: "239.99",
-            old_price: "299.99",
-            imgSrc: "/macbook-pro.png",
+            sku: 3,
+            product_name: "Apple MacBook Pro 2023",
+            store_price: "239.99",
+            discount_store_price: "299.99",
+            default_image: "/macbook-pro.png",
         },
         {
-            id: 4,
-            name: "Lenovo IdeaPad Gaming 3",
-            current_price: "159.99",
-            old_price: "199.99",
-            imgSrc: "/lenovo.png",
+            sku: 4,
+            product_name: "Lenovo IdeaPad Gaming 3",
+            store_price: "159.99",
+            discount_store_price: "199.99",
+            default_image: "/lenovo.png",
         },
     ],
     brands: [

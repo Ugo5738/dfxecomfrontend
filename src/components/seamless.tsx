@@ -29,7 +29,7 @@ const Seamless = () => {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        <img src={item.imgSrc} alt={item.title} className="w-[8rem] h-[6rem]" />
+                        <img src={item.image} alt={item.title} className="w-[8rem] h-[6rem]" />
                         <Text
                             textAlign="center"
                             fontSize={{ base: "1.5rem", sm: "2rem" }}

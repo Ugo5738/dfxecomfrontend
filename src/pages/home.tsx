@@ -1,8 +1,6 @@
 import { Flex, Text, Box, Grid, GridItem, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
-// import { useGetUser } from "../services/auth";
-import { shopCategories, hotDeals } from "../utils/dummyData";
 import { homeCarousel } from "../utils/staticData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay, Keyboard } from "swiper/modules";
@@ -13,14 +11,55 @@ import AppButton from "../components/button";
 import Nav from "../components/nav";
 import WaitList from "../components/waitlist";
 import Seamless from "../components/seamless";
+import { useGetTrendingInventory, useGetInventoryProducts } from "../services/products";
+import LoadingSpinner from "../components/loading";
+import { LegacyRef, useEffect, useRef, useState } from "react";
+import { ParentRefType } from "../utils/types";
 
 const Home = () => {
-    // const { data: user, error, isLoading, isSuccess } = useGetUser();
-    // console.log("user", user, "error", error, "isLoading", isLoading, "isSuccess", isSuccess);
+    const {
+        data: trendingInventory,
+        error: trendingInventoryError,
+        isLoading: trendingInventoryLoading,
+        isSuccess: trendingInventorySuccess,
+    } = useGetTrendingInventory();
+
+    const {
+        data: inventoryProducts,
+        error: inventoryProductsError,
+        isLoading: inventoryProductsLoading,
+        isSuccess: inventoryProductsSuccess,
+    } = useGetInventoryProducts();
+
+    const [scrollDuration, setScrollDuration] = useState(30);
+    const parentRef = useRef<ParentRefType>(null);
+
+    useEffect(() => {
+        let scrollAmount = 0;
+        if (!parentRef?.current) return;
+        const maxScroll = parentRef?.current?.scrollWidth - parentRef?.current?.clientWidth;
+
+        const scroll = () => {
+            scrollAmount++;
+            if (scrollAmount > maxScroll) {
+                scrollAmount = 0;
+            }
+            if (parentRef?.current) parentRef.current.scrollLeft = scrollAmount;
+        };
+
+        const scrollInterval = setInterval(scroll, scrollDuration);
+
+        return () => clearInterval(scrollInterval);
+    }, [scrollDuration]);
+
+    if (trendingInventoryLoading || inventoryProductsLoading) return <LoadingSpinner />;
+    if (trendingInventoryError || inventoryProductsError || !inventoryProducts?.results)
+        return <div>error</div>;
+
     return (
         <Box>
             <Nav />
-            <Box bg="bg.main" py="5rem" color="typography.dark">
+            <Box bg="bg.main" py={{ base: "3rem", sm: "5rem" }} color="typography.dark">
                 <Swiper
                     modules={[Pagination, A11y, Autoplay, Keyboard]}
                     spaceBetween={600}
@@ -39,36 +78,48 @@ const Home = () => {
                     {homeCarousel.map((item) => (
                         <SwiperSlide key={item.id}>
                             <Flex
-                                justifyContent="space-between"
+                                // justifyContent="space-between"
                                 flexDir={{ base: "column", md: "row" }}
                             >
                                 <Flex
                                     flexDir="column"
                                     gap="1rem"
-                                    mb={{ base: "5rem", sm: "10rem" }}
+                                    alignItems={{ base: "center", md: "flex-start" }}
+                                    mb={{ base: "0", md: "10rem" }}
                                     order={{ base: 2, md: 1 }}
-                                    pl={{ base: "1.5rem", sm: "3rem" }}
+                                    pl={{ base: "0", md: "3rem" }}
                                 >
-                                    <Text color="brand.orange" fontSize="1.5rem" fontWeight="600">
+                                    <Text
+                                        color="brand.orange"
+                                        fontSize="2.5rem"
+                                        fontWeight="600"
+                                        display={{ base: "none", md: "flex" }}
+                                    >
                                         {"New"}
                                     </Text>
-                                    <Flex flexDir="column">
+                                    <Flex flexDir="column" display={{ base: "none", md: "flex" }}>
                                         <Text
-                                            fontSize={{ base: "1.75rem", sm: "2rem" }}
+                                            fontSize={{ base: "2.25rem", md: "3rem" }}
+                                            fontFamily="Raleway"
                                             fontWeight="600"
                                             mb="-1rem"
                                         >
                                             {item.title}
                                         </Text>
                                         <Text
-                                            fontSize={{ base: "2.5rem", sm: "3rem" }}
+                                            fontSize={{ base: "3rem", md: "5rem" }}
                                             fontWeight="800"
                                             whiteSpace="nowrap"
                                         >
                                             {item.header}
                                         </Text>
                                     </Flex>
-                                    <Text fontSize="1.5rem" fontWeight="500" lineHeight="1.8rem">
+                                    <Text
+                                        fontSize="2.6rem"
+                                        fontWeight="500"
+                                        lineHeight="normal"
+                                        display={{ base: "none", md: "flex" }}
+                                    >
                                         {item.text}
                                     </Text>
                                     <AppButton
@@ -81,12 +132,18 @@ const Home = () => {
                                         Shop Now
                                     </AppButton>
                                 </Flex>
-                                <Flex order={{ base: 1, md: 2 }}>
+                                <Flex
+                                    order={{ base: 1, md: 2 }}
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
                                     <Image
-                                        src={item.imgSrc}
+                                        src={item.image}
                                         alt={item.title}
-                                        minH={{ base: "15rem", sm: "25rem", md: "30rem" }}
-                                        minW={{ base: "15rem", sm: "25rem", md: "30rem" }}
+                                        w="full"
+                                        h="full"
+                                        minW={{ base: "15rem", sm: "25rem", md: "35rem" }}
+                                        maxH={{ base: "20rem", sm: "full", md: "full" }}
                                         objectFit="contain"
                                         zIndex="10"
                                     />
@@ -106,54 +163,76 @@ const Home = () => {
                     >
                         Hot Deals
                     </Text>
-                    <Grid
-                        templateColumns={{
-                            base: "repeat(1, 1fr)",
-                            sm: "repeat(2, 1fr)",
-                            md: "repeat(3, 1fr)",
-                        }}
-                        mt="4rem"
+                    <Flex
                         justifyContent="center"
                         gap="3rem"
+                        mt="4rem"
+                        ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
+                        overflow="hidden"
                     >
-                        {hotDeals.map((item) => (
-                            <GridItem
-                                key={item.id}
-                                className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
-                                boxShadow="lg"
-                            >
-                                <Flex
-                                    flexDir="column"
-                                    gap="3rem"
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    as={Link}
-                                    to={`/product-detail/${item.name}`}
+                        {inventoryProductsSuccess &&
+                            inventoryProducts?.results?.map((item) => (
+                                <Box
+                                    key={item.sku}
+                                    className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
+                                    boxShadow="lg"
+                                    minW="25rem"
+                                    onMouseEnter={() => setScrollDuration(10000)}
+                                    onMouseLeave={() => setScrollDuration(30)}
                                 >
                                     <Flex
                                         flexDir="column"
-                                        alignSelf="flex-start"
-                                        alignItems="flex-start"
+                                        gap="3rem"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        as={Link}
+                                        to={`/product/${item.product_name}`}
                                     >
-                                        <Text
-                                            fontSize="1.2rem"
-                                            fontWeight="600"
-                                            color="brand.orange"
+                                        <Flex
+                                            flexDir="column"
+                                            alignSelf="flex-start"
+                                            alignItems="flex-start"
                                         >
-                                            New
-                                        </Text>
-                                        <Text fontSize="1.5rem" fontWeight="600">
-                                            {item.name}
-                                        </Text>
-                                        <Text fontSize="1.35rem" fontWeight="500">
-                                            {item.price}
-                                        </Text>
+                                            <Text
+                                                fontSize="1.2rem"
+                                                fontWeight="600"
+                                                color="brand.orange"
+                                                textTransform="capitalize"
+                                            >
+                                                {item.condition}
+                                            </Text>
+                                            <Text fontSize="1.5rem" fontWeight="600">
+                                                {item.product_name}
+                                            </Text>
+                                            <Flex alignItems="baseline">
+                                                <Text
+                                                    color="typography.dark"
+                                                    fontSize="1.35rem"
+                                                    fontWeight="600"
+                                                >
+                                                    {item.sale_price}
+                                                </Text>
+                                                {item.store_price && (
+                                                    <Text
+                                                        color="typography.red"
+                                                        fontSize="1.2rem"
+                                                        px="2"
+                                                        textDecoration="line-through"
+                                                    >
+                                                        {item.store_price}
+                                                    </Text>
+                                                )}
+                                            </Flex>
+                                        </Flex>
+                                        <img
+                                            src={item.default_image}
+                                            alt={item.product_name}
+                                            className="h-[27rem]"
+                                        />
                                     </Flex>
-                                    <img src={item.imgSrc} alt={item.name} className="h-[21rem]" />
-                                </Flex>
-                            </GridItem>
-                        ))}
-                    </Grid>
+                                </Box>
+                            ))}
+                    </Flex>
                 </Box>
             </Box>
             <Box py="3rem" mx="auto" w={{ base: "90%", md: "80%" }} color="typography.dark">
@@ -169,39 +248,54 @@ const Home = () => {
                     templateColumns={{
                         base: "repeat(1, 1fr)",
                         sm: "repeat(2, 1fr)",
-                        md: "repeat(4, 1fr)",
+                        md: "repeat(3, 1fr)",
                     }}
                     mt="4rem"
                     justifyContent="center"
                     gap="3rem"
                     flexWrap={{ base: "wrap", md: "nowrap" }}
                 >
-                    {shopCategories.map((item) => (
-                        <GridItem
-                            key={item.id}
-                            className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
-                            boxShadow="lg"
-                        >
-                            <Flex
-                                flexDir="column"
-                                gap="3rem"
-                                justifyContent="center"
-                                alignItems="center"
-                                as={Link}
-                                to={`/shop/${item.title}`}
+                    {trendingInventorySuccess &&
+                        trendingInventory?.map((item) => (
+                            <GridItem
+                                key={item?.id}
+                                className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
+                                boxShadow="lg"
+                                // maxW="25rem"
+                                // w="full"
                             >
-                                <Text
-                                    textAlign="center"
-                                    fontSize={{ base: "1.5rem", sm: "2rem" }}
-                                    fontWeight="600"
-                                    mt="1rem"
+                                <Flex
+                                    flexDir="column"
+                                    gap="3rem"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    as={Link}
+                                    to={`/shop/${item?.name}`}
                                 >
-                                    {item.title}
-                                </Text>
-                                <img src={item.imgSrc} alt={item.title} className="h-[21rem]" />
-                            </Flex>
-                        </GridItem>
-                    ))}
+                                    <Text
+                                        textAlign="center"
+                                        fontSize={{ base: "1.5rem", sm: "2rem" }}
+                                        fontWeight="600"
+                                        mt="1rem"
+                                    >
+                                        {item?.name}
+                                    </Text>
+                                    <img
+                                        src={item?.sample_product?.image}
+                                        alt={item?.name}
+                                        className="h-[18rem]"
+                                    />
+                                    <Text
+                                        textAlign="center"
+                                        fontSize={{ base: "1.1rem", sm: "1.5rem" }}
+                                        fontWeight="600"
+                                        mt="1rem"
+                                    >
+                                        {item?.sample_product?.name}
+                                    </Text>
+                                </Flex>
+                            </GridItem>
+                        ))}
                 </Grid>
             </Box>
             <Seamless />

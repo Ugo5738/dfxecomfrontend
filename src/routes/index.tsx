@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Home, Login, Register, Cart, ProductDetail, Shop, Checkout, Error } from "./route";
 import { Suspense } from "react";
-import Loading from "../components/loading";
+import LoadingSpinner from "../components/loading";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Home />
             </Suspense>
         ),
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Login />
             </Suspense>
         ),
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Register />
             </Suspense>
         ),
@@ -34,16 +34,16 @@ const router = createBrowserRouter([
     {
         path: "/cart",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Cart />
             </Suspense>
         ),
         errorElement: <Error />,
     },
     {
-        path: "/product-detail",
+        path: "/product/:id",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <ProductDetail />
             </Suspense>
         ),
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
     {
         path: "/shop",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Shop />
             </Suspense>
         ),
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
     {
         path: "/checkout",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Checkout />
             </Suspense>
         ),
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
     {
         path: "*",
         element: (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingSpinner />}>
                 <Home />
             </Suspense>
         ),

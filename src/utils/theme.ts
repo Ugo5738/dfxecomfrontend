@@ -58,6 +58,8 @@ const styles = Object.freeze({
             color: colors.typography.dark,
             backgroundColor: "#fff",
             fontSize: "1.2rem",
+            fontFamily: "'Lato', sans-serif",
+            // fontFamily: "Roboto-Mono",
         },
         a: {
             color: colors.brand.dark,

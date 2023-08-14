@@ -2,7 +2,6 @@ import { object, string, ref, number, ObjectSchema } from "yup";
 import { isValidPhoneNumber, isPossiblePhoneNumber } from "react-phone-number-input";
 import { CheckoutType } from "./types";
 import { formatDateToMonthYear } from "./format";
-// import { useCreditCardValidator } from 'react-creditcard-validator';
 
 export const signUpSchema = object({
     first_name: string().trim().required("Last Name is required"),
@@ -33,7 +32,7 @@ export const loginSchema = object({
     email: string().trim().email("Must be a valid email").required("Email is required"),
     password: string()
         .trim()
-        .min(8, "Password must be a minimum of 8 characters")
+        // .min(8, "Password must be a minimum of 8 characters")
         .required("Password is required"),
 }).required();
 

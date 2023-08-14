@@ -5,6 +5,8 @@ import { ErrorToast } from "../utils/toast";
 interface ResponseType {
     detail: string;
     email: string;
+    code: string;
+    messages: Record<string, string>[];
 }
 
 const axios = Axios.create({
@@ -32,10 +34,18 @@ axios.interceptors.response.use(
     async (error: AxiosError<ResponseType>) => {
         if (error.response?.data?.detail) {
             ErrorToast(error.response.data.detail);
-            return;
+            if (error.response.data.detail === "Authentication credentials were not provided.") {
+                // sessionStorage.removeItem("dfx-token");
+                // window.location.href = "/login";
+            }
+            if (error.response.data.code === "token_not_valid") {
+                // sessionStorage.removeItem("dfx-token");
+                // window.location.href = "/login";
+            }
+            return null;
         } else if (error.response?.data?.email) {
             ErrorToast(error.response.data.email[0]);
-            return;
+            return null;
         } else {
             ErrorToast(error.message);
         }

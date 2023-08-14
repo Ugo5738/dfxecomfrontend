@@ -1,17 +1,11 @@
 import { isRouteErrorResponse, useNavigate, useRouteError } from "react-router-dom";
 import { useState } from "react";
-
-interface ErrorProps extends Error {
-    statusText: string;
-    data: string;
-    message: string;
-    status: number;
-}
+import { ErrorPropsType } from "../utils/types";
 
 const Error = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const error = useRouteError() as ErrorProps;
+    const error = useRouteError() as ErrorPropsType;
 
     if (isRouteErrorResponse(error)) {
         if (error.status === 404) {

@@ -22,10 +22,12 @@ import { BsCart3 } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { PiSignInLight } from "react-icons/pi";
 import { useState } from "react";
+// import { useGetUser } from "../services/auth";
 
 const MainNav = () => {
     const [searchInput, setSearchInput] = useState("");
     const [toggleSearch, setToggleSearch] = useState(false);
+    // const { data: user, error, isLoading, isSuccess } = useGetUser();
 
     return (
         <Box mx="auto" w={{ base: "98%", sm: "96%" }}>
@@ -116,38 +118,6 @@ const MainNav = () => {
                             </InputGroup>
                         </Flex>
                     </Slide>
-                    {/* {toggleSearch && (
-                        <Flex
-                            w="full"
-                            p="2rem"
-                            position="absolute"
-                            top="5rem"
-                            left="0"
-                            right="0"
-                            bg="bg.light"
-                            rounded="2xl"
-                            shadow="2xl"
-                            zIndex={1000}
-                        >
-                            <InputGroup>
-                                <Input
-                                    value={searchInput}
-                                    onChange={(e) => setSearchInput(e.target.value)}
-                                    placeholder="Search DFX"
-                                    _placeholder={{ fontsize: "1.25rem" }}
-                                    w="full"
-                                    rounded="2xl"
-                                    p="1.5rem"
-                                    color="brand.dark"
-                                    fontSize="1.5rem"
-                                    border="2px"
-                                />
-                                <InputRightElement pt=".8rem" pr=".5rem">
-                                    <CiSearch className="text-[#171923] h-8 w-8" />
-                                </InputRightElement>
-                            </InputGroup>
-                        </Flex>
-                    )} */}
                     <Popover placement="bottom">
                         <PopoverTrigger>
                             <Image

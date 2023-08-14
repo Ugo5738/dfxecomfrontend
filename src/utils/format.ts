@@ -5,3 +5,8 @@ export const formatDateToMonthYear = (dateString: string) => {
     if (!isValid(date)) return "";
     return format(date, "MM/yy");
 };
+
+export const removeEmpty = (obj: never) => {
+    Object.keys(obj).forEach((key) => obj[key] == null || (!obj[key] && delete obj[key]));
+    return obj;
+};

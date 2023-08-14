@@ -66,7 +66,7 @@ const DropdownNav = () => {
                                                 <Image
                                                     boxSize="2rem"
                                                     borderRadius="full"
-                                                    src={item.imgSrc}
+                                                    src={item.image}
                                                     alt={item.title}
                                                     mr="12px"
                                                 />
@@ -111,7 +111,7 @@ const DropdownNav = () => {
                                                 <Image
                                                     boxSize="2rem"
                                                     borderRadius="full"
-                                                    src={item.imgSrc}
+                                                    src={item.image}
                                                     alt={item.title}
                                                     mr="12px"
                                                 />
@@ -156,7 +156,7 @@ const DropdownNav = () => {
                                                 <Image
                                                     boxSize="2rem"
                                                     borderRadius="full"
-                                                    src={item.imgSrc}
+                                                    src={item.image}
                                                     alt={item.title}
                                                     mr="12px"
                                                 />
@@ -201,7 +201,7 @@ const DropdownNav = () => {
                                                 <Image
                                                     boxSize="2rem"
                                                     borderRadius="full"
-                                                    src={item.imgSrc}
+                                                    src={item.image}
                                                     alt={item.title}
                                                     mr="12px"
                                                 />
@@ -246,7 +246,7 @@ const DropdownNav = () => {
                                                 <Image
                                                     boxSize="2rem"
                                                     borderRadius="full"
-                                                    src={item.imgSrc}
+                                                    src={item.image}
                                                     alt={item.title}
                                                     mr="12px"
                                                 />
