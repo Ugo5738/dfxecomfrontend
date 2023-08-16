@@ -22,10 +22,10 @@ import { BsCart3 } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { PiSignInLight } from "react-icons/pi";
 import { useState } from "react";
+import { SearchProps } from "../utils/types";
 // import { useGetUser } from "../services/auth";
 
-const MainNav = () => {
-    const [searchInput, setSearchInput] = useState("");
+const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
     const [toggleSearch, setToggleSearch] = useState(false);
     // const { data: user, error, isLoading, isSuccess } = useGetUser();
 
@@ -52,8 +52,8 @@ const MainNav = () => {
                 <Flex grow="1" display={{ base: "none", md: "flex" }}>
                     <InputGroup>
                         <Input
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search DFX"
                             _placeholder={{ fontsize: "1.25rem" }}
                             w="full"
@@ -64,7 +64,7 @@ const MainNav = () => {
                             border="1px"
                         />
                         <InputRightElement pt=".8rem" pr=".5rem">
-                            <CiSearch className="text-[#171923] h-8 w-8" />
+                            <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
                         </InputRightElement>
                     </InputGroup>
                 </Flex>
@@ -101,8 +101,8 @@ const MainNav = () => {
                             />
                             <InputGroup>
                                 <Input
-                                    value={searchInput}
-                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
                                     placeholder="Search DFX"
                                     _placeholder={{ fontsize: "1.25rem" }}
                                     w="full"
@@ -113,7 +113,7 @@ const MainNav = () => {
                                     border="2px"
                                 />
                                 <InputRightElement pt=".8rem" pr=".5rem">
-                                    <CiSearch className="text-[#171923] h-8 w-8" />
+                                    <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
                                 </InputRightElement>
                             </InputGroup>
                         </Flex>

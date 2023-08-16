@@ -3,6 +3,7 @@ import axios from "./axios";
 import URLS from "./urls";
 import { ProductType, ShopCategoriesType } from "../utils/types";
 import { ParamsType } from "./../utils/types";
+import { removeEmpty } from "../utils/format";
 
 export const useGetTrendingInventory = () => {
     const { data, error, isLoading, isSuccess } = useQuery(["trending_inventory"], async () => {
@@ -14,11 +15,12 @@ export const useGetTrendingInventory = () => {
 };
 
 export const useGetProducts = (params?: ParamsType) => {
+    removeEmpty(params!);
     const { data, error, isLoading, isSuccess, isPreviousData } = useQuery(
         ["products", params],
         async () => {
             const res = await axios.get(URLS.PRODUCTS, { params });
-            return res.data as unknown as ProductType[];
+            return res.data as unknown as ProductType;
         },
         { keepPreviousData: true },
     );
@@ -27,6 +29,7 @@ export const useGetProducts = (params?: ParamsType) => {
 };
 
 export const useGetInventoryProducts = (params?: ParamsType) => {
+    removeEmpty(params!);
     const { data, error, isLoading, isSuccess, isPreviousData } = useQuery(
         ["products_inventory", params],
         async () => {

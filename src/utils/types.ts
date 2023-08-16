@@ -83,7 +83,7 @@ export interface ParamsType {
     attribute?: string;
     price_min?: string;
     price_max?: string;
-    condition: ("new" | "used")[];
+    condition?: ("new" | "used")[];
     page?: number;
     page_size?: number;
 }
@@ -99,4 +99,9 @@ export interface ErrorPropsType extends Error {
     data: string;
     message: string;
     status: number;
+}
+
+export interface SearchProps {
+    searchTerm: string;
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }

@@ -9,6 +9,7 @@ import ScrollNav from "../components/scrollNav";
 
 const Cart = () => {
     const navigation = useNavigation();
+    const [searchTerm, setSearchTerm] = useState("");
     const [carts, setCarts] = useState(cartsItems.nodes);
     const subTotal = carts.reduce((acc, curr) => acc + Number(curr.price), 0);
     const shippingFee = Number(cartsItems.shippingFee) || 0;
@@ -26,7 +27,7 @@ const Cart = () => {
 
     return (
         <Box>
-            <MainNav />
+            <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <ScrollNav />
             <Box className="mx-auto w-[98%]">
                 <Text textAlign="right" fontWeight="600" fontSize="2.25rem" py="1rem">

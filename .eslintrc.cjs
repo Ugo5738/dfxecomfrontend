@@ -34,6 +34,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-member-access": "off",
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-implicit-any': 'off',
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
     "prettier/prettier": "warn",
     "no-console": "warn",
   },

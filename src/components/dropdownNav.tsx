@@ -61,7 +61,7 @@ const DropdownNav = () => {
                                                 key={item.id}
                                                 minH="48px"
                                                 as={Link}
-                                                to={`/${item.title}`}
+                                                to={`/shop/${item.title}`}
                                             >
                                                 <Image
                                                     boxSize="2rem"
@@ -106,7 +106,7 @@ const DropdownNav = () => {
                                                 key={item.id}
                                                 minH="48px"
                                                 as={Link}
-                                                to={`/${item.title}`}
+                                                to={`/shop/${item.title}`}
                                             >
                                                 <Image
                                                     boxSize="2rem"
@@ -151,7 +151,7 @@ const DropdownNav = () => {
                                                 key={item.id}
                                                 minH="48px"
                                                 as={Link}
-                                                to={`/${item.title}`}
+                                                to={`/shop/${item.title}`}
                                             >
                                                 <Image
                                                     boxSize="2rem"
@@ -196,7 +196,7 @@ const DropdownNav = () => {
                                                 key={item.id}
                                                 minH="48px"
                                                 as={Link}
-                                                to={`/${item.title}`}
+                                                to={`/shop/${item.title}`}
                                             >
                                                 <Image
                                                     boxSize="2rem"
@@ -241,7 +241,7 @@ const DropdownNav = () => {
                                                 key={item.id}
                                                 minH="48px"
                                                 as={Link}
-                                                to={`/${item.title}`}
+                                                to={`/shop/${item.title}`}
                                             >
                                                 <Image
                                                     boxSize="2rem"

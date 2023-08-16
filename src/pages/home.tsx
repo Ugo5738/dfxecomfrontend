@@ -14,7 +14,8 @@ import Seamless from "../components/seamless";
 import { useGetTrendingInventory, useGetInventoryProducts } from "../services/products";
 import LoadingSpinner from "../components/loading";
 import { LegacyRef, useEffect, useRef, useState } from "react";
-import { ParentRefType } from "../utils/types";
+import { ErrorPropsType, ParentRefType } from "../utils/types";
+import Error404 from "../components/error";
 
 const Home = () => {
     const {
@@ -31,6 +32,7 @@ const Home = () => {
         isSuccess: inventoryProductsSuccess,
     } = useGetInventoryProducts();
 
+    const [searchTerm, setSearchTerm] = useState("");
     const [scrollDuration, setScrollDuration] = useState(30);
     const parentRef = useRef<ParentRefType>(null);
 
@@ -54,11 +56,11 @@ const Home = () => {
 
     if (trendingInventoryLoading || inventoryProductsLoading) return <LoadingSpinner />;
     if (trendingInventoryError || inventoryProductsError || !inventoryProducts?.results)
-        return <div>error</div>;
+        return <Error404 error={trendingInventoryError as ErrorPropsType} />;
 
     return (
         <Box>
-            <Nav />
+            <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <Box bg="bg.main" py={{ base: "3rem", sm: "5rem" }} color="typography.dark">
                 <Swiper
                     modules={[Pagination, A11y, Autoplay, Keyboard]}
@@ -85,7 +87,7 @@ const Home = () => {
                                     flexDir="column"
                                     gap="1rem"
                                     alignItems={{ base: "center", md: "flex-start" }}
-                                    mb={{ base: "0", md: "10rem" }}
+                                    mb={{ base: "5rem", md: "10rem" }}
                                     order={{ base: 2, md: 1 }}
                                     pl={{ base: "0", md: "3rem" }}
                                 >

@@ -1,4 +1,5 @@
 import { format, isValid, parseISO } from "date-fns";
+import { ParamsType } from "./types";
 
 export const formatDateToMonthYear = (dateString: string) => {
     const date = parseISO(dateString);
@@ -6,7 +7,7 @@ export const formatDateToMonthYear = (dateString: string) => {
     return format(date, "MM/yy");
 };
 
-export const removeEmpty = (obj: never) => {
+export const removeEmpty = (obj: ParamsType) => {
     Object.keys(obj).forEach((key) => obj[key] == null || (!obj[key] && delete obj[key]));
     return obj;
 };

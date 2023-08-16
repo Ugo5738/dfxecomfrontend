@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 interface ButtonType extends ButtonProps {
     children: ReactNode;
     type?: "button" | "submit" | "reset";
-    variant?: "primary" | "secondary" | "tertiary" | "outline";
+    variant?: "primary" | "secondary" | "tertiary" | "outline" | "dark";
     width?: string;
     height?: string;
     loading?: boolean;
@@ -33,7 +33,7 @@ const AppButton = ({
     const { colors } = customTheme;
     return (
         <Button
-            as={Link}
+            as={to ? Link : undefined}
             to={to}
             type={type}
             variant={variant}
@@ -52,6 +52,8 @@ const AppButton = ({
                     ? colors.brand.main
                     : variant === "tertiary"
                     ? colors.brand.light
+                    : variant === "dark"
+                    ? colors.bg.blue
                     : "transparent"
             }
             color={
@@ -61,6 +63,8 @@ const AppButton = ({
                     ? "white"
                     : variant === "tertiary"
                     ? colors.typography.dark
+                    : variant === "dark"
+                    ? "white"
                     : colors.typography.dark
             }
             _hover={{

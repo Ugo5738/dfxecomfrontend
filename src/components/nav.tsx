@@ -2,8 +2,9 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./navBar";
 import MainNav from "./mainNav";
 import ScrollNav from "./scrollNav";
+import { SearchProps } from "../utils/types";
 
-const Nav = () => {
+const Nav = ({ searchTerm, setSearchTerm }: SearchProps) => {
     return (
         <Grid
             templateAreas={{
@@ -21,7 +22,7 @@ const Nav = () => {
             w="100%"
         >
             <GridItem area={"mainNav"}>
-                <MainNav />
+                <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </GridItem>
             <GridItem area={"scrollNav"} alignSelf="baseline" w="100%">
                 <ScrollNav />

@@ -11,6 +11,7 @@ import { CheckoutType, ColorObject } from "./../utils/types";
 const Checkout = () => {
     const color = useTheme().colors as ColorObject;
     const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
     const [isChecked, setIsChecked] = useState(false);
     const onCheckout = (data: CheckoutType) => {
         setLoading(true);
@@ -22,7 +23,7 @@ const Checkout = () => {
 
     return (
         <Box>
-            <MainNav />
+            <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <ScrollNav />
             <Center py="5rem">
                 <Flex
