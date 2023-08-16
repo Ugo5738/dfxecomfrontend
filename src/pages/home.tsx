@@ -182,8 +182,7 @@ const Home = () => {
                             inventoryProducts?.results?.map((item) => (
                                 <Box
                                     key={item.sku}
-                                    className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
-                                    boxShadow="lg"
+                                    className="hover:scale-105 w-full pb-2 pt-4"
                                     minW="25rem"
                                     onMouseEnter={() => setScrollDuration(10000)}
                                     onMouseLeave={() => setScrollDuration(30)}
@@ -193,50 +192,52 @@ const Home = () => {
                                         gap="3rem"
                                         justifyContent="center"
                                         alignItems="center"
+                                        boxShadow="lg"
+                                        className="w-full bg-white p-8 rounded-3xl"
                                         as={Link}
                                         to={`/product/${item.product_name}`}
                                     >
-                                        <Flex
-                                            flexDir="column"
-                                            alignSelf="flex-start"
-                                            alignItems="flex-start"
+                                        <Text
+                                            fontSize="1.2rem"
+                                            fontWeight="600"
+                                            color="brand.orange"
+                                            justifySelf="flex-end"
+                                            ml="auto"
+                                            textTransform="uppercase"
                                         >
-                                            <Text
-                                                fontSize="1.2rem"
-                                                fontWeight="600"
-                                                color="brand.orange"
-                                                textTransform="capitalize"
-                                            >
-                                                {item.condition}
-                                            </Text>
-                                            <Text fontSize="1.5rem" fontWeight="600">
-                                                {item.product_name}
-                                            </Text>
-                                            <Flex alignItems="baseline">
-                                                <Text
-                                                    color="typography.dark"
-                                                    fontSize="1.35rem"
-                                                    fontWeight="600"
-                                                >
-                                                    {item.sale_price}
-                                                </Text>
-                                                {item.store_price && (
-                                                    <Text
-                                                        color="typography.red"
-                                                        fontSize="1.2rem"
-                                                        px="2"
-                                                        textDecoration="line-through"
-                                                    >
-                                                        {item.store_price}
-                                                    </Text>
-                                                )}
-                                            </Flex>
-                                        </Flex>
+                                            {item.condition}
+                                        </Text>
                                         <img
                                             src={item.default_image}
                                             alt={item.product_name}
                                             className="h-[27rem]"
                                         />
+                                    </Flex>
+                                    <Flex
+                                        flexDir="column"
+                                        alignSelf="flex-start"
+                                        alignItems="flex-start"
+                                        mt="2rem"
+                                    >
+                                        <Text fontSize="1.75rem">{item.product_name}</Text>
+                                        <Flex alignItems="baseline" flexDir="column">
+                                            <Text
+                                                color="typography.dark"
+                                                fontSize="2rem"
+                                                fontWeight="600"
+                                            >
+                                                {`$${item.sale_price}`}
+                                            </Text>
+                                            {item.store_price && (
+                                                <Text
+                                                    color="typography.ash"
+                                                    fontSize="1.5rem"
+                                                    textDecoration="line-through"
+                                                >
+                                                    {`$${item.store_price}`}
+                                                </Text>
+                                            )}
+                                        </Flex>
                                     </Flex>
                                 </Box>
                             ))}
@@ -281,14 +282,6 @@ const Home = () => {
                                     as={Link}
                                     to={`/shop/${item?.name}`}
                                 >
-                                    <Text
-                                        textAlign="center"
-                                        fontSize={{ base: "1.5rem", sm: "2rem" }}
-                                        fontWeight="600"
-                                        mt="1rem"
-                                    >
-                                        {item?.name}
-                                    </Text>
                                     <img
                                         src={item?.sample_product?.image}
                                         alt={item?.name}
@@ -296,11 +289,11 @@ const Home = () => {
                                     />
                                     <Text
                                         textAlign="center"
-                                        fontSize={{ base: "1.1rem", sm: "1.5rem" }}
+                                        fontSize={{ base: "1.5rem", sm: "2rem" }}
                                         fontWeight="600"
                                         mt="1rem"
                                     >
-                                        {item?.sample_product?.name}
+                                        {item?.name}
                                     </Text>
                                 </Flex>
                             </GridItem>

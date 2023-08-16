@@ -8,6 +8,7 @@ export const formatDateToMonthYear = (dateString: string) => {
 };
 
 export const removeEmpty = (obj: ParamsType) => {
+    if (obj == null) return {};
     Object.keys(obj).forEach((key) => obj[key] == null || (!obj[key] && delete obj[key]));
     return obj;
 };

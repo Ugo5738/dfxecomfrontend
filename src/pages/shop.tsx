@@ -403,7 +403,7 @@ const Shop = () => {
                                 <Flex
                                     key={item.sku}
                                     flexDir="column"
-                                    className="hover:scale-105 w-full bg-white p-4 sm:p-8 rounded-3xl"
+                                    className="hover:scale-105 w-full bg-white py-8 px-4 sm:px-8 rounded-3xl"
                                     boxShadow="lg"
                                     justifyContent="space-between"
                                 >

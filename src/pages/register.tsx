@@ -59,7 +59,7 @@ const Register = () => {
                     flexDir="column"
                 >
                     <Text fontSize="2rem" fontWeight="bold" mb="3rem">
-                        Create Your Account
+                        Welcome to DFX Gadgets Hub
                     </Text>
                     <form onSubmit={handleFormSubmit}>
                         <Flex
@@ -214,6 +214,17 @@ const Register = () => {
                             </Button>
                         </Flex>
                     </Flex>
+                    <Text textAlign="center" mt="2rem">
+                        For any further assistance, please visit our{" "}
+                        <Link to="/help" className="text-[#3E3FCD]">
+                            help center
+                        </Link>{" "}
+                        or{" "}
+                        <Link to="/support" className="text-[#3E3FCD]">
+                            contact our CS
+                        </Link>{" "}
+                        team
+                    </Text>
                 </Flex>
             </Center>
         </Box>

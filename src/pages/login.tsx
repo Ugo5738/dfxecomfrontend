@@ -50,7 +50,7 @@ const Login = () => {
                     flexDir="column"
                 >
                     <Text fontSize="2rem" fontWeight="bold" mb="3rem">
-                        Welcome Back
+                        Welcome Back to DFX Gadgets Hub
                     </Text>
                     <form onSubmit={handleFormSubmit}>
                         <Flex
@@ -78,12 +78,13 @@ const Login = () => {
                                 size="md"
                             />
                             <Button
-                                color={"brand.orange"}
+                                color={"typography.red"}
                                 alignSelf={"start"}
                                 mb="1rem"
                                 bg="white"
                                 as={Link}
                                 to="/forgot-password"
+                                fontSize="1.25rem"
                             >
                                 Forgot Password?
                             </Button>
@@ -131,6 +132,17 @@ const Login = () => {
                             </Button>
                         </Flex>
                     </Flex>
+                    <Text textAlign="center" mt="2rem">
+                        For any further assistance, please visit our{" "}
+                        <Link to="/help" className="text-[#3E3FCD]">
+                            help center
+                        </Link>{" "}
+                        or{" "}
+                        <Link to="/support" className="text-[#3E3FCD]">
+                            contact our CS
+                        </Link>{" "}
+                        team
+                    </Text>
                 </Flex>
             </Center>
         </Box>
