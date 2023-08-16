@@ -8,9 +8,9 @@ interface Error404Props {
 const Error404 = ({ error }: Error404Props) => {
     const navigate = useNavigate();
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold my-8 text-black">Something Went Wrong</h1>
-            <h1 className="text-3xl font-bold mb-4 text-black">
+        <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-8">
+            <h1 className="text-3xl font-bold my-8 text-black text-center">Something Went Wrong</h1>
+            <h1 className="text-3xl font-bold mb-4 text-black text-center">
                 {error && (error?.statusText || error?.data || error?.message)}
             </h1>
             <button

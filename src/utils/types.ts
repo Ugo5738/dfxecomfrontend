@@ -99,6 +99,7 @@ export interface ErrorPropsType extends Error {
     data: string;
     message: string;
     status: number;
+    error?: Record<string, string>;
 }
 
 export interface SearchProps {

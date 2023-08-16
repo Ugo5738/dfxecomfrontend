@@ -55,7 +55,12 @@ const Home = () => {
     }, [scrollDuration]);
 
     if (trendingInventoryLoading || inventoryProductsLoading) return <LoadingSpinner />;
-    if (trendingInventoryError || inventoryProductsError || !inventoryProducts?.results)
+    if (
+        trendingInventoryError ||
+        inventoryProductsError ||
+        !inventoryProducts?.results ||
+        !trendingInventory
+    )
         return <Error404 error={trendingInventoryError as ErrorPropsType} />;
 
     return (
@@ -173,6 +178,7 @@ const Home = () => {
                         overflow="hidden"
                     >
                         {inventoryProductsSuccess &&
+                            inventoryProducts?.results.length > 0 &&
                             inventoryProducts?.results?.map((item) => (
                                 <Box
                                     key={item.sku}
@@ -258,6 +264,7 @@ const Home = () => {
                     flexWrap={{ base: "wrap", md: "nowrap" }}
                 >
                     {trendingInventorySuccess &&
+                        trendingInventory.length > 0 &&
                         trendingInventory?.map((item) => (
                             <GridItem
                                 key={item?.id}
