@@ -32,6 +32,9 @@ axios.interceptors.request.use(axiosConfigurator as never);
 axios.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<ResponseType>) => {
+        if (error.code === "ERR_NETWORK") {
+            return Promise.reject(new Error("You are not connected to the internet."));
+        }
         if (error.response?.data?.detail) {
             ErrorToast(error.response.data.detail);
             if (error.response.data.detail === "Authentication credentials were not provided.") {

@@ -42,7 +42,7 @@ const Home = () => {
         const maxScroll = parentRef?.current?.scrollWidth - parentRef?.current?.clientWidth;
 
         const scroll = () => {
-            scrollAmount++;
+            scrollAmount += 0.8;
             if (scrollAmount > maxScroll) {
                 scrollAmount = 0;
             }
@@ -160,8 +160,8 @@ const Home = () => {
                     ))}
                 </Swiper>
             </Box>
-            <Box bg="bg.light">
-                <Box py="5rem" mx="auto" w={{ base: "90%", md: "80%" }} color="typography.dark">
+            <Box bg="bg.light" overflow="hidden">
+                <Box py="5rem" mx="auto" w={{ base: "90%", md: "88%" }} color="typography.dark">
                     <Text
                         textAlign="center"
                         color="typography.dark"
@@ -172,18 +172,20 @@ const Home = () => {
                     </Text>
                     <Flex
                         justifyContent="center"
-                        gap="3rem"
+                        alignItems="center"
+                        gap="2rem"
                         mt="4rem"
-                        ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
+                        pl={{ base: "115rem", sm: "140rem" }}
                         overflow="hidden"
+                        ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
                     >
                         {inventoryProductsSuccess &&
-                            inventoryProducts?.results.length > 0 &&
+                            inventoryProducts?.results?.length > 0 &&
                             inventoryProducts?.results?.map((item) => (
                                 <Box
                                     key={item.sku}
                                     className="hover:scale-105 w-full pb-2 pt-4"
-                                    minW="25rem"
+                                    minW={{ base: "20rem", sm: "25rem" }}
                                     onMouseEnter={() => setScrollDuration(10000)}
                                     onMouseLeave={() => setScrollDuration(30)}
                                 >
@@ -265,7 +267,7 @@ const Home = () => {
                     flexWrap={{ base: "wrap", md: "nowrap" }}
                 >
                     {trendingInventorySuccess &&
-                        trendingInventory.length > 0 &&
+                        trendingInventory?.length > 0 &&
                         trendingInventory?.map((item) => (
                             <GridItem
                                 key={item?.id}

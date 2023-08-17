@@ -78,7 +78,7 @@ const Shop = () => {
     }, [pageCount, setPage]);
 
     useEffect(() => {
-        if (productsInventory && productsInventory?.results.length > 0) {
+        if (productsInventory && productsInventory?.results?.length > 0) {
             setProductItems(productsInventory?.results);
         }
     }, [productsInventory]);
