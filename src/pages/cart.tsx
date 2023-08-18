@@ -1,4 +1,4 @@
-import { Flex, Text, Box, Image, Select } from "@chakra-ui/react";
+import { Flex, Text, Box, Image, Select, Button } from "@chakra-ui/react";
 import Footer from "../components/footer";
 import MainNav from "../components/mainNav";
 import { cartsItems } from "../utils/dummyData";
@@ -6,6 +6,8 @@ import AppButton from "../components/button";
 import { useNavigation } from "react-router-dom";
 import { useState } from "react";
 import ScrollNav from "../components/scrollNav";
+import { MdDelete } from "react-icons/md";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const Cart = () => {
     const navigation = useNavigation();
@@ -30,26 +32,34 @@ const Cart = () => {
             <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <ScrollNav />
             <Box className="mx-auto w-[98%]">
-                <Text textAlign="right" fontWeight="600" fontSize="2.25rem" py="1rem">
-                    Your Cart
+                <Text
+                    textAlign={{ base: "left", md: "right" }}
+                    fontWeight="600"
+                    fontSize="2.25rem"
+                    py="1rem"
+                >
+                    Your Cart ({carts.length})
                 </Text>
                 <Flex
                     alignItems="stretch"
-                    gap="3rem"
+                    gap="2rem"
                     mb="3rem"
                     pb="3rem"
-                    bg="white"
                     borderY="2px"
                     borderBottomColor="#88888880"
+                    bg="bg.light"
                 >
                     <Flex
                         boxShadow="2xl"
                         borderRadius="1rem"
                         p="2rem"
+                        ml="2rem"
                         my="2rem"
                         flexDir="column"
                         gap="5rem"
                         align="stretch"
+                        bg="white"
+                        display={{ base: "none", md: "flex" }}
                     >
                         <Flex flexDir="column" flexGrow="1">
                             <Box
@@ -80,7 +90,7 @@ const Cart = () => {
                                             />
                                             <Text fontSize="1.5rem">
                                                 {cart.name}
-                                                <span className="ml-2">{`(${1})`}</span>
+                                                <span className="ml-2">{`(${cart.quantity})`}</span>
                                             </Text>
                                         </Flex>
                                         <Text fontSize="1.5rem" justifySelf="flex-end">
@@ -102,12 +112,13 @@ const Cart = () => {
                                 fontSize="1.5rem"
                             >
                                 <Text>Sub Total</Text>
-                                <Text>{`$${subTotal}`}</Text>
+                                <Text>{`$${subTotal.toFixed(2)}`}</Text>
                             </Flex>
                             <AppButton
                                 type="button"
                                 variant="primary"
                                 width="100%"
+                                bRadius=".5rem"
                                 isLoading={navigation.state === "loading"}
                                 loadingText="Proceeding to Checkout"
                                 to="/checkout"
@@ -117,45 +128,85 @@ const Cart = () => {
                         </Flex>
                     </Flex>
 
-                    <Flex flexDir="column" gap="2rem" flexGrow="1">
+                    <Flex flexDir="column" gap="1rem" flexGrow="1" overflowX="hidden">
                         {carts.map((cart) => (
                             <Flex
                                 key={cart.id}
                                 borderBottom="2px"
                                 borderBottomColor="#88888880"
-                                p="2rem"
-                                alignItems="center"
+                                py="2rem"
+                                px={{ base: "1rem", lg: "2rem" }}
                                 justifyContent="space-between"
                                 gap="2rem"
+                                flexDir={{ base: "column", md: "row" }}
                             >
-                                <Flex alignItems="center" gap="3rem" flexGrow="1">
-                                    <Image height="12rem" src={cart.image} alt={cart.name} />
-                                    <Text fontSize="1.5rem">{cart.name}</Text>
-                                </Flex>
-                                <Flex>
-                                    <Select
-                                        placeholder="Quantity"
-                                        size="lg"
-                                        fontSize="1.5rem"
-                                        value={cart.quantity}
-                                        onChange={(e) => {
-                                            handleQuantityChange(
-                                                cart.id,
-                                                Number(cart.price) * Number(e.target.value),
-                                                Number(e.target.value),
-                                            );
-                                        }}
+                                <Flex alignItems="center" justifyContent="space-between" gap="2rem">
+                                    <Flex
+                                        alignItems="center"
+                                        w={{ base: "10%", xs: "15%" }}
+                                        minW="7rem"
                                     >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </Select>
+                                        <Image height="12rem" src={cart.image} alt={cart.name} />
+                                    </Flex>
+                                    <Flex flexDir="column" gap="1rem" flexGrow="1">
+                                        <Text
+                                            fontSize={{ base: "1.35rem", sm: "1.5rem", lg: "2rem" }}
+                                            fontWeight="bold"
+                                        >
+                                            {cart.name}
+                                        </Text>
+                                        <Text
+                                            fontSize={{ base: "1.1rem", sm: "1.4rem" }}
+                                            fontWeight="bold"
+                                        >
+                                            Color: <span className="font-normal">{cart.color}</span>
+                                        </Text>
+                                        {cart.in_stock ? (
+                                            <Text fontSize="1.2rem">In Stock</Text>
+                                        ) : (
+                                            <Text
+                                                fontSize="1.2rem"
+                                                textDecoration="line-through"
+                                                color="brand.orange"
+                                            >
+                                                Out Of Stock
+                                            </Text>
+                                        )}
+                                        <Text
+                                            fontSize={{ base: "1.5rem", sm: "2rem" }}
+                                            fontWeight="500"
+                                            display={{ base: "block", md: "none" }}
+                                        >
+                                            {`$${cart.price}`}
+                                        </Text>
+                                    </Flex>
+                                    <Flex display={{ base: "none", md: "flex" }}>
+                                        <Select
+                                            placeholder="Quantity"
+                                            size="lg"
+                                            fontSize="1.5rem"
+                                            fontWeight="700"
+                                            value={cart.quantity}
+                                            onChange={(e) => {
+                                                handleQuantityChange(
+                                                    cart.id,
+                                                    Number(cart.price) * Number(e.target.value),
+                                                    Number(e.target.value),
+                                                );
+                                            }}
+                                        >
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </Select>
+                                    </Flex>
                                 </Flex>
                                 <Flex
+                                    display={{ base: "none", md: "flex" }}
                                     flexDir="column"
                                     gap="2rem"
                                     alignItems="center"
-                                    ml={{ base: "10rem" }}
+                                    ml={{ lg: "5%" }}
                                 >
                                     <Text fontSize="2.25rem" fontWeight="700">
                                         {`$${cart.price}`}
@@ -165,7 +216,7 @@ const Cart = () => {
                                         variant="primary"
                                         borderRadius=".3rem"
                                         height="3.5rem"
-                                        w={{ base: "12rem" }}
+                                        w="12rem"
                                         isLoading={false}
                                         loadingText="Proceeding to Checkout"
                                         onClick={() =>
@@ -174,6 +225,70 @@ const Cart = () => {
                                     >
                                         Remove Item
                                     </AppButton>
+                                </Flex>
+                                <Flex
+                                    display={{ base: "flex", md: "none" }}
+                                    justifyContent="space-between"
+                                    pr=".5rem"
+                                >
+                                    <Button
+                                        variant="ghost"
+                                        leftIcon={<MdDelete className="text-[#DF6A12] w-12 h-12" />}
+                                        onClick={() =>
+                                            setCarts(carts.filter((c) => c.id !== cart.id))
+                                        }
+                                        w="2rem"
+                                    ></Button>
+                                    <Flex bg="#ADADD3" borderRadius=".5rem" alignItems="center">
+                                        <Button
+                                            leftIcon={
+                                                <AiOutlineMinus className="text-4xl font-black" />
+                                            }
+                                            variant="ghost"
+                                            bg="#EBEBF5"
+                                            pr="0"
+                                            pl=".6rem"
+                                            py="1.5rem"
+                                            borderEndRadius=".5rem"
+                                            isDisabled={cart.quantity === 1}
+                                            onClick={() => {
+                                                handleQuantityChange(
+                                                    cart.id,
+                                                    (Number(cart.price) / cart.quantity) *
+                                                        (cart.quantity - 1),
+                                                    cart.quantity - 1,
+                                                );
+                                            }}
+                                        ></Button>
+                                        <Text
+                                            mx="1rem"
+                                            flexGrow="1"
+                                            fontSize={{ base: "1.5rem", sm: "2rem" }}
+                                            fontWeight="700"
+                                            textAlign="center"
+                                        >
+                                            {cart.quantity}
+                                        </Text>
+                                        <Button
+                                            leftIcon={
+                                                <AiOutlinePlus className="text-4xl text-white font-black" />
+                                            }
+                                            variant="ghost"
+                                            bg="#3E3FCD"
+                                            pr="0"
+                                            pl=".6rem"
+                                            py="1.5rem"
+                                            borderStartRadius=".5rem"
+                                            onClick={() => {
+                                                handleQuantityChange(
+                                                    cart.id,
+                                                    (Number(cart.price) / cart.quantity) *
+                                                        (cart.quantity + 1),
+                                                    cart.quantity + 1,
+                                                );
+                                            }}
+                                        ></Button>
+                                    </Flex>
                                 </Flex>
                             </Flex>
                         ))}
@@ -184,12 +299,11 @@ const Cart = () => {
                             borderColor="#88888880"
                             fontSize="1.5rem"
                             flexDir="column"
-                            pl={{ base: "10%", sm: "20%" }}
                             px="2rem"
                         >
                             <Flex alignItems="center" justifyContent="space-between" gap="3rem">
                                 <Text>Sub Total</Text>
-                                <Text>{`$${subTotal}`}</Text>
+                                <Text>{`$${subTotal.toFixed(2)}`}</Text>
                             </Flex>
                             <Flex alignItems="center" justifyContent="space-between" gap="3rem">
                                 <Text>Shipping Fee</Text>
@@ -208,7 +322,20 @@ const Cart = () => {
                             px="2rem"
                         >
                             <Text>Total</Text>
-                            <Text>{`$${total}`}</Text>
+                            <Text>{`$${total.toFixed(2)}`}</Text>
+                        </Flex>
+                        <Flex mx="auto" w="80%" mt="3rem" display={{ base: "flex", md: "none" }}>
+                            <AppButton
+                                type="button"
+                                variant="primary"
+                                width="100%"
+                                bRadius=".5rem"
+                                isLoading={navigation.state === "loading"}
+                                loadingText="Proceeding to Checkout"
+                                to="/checkout"
+                            >
+                                Proceed to Checkout
+                            </AppButton>
                         </Flex>
                     </Flex>
                 </Flex>

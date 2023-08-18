@@ -436,14 +436,14 @@ const Shop = () => {
                                             </Text>
                                         )}
                                     </Flex>
-                                    <AppButton
+                                    {/* <AppButton
                                         variant="primary"
                                         borderRadius=".3rem"
                                         height="3rem"
                                         loadingText="Adding to cart"
                                     >
                                         ADD TO CART
-                                    </AppButton>
+                                    </AppButton> */}
                                 </Flex>
                             ))}
                     </Grid>

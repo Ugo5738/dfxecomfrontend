@@ -1,4 +1,4 @@
-import { Flex, Text, Box, Grid, GridItem, Image } from "@chakra-ui/react";
+import { Flex, Text, Box, Grid, GridItem } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
 import { homeCarousel } from "../utils/staticData";
@@ -85,16 +85,18 @@ const Home = () => {
                     {homeCarousel.map((item) => (
                         <SwiperSlide key={item.id}>
                             <Flex
-                                // justifyContent="space-between"
-                                flexDir={{ base: "column", md: "row" }}
+                                backgroundImage={`url(${item.image})`}
+                                backgroundSize="100% 100%"
+                                backgroundRepeat="no-repeat"
+                                backgroundPosition="center"
                             >
                                 <Flex
                                     flexDir="column"
                                     gap="1rem"
-                                    alignItems={{ base: "center", md: "flex-start" }}
                                     mb={{ base: "5rem", md: "10rem" }}
-                                    order={{ base: 2, md: 1 }}
-                                    pl={{ base: "0", md: "3rem" }}
+                                    px="3rem"
+                                    w="full"
+                                    minH="15rem"
                                 >
                                     <Text
                                         color="brand.orange"
@@ -132,33 +134,23 @@ const Home = () => {
                                     <AppButton
                                         variant="primary"
                                         colorScheme="brand"
-                                        w="12rem"
-                                        mt={{ base: "2rem", md: "10rem" }}
+                                        w={{ base: "100%", md: "12rem" }}
+                                        mt="10rem"
+                                        display={{ base: "none", md: "flex" }}
                                         to="/shop"
                                     >
                                         Shop Now
                                     </AppButton>
                                 </Flex>
-                                <Flex
-                                    order={{ base: 1, md: 2 }}
-                                    justifyContent="center"
-                                    alignItems="center"
-                                >
-                                    <Image
-                                        src={item.image}
-                                        alt={item.title}
-                                        w="full"
-                                        h="full"
-                                        minW={{ base: "15rem", sm: "25rem", md: "35rem" }}
-                                        maxH={{ base: "20rem", sm: "full", md: "full" }}
-                                        objectFit="contain"
-                                        zIndex="10"
-                                    />
-                                </Flex>
                             </Flex>
                         </SwiperSlide>
                     ))}
                 </Swiper>
+                <Flex mt="3rem" mx="auto" w="90%0" display={{ base: "flex", md: "none" }} px="10%">
+                    <AppButton variant="primary" colorScheme="brand" w="100%" to="/shop">
+                        Shop Now
+                    </AppButton>
+                </Flex>
             </Box>
             <Box bg="bg.light" overflow="hidden">
                 <Box py="5rem" mx="auto" w={{ base: "90%", md: "88%" }} color="typography.dark">

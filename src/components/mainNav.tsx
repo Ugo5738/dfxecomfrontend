@@ -30,11 +30,12 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
     // const { data: user, error, isLoading, isSuccess } = useGetUser();
 
     return (
-        <Box mx="auto" w={{ base: "98%", sm: "96%" }}>
+        <Box mx="auto" w={{ base: "100%", sm: "96%" }}>
             <Flex
                 justifyContent="space-between"
                 alignItems="center"
-                p="1rem"
+                py="1rem"
+                px=".5rem"
                 color="white"
                 gap={{ base: "1rem", xs: "3rem" }}
                 w="full"
@@ -78,10 +79,11 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     <Box
                         minW={11}
                         minH={10}
+                        ml="-1rem"
                         onClick={() => setToggleSearch(!toggleSearch)}
                         cursor="pointer"
                     >
-                        <CiSearch className="text-[#171923] h-10 w-12" />
+                        <CiSearch className="text-[#171923] h-10 w-10" />
                     </Box>
                     <Slide direction="top" in={toggleSearch} style={{ zIndex: 20 }} unmountOnExit>
                         <Flex
@@ -177,7 +179,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         Sign In
                     </AppButton>
                 </Flex>
-                <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/checkout">
+                <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
                     <BsCart3 className="text-[#171923] h-12 w-12" />
                     <Text
                         rounded="full"
