@@ -36,6 +36,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 alignItems="center"
                 py="1rem"
                 px=".5rem"
+                mt={{ base: ".5rem", md: "0" }}
                 color="white"
                 gap={{ base: "1rem", xs: "3rem" }}
                 w="full"
@@ -79,7 +80,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     <Box
                         minW={11}
                         minH={10}
-                        ml="-1rem"
+                        ml="-2rem"
                         onClick={() => setToggleSearch(!toggleSearch)}
                         cursor="pointer"
                     >

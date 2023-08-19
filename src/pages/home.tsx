@@ -42,7 +42,7 @@ const Home = () => {
         const maxScroll = parentRef?.current?.scrollWidth - parentRef?.current?.clientWidth;
 
         const scroll = () => {
-            scrollAmount += 0.8;
+            scrollAmount += 2;
             if (scrollAmount > maxScroll) {
                 scrollAmount = 0;
             }
@@ -265,8 +265,6 @@ const Home = () => {
                                 key={item?.id}
                                 className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
                                 boxShadow="lg"
-                                // maxW="25rem"
-                                // w="full"
                             >
                                 <Flex
                                     flexDir="column"

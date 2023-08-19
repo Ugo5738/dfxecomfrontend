@@ -255,7 +255,7 @@ const Cart = () => {
                                                 handleQuantityChange(
                                                     cart.id,
                                                     (Number(cart.price) / cart.quantity) *
-                                                        (cart.quantity - 1),
+                                                    (cart.quantity - 1),
                                                     cart.quantity - 1,
                                                 );
                                             }}
@@ -278,12 +278,14 @@ const Cart = () => {
                                             pr="0"
                                             pl=".6rem"
                                             py="1.5rem"
+                                            colorScheme="purple"
+                                            _hover={{ bg: "#4E3FCD" }}
                                             borderStartRadius=".5rem"
                                             onClick={() => {
                                                 handleQuantityChange(
                                                     cart.id,
                                                     (Number(cart.price) / cart.quantity) *
-                                                        (cart.quantity + 1),
+                                                    (cart.quantity + 1),
                                                     cart.quantity + 1,
                                                 );
                                             }}
