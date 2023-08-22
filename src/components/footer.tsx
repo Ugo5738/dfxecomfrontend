@@ -22,11 +22,10 @@ const Footer = () => {
                 gap="3rem"
                 ml={{ base: 0, sm: "20rem" }}
                 flexWrap={{ base: "wrap", md: "nowrap" }}
-                fontWeight={600}
                 color={"black"}
             >
                 <Flex flexDir="column" gap="1rem">
-                    <Text fontSize="1.5rem" mb="1rem">
+                    <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
                         Products
                     </Text>
                     {footerProducts.map((item) => (
@@ -36,7 +35,7 @@ const Footer = () => {
                     ))}
                 </Flex>
                 <Flex flexDir="column" gap="1rem">
-                    <Text fontSize="1.5rem" mb="1rem">
+                    <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
                         Company
                     </Text>
                     {footerCompany.map((item) => (
@@ -46,7 +45,7 @@ const Footer = () => {
                     ))}
                 </Flex>
                 <Flex flexDir="column" gap="1rem">
-                    <Text fontSize="1.5rem" mb="1rem">
+                    <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
                         Support
                     </Text>
                     {footerSupport.map((item) => (
@@ -56,7 +55,7 @@ const Footer = () => {
                     ))}
                 </Flex>
                 <Flex flexDir="column" gap="1rem" align={{ base: "start", md: "center" }}>
-                    <Text fontSize="1.5rem" mb="1rem">
+                    <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
                         Follow Us
                     </Text>
                     <Flex fontSize="2rem" gap="1rem">

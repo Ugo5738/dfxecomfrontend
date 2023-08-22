@@ -59,8 +59,9 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                             placeholder="Search DFX"
                             _placeholder={{ fontsize: "1.25rem" }}
                             w="full"
-                            rounded="2xl"
+                            rounded="6rem"
                             p="1.5rem"
+                            pr="3.5rem"
                             color="brand.dark"
                             fontSize="1.5rem"
                             border="1px"
@@ -109,8 +110,9 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                                     placeholder="Search DFX"
                                     _placeholder={{ fontsize: "1.25rem" }}
                                     w="full"
-                                    rounded="2xl"
+                                    rounded="6rem"
                                     p="1.5rem"
+                                    pr="3.5rem"
                                     color="brand.dark"
                                     fontSize="1.5rem"
                                     border="2px"
@@ -166,7 +168,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     display={{ base: "none", md: "flex" }}
                     justifyContent="space-between"
                     alignItems="center"
-                    gap="1rem"
+                    gap="3rem"
                 >
                     <AppButton
                         variant="primary"

@@ -17,7 +17,7 @@ const WaitList = () => {
                 gap="1rem"
                 py="4rem"
                 fontSize={{ base: "1.5rem", sm: "2rem" }}
-                fontWeight="bold"
+                fontWeight={700}
                 textAlign="center"
             >
                 <IoMailSharp className="text-6xl" />
@@ -29,7 +29,8 @@ const WaitList = () => {
                     _placeholder={{
                         textAlign: "center",
                         color: "typography.dark",
-                        fontsize: "1.2rem",
+                        fontsize: "1.5rem",
+                        fontWeight: 300,
                     }}
                     size="lg"
                     border="2px"

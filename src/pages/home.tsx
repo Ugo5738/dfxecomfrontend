@@ -64,7 +64,7 @@ const Home = () => {
         return <Error404 error={trendingInventoryError as ErrorPropsType} />;
 
     return (
-        <Box>
+        <Box overflowX="hidden">
             <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <Box bg="bg.main" py={{ base: "3rem", sm: "5rem" }} color="typography.dark">
                 <Swiper
@@ -153,12 +153,13 @@ const Home = () => {
                 </Flex>
             </Box>
             <Box bg="bg.light" overflow="hidden">
-                <Box py="5rem" mx="auto" w={{ base: "90%", md: "88%" }} color="typography.dark">
+                <Box py="5rem" mx="auto" w="100%" color="typography.dark">
                     <Text
-                        textAlign="center"
+                        textAlign="left"
                         color="typography.dark"
                         fontSize={{ base: "2rem", sm: "2.5rem" }}
                         fontWeight="700"
+                        ml="2rem"
                     >
                         Hot Deals
                     </Text>
@@ -186,7 +187,7 @@ const Home = () => {
                                         gap="3rem"
                                         justifyContent="center"
                                         alignItems="center"
-                                        boxShadow="lg"
+                                        boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.25)"
                                         className="w-full bg-white p-8 rounded-3xl"
                                         as={Link}
                                         to={`/product/${item.product_name}`}
@@ -213,7 +214,9 @@ const Home = () => {
                                         alignItems="flex-start"
                                         mt="2rem"
                                     >
-                                        <Text fontSize="1.75rem">{item.product_name}</Text>
+                                        <Text fontSize="1.75rem" fontWeight={400}>
+                                            {item.product_name}
+                                        </Text>
                                         <Flex alignItems="baseline" flexDir="column">
                                             <Text
                                                 color="typography.dark"
@@ -227,6 +230,7 @@ const Home = () => {
                                                     color="typography.ash"
                                                     fontSize="1.5rem"
                                                     textDecoration="line-through"
+                                                    fontFamily="Bebas Neue"
                                                 >
                                                     {`$${item.store_price}`}
                                                 </Text>
@@ -238,9 +242,9 @@ const Home = () => {
                     </Flex>
                 </Box>
             </Box>
-            <Box py="3rem" mx="auto" w={{ base: "90%", md: "80%" }} color="typography.dark">
+            <Box py="3rem" mx="auto" w="96%" color="typography.dark">
                 <Text
-                    textAlign="center"
+                    textAlign="left"
                     color="typography.dark"
                     fontSize={{ base: "2rem", sm: "2.5rem" }}
                     fontWeight="700"
@@ -252,6 +256,7 @@ const Home = () => {
                         base: "repeat(1, 1fr)",
                         sm: "repeat(2, 1fr)",
                         md: "repeat(3, 1fr)",
+                        lg: "repeat(6, 1fr)",
                     }}
                     mt="4rem"
                     justifyContent="center"
@@ -264,7 +269,7 @@ const Home = () => {
                             <GridItem
                                 key={item?.id}
                                 className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
-                                boxShadow="lg"
+                                boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.25)"
                             >
                                 <Flex
                                     flexDir="column"

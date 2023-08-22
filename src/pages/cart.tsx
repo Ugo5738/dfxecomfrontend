@@ -140,7 +140,12 @@ const Cart = () => {
                                 gap="2rem"
                                 flexDir={{ base: "column", md: "row" }}
                             >
-                                <Flex alignItems="center" justifyContent="space-between" gap="2rem">
+                                <Flex
+                                    alignItems="center"
+                                    justifyContent="space-between"
+                                    gap="3rem"
+                                    w="full"
+                                >
                                     <Flex
                                         alignItems="center"
                                         w={{ base: "10%", xs: "15%" }}
@@ -255,7 +260,7 @@ const Cart = () => {
                                                 handleQuantityChange(
                                                     cart.id,
                                                     (Number(cart.price) / cart.quantity) *
-                                                    (cart.quantity - 1),
+                                                        (cart.quantity - 1),
                                                     cart.quantity - 1,
                                                 );
                                             }}
@@ -285,7 +290,7 @@ const Cart = () => {
                                                 handleQuantityChange(
                                                     cart.id,
                                                     (Number(cart.price) / cart.quantity) *
-                                                    (cart.quantity + 1),
+                                                        (cart.quantity + 1),
                                                     cart.quantity + 1,
                                                 );
                                             }}

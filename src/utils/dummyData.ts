@@ -327,7 +327,7 @@ export const cartsItems = {
     nodes: [
         {
             id: 1,
-            name: "Apple IPhone 14 Pro",
+            name: "iPhone 14 Pro",
             color: "Deep Purple",
             price: "199.99",
             image: "/iphone-14.png",
@@ -345,7 +345,7 @@ export const cartsItems = {
         },
         {
             id: 3,
-            name: "Apple MacBook Pro 2023",
+            name: "MacBook Pro 2023",
             color: "Silver",
             price: "239.99",
             image: "/macbook-pro.png",
@@ -617,7 +617,7 @@ export const productDetailsData = {
                 color: "Gold",
                 code: "#FFD700",
                 image: "/product-back.png",
-            }
+            },
         ],
         storage: [
             {

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Seamless = () => {
     return (
-        <Box py="3rem" mx="auto" w={{ base: "96%", md: "80%" }} color="typography.dark">
+        <Box py="3rem" mx="auto" w={{ base: "96%", md: "90%" }} color="typography.dark">
             <Text
                 textAlign="center"
                 color="typography.dark"
@@ -16,10 +16,9 @@ const Seamless = () => {
             </Text>
             <Flex
                 mt="4rem"
-                justifyContent="center"
-                alignItems="center"
-                gap="3rem"
-                flexWrap={{ base: "wrap", sm: "nowrap" }}
+                justifyContent={{ base: "center", md: "space-between" }}
+                gap="5rem"
+                flexWrap={{ base: "wrap", md: "nowrap" }}
             >
                 {seamLessShopping.map((item) => (
                     <Flex
@@ -32,7 +31,7 @@ const Seamless = () => {
                         <img src={item.image} alt={item.title} className="w-[8rem] h-[6rem]" />
                         <Text
                             textAlign="center"
-                            fontSize={{ base: "1.5rem", sm: "2rem" }}
+                            fontSize={{ base: "1.5rem", sm: "2.5rem" }}
                             fontWeight="600"
                             mt="1rem"
                         >
@@ -40,8 +39,8 @@ const Seamless = () => {
                         </Text>
                         <Text
                             textAlign="center"
-                            fontSize={{ base: "1.2rem", sm: "1.5rem" }}
-                            lineHeight="2rem"
+                            fontSize={{ base: "1.2rem", sm: "2.25rem" }}
+                            lineHeight="3rem"
                         >
                             {item.description}
                         </Text>

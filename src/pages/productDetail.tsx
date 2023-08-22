@@ -248,7 +248,7 @@ const ProductDetail = () => {
                     <Button
                         onClick={onToggle}
                         variant="link"
-                        my="3rem"
+                        my="1rem"
                         fontSize="2rem"
                         color="typography.dark"
                     >
@@ -260,20 +260,24 @@ const ProductDetail = () => {
                                 <Flex
                                     key={data.id}
                                     justifyContent="space-between"
-                                    gap="3rem"
+                                    gap={{ base: "3rem", sm: "10%", md: "15%" }}
                                     my="2rem"
                                     pr=".5rem"
+                                    w="full"
                                 >
                                     <Text fontSize="1.5rem" fontWeight="bold" mb="1rem" w="30%">
                                         {data.title}
                                     </Text>
-                                    <Flex flexDir="column" flexGrow="1">
+                                    <Flex flexDir="column" flexGrow="1" w="full">
                                         {data.details.map((detail) => (
                                             <Box key={detail.id}>
                                                 <UnorderedList>
                                                     <ListItem>
-                                                        <Flex>
-                                                            <Text fontWeight="bold" whiteSpace="nowrap">
+                                                        <Flex flexWrap="wrap">
+                                                            <Text
+                                                                fontWeight="bold"
+                                                                whiteSpace="nowrap"
+                                                            >
                                                                 {detail.text}
                                                             </Text>
                                                             <span className="mx-2 text-2xl font-bold -mt-1">
