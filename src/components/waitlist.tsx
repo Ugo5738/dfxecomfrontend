@@ -13,7 +13,7 @@ const WaitList = () => {
                 flexDir="column"
                 color="typography.dark"
                 mx="auto"
-                w={{ base: "98%", sm: "90%" }}
+                w={{ base: "96%", sm: "90%" }}
                 gap="1rem"
                 py="4rem"
                 fontSize={{ base: "1.5rem", sm: "2rem" }}

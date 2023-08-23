@@ -168,7 +168,7 @@ const Home = () => {
                         alignItems="center"
                         gap="2rem"
                         mt="4rem"
-                        pl={{ base: "115rem", sm: "140rem" }}
+                        pl={{ base: "110rem", sm: "135rem" }}
                         overflow="hidden"
                         ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
                     >
@@ -242,12 +242,13 @@ const Home = () => {
                     </Flex>
                 </Box>
             </Box>
-            <Box py="3rem" mx="auto" w="96%" color="typography.dark">
+            <Box py="3rem" mx="auto" w="100%" color="typography.dark">
                 <Text
                     textAlign="left"
                     color="typography.dark"
                     fontSize={{ base: "2rem", sm: "2.5rem" }}
                     fontWeight="700"
+                    ml="2rem"
                 >
                     Shop by Categories
                 </Text>
@@ -261,6 +262,7 @@ const Home = () => {
                     mt="4rem"
                     justifyContent="center"
                     gap="3rem"
+                    mx="2rem"
                     flexWrap={{ base: "wrap", md: "nowrap" }}
                 >
                     {trendingInventorySuccess &&

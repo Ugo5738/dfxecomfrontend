@@ -406,6 +406,7 @@ export const products = {
         Wearable: ["Smart Watches", "Smart Glasses"],
     },
     priceRange: [
+        { price_min: 0, price_max: 50 },
         { price_min: 50, price_max: 100 },
         { price_min: 100, price_max: 500 },
         { price_min: 500, price_max: 1000 },

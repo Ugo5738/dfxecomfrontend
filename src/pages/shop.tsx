@@ -108,11 +108,11 @@ const Shop = () => {
         setParams((prevParams) => ({ ...prevParams, brand_name: brand, search: "" }));
     };
 
-    const handlePriceFilter = (priceRange: { price_min: number; price_max: number }) => {
+    const handlePriceFilter = (priceRange: { price_min?: number; price_max?: number }) => {
         setParams((prevParams) => ({
             ...prevParams,
-            price_min: priceRange.price_min.toString(),
-            price_max: priceRange.price_max.toString(),
+            price_min: priceRange?.price_min?.toString(),
+            price_max: priceRange?.price_max?.toString(),
         }));
     };
 
@@ -272,8 +272,8 @@ const Shop = () => {
                                         size="lg"
                                         colorScheme="orange"
                                         isChecked={
-                                            params.price_min === priceRange.price_min.toString() &&
-                                            params.price_max === priceRange.price_max.toString()
+                                            params.price_min === priceRange?.price_min?.toString() &&
+                                            params.price_max === priceRange?.price_max?.toString()
                                         }
                                         onChange={() => handlePriceFilter(priceRange)}
                                     >
