@@ -79,16 +79,14 @@ const Home = () => {
                     }}
                     autoplay={{ delay: 5000, disableOnInteraction: false }}
                     keyboard={{ enabled: true, onlyInViewport: false }}
-                    // onSwiper={(swiper) => console.log(swiper)}
-                    // onSlideChange={() => console.log('slide change')}
                 >
                     {homeCarousel.map((item) => (
                         <SwiperSlide key={item.id}>
                             <Flex
                                 backgroundImage={`url(${item.image})`}
-                                backgroundSize="100% 100%"
+                                backgroundSize="90% 100%"
                                 backgroundRepeat="no-repeat"
-                                backgroundPosition="center"
+                                backgroundPosition="right"
                             >
                                 <Flex
                                     flexDir="column"
@@ -159,7 +157,7 @@ const Home = () => {
                         color="typography.dark"
                         fontSize={{ base: "2rem", sm: "2.5rem" }}
                         fontWeight="700"
-                        ml="2rem"
+                        ml={{ base: "1.5rem", sm: "3rem" }}
                     >
                         Hot Deals
                     </Text>
@@ -167,8 +165,8 @@ const Home = () => {
                         justifyContent="center"
                         alignItems="center"
                         gap="2rem"
-                        mt="4rem"
-                        pl={{ base: "110rem", sm: "135rem" }}
+                        mt={{ base: "2rem", md: "4rem" }}
+                        pl={{ base: "110rem", sm: "137rem" }}
                         overflow="hidden"
                         ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
                     >
@@ -177,7 +175,7 @@ const Home = () => {
                             inventoryProducts?.results?.map((item) => (
                                 <Box
                                     key={item.sku}
-                                    className="hover:scale-105 w-full pb-2 pt-4"
+                                    className="w-full pt-4"
                                     minW={{ base: "20rem", sm: "25rem" }}
                                     onMouseEnter={() => setScrollDuration(10000)}
                                     onMouseLeave={() => setScrollDuration(30)}
@@ -187,8 +185,8 @@ const Home = () => {
                                         gap="3rem"
                                         justifyContent="center"
                                         alignItems="center"
-                                        boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.25)"
-                                        className="w-full bg-white p-8 rounded-3xl"
+                                        boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
+                                        className="w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
                                         as={Link}
                                         to={`/product/${item.product_name}`}
                                     >
@@ -205,7 +203,7 @@ const Home = () => {
                                         <img
                                             src={item.default_image}
                                             alt={item.product_name}
-                                            className="h-[27rem]"
+                                            className="h-[15rem] md:h-[23rem]"
                                         />
                                     </Flex>
                                     <Flex
@@ -248,13 +246,13 @@ const Home = () => {
                     color="typography.dark"
                     fontSize={{ base: "2rem", sm: "2.5rem" }}
                     fontWeight="700"
-                    ml="2rem"
+                    ml={{ base: "1.5rem", sm: "3rem" }}
                 >
                     Shop by Categories
                 </Text>
                 <Grid
                     templateColumns={{
-                        base: "repeat(1, 1fr)",
+                        base: "repeat(2, 1fr)",
                         sm: "repeat(2, 1fr)",
                         md: "repeat(3, 1fr)",
                         lg: "repeat(6, 1fr)",
@@ -270,8 +268,8 @@ const Home = () => {
                         trendingInventory?.map((item) => (
                             <GridItem
                                 key={item?.id}
-                                className="hover:scale-105 w-full bg-white p-8 rounded-3xl"
-                                boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.25)"
+                                className="hover:scale-105 transition-all duration-300 w-full bg-white px-2 md:px-4 py-8 rounded-3xl"
+                                boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
                             >
                                 <Flex
                                     flexDir="column"
@@ -279,19 +277,14 @@ const Home = () => {
                                     justifyContent="center"
                                     alignItems="center"
                                     as={Link}
-                                    to={`/shop/${item?.name}`}
+                                    to={`/shop?category=${item?.name}`}
                                 >
                                     <img
                                         src={item?.sample_product?.image}
                                         alt={item?.name}
-                                        className="h-[18rem]"
+                                        className="h-[14rem] md:h-[18rem] mt-6"
                                     />
-                                    <Text
-                                        textAlign="center"
-                                        fontSize={{ base: "1.5rem", sm: "2rem" }}
-                                        fontWeight="600"
-                                        mt="1rem"
-                                    >
+                                    <Text textAlign="center" fontSize="1.5rem" fontWeight={700}>
                                         {item?.name}
                                     </Text>
                                 </Flex>

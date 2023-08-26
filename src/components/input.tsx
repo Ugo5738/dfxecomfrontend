@@ -59,7 +59,8 @@ const AppInput = <T extends SignUpFormType | LoginFormType | CheckoutType>({
                 spellCheck="true"
                 isInvalid={errors?.[name]?.message ? true : false}
                 errorBorderColor="red.300"
-                _placeholder={{ color: "gray.400", fontSize: "1.25rem", verticalAlign: "middle" }}
+                border="1px solid #161616"
+                _placeholder={{ color: "bg.opaque", fontSize: "1.25rem", verticalAlign: "middle" }}
                 {...register(name, {
                     required: true,
                     ...(type === "password" && {
@@ -98,6 +99,9 @@ export const CustomPhoneInput = forwardRef<HTMLInputElement, CustomPhoneInputPro
             ref={ref}
             placeholder="Enter phone number"
             className="w-full p-4"
+            border="1px solid #161616"
+            ml=".5rem"
+            w="full"
             height={{ base: "3.5rem", sm: "4.5" }}
             padding={{ base: "1rem", sm: "2rem" }}
             fontSize="1.5rem"

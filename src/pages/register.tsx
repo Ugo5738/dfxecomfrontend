@@ -58,7 +58,7 @@ const Register = () => {
                     mx="auto"
                     flexDir="column"
                 >
-                    <Text fontSize="2rem" fontWeight="bold" mb="3rem">
+                    <Text fontSize="2rem" mb="3rem" w={{ base: "96%", md: "90%" }} mx="auto">
                         Welcome to DFX Gadgets Hub
                     </Text>
                     <form onSubmit={handleFormSubmit}>
@@ -129,7 +129,7 @@ const Register = () => {
                                         value={value}
                                         onChange={onChange}
                                         defaultCountry="NG"
-                                        className="w-full px-2"
+                                        className="w-full"
                                         inputComponent={CustomPhoneInput as never}
                                     />
                                 )}
@@ -154,7 +154,9 @@ const Register = () => {
                                         searchable={true}
                                         placeholder="Select Country"
                                         searchPlaceholder="Search countries"
-                                        className="w-full mt-8"
+                                        fullWidth
+                                        selectButtonClassName="-mb-2"
+                                        className="w-full h-full mt-8 border border-[#888] rounded-md"
                                         id="country"
                                     />
                                 )}
@@ -173,7 +175,9 @@ const Register = () => {
                                 type="submit"
                                 variant="primary"
                                 width="100%"
-                                mt="2rem"
+                                mt="3rem"
+                                borderRadius=".3rem"
+                                fontWeight="400"
                                 isLoading={loading}
                                 loadingText="Creating Account"
                                 onClick={handleFormSubmit}
@@ -189,7 +193,7 @@ const Register = () => {
                         </Link>
                     </Flex>
                     <Flex flexDir="column" mt="3rem">
-                        <Flex alignItems="center">
+                        <Flex alignItems="center" w={{ base: "96%", md: "90%" }} mx="auto">
                             <hr className="flex-1 border-t-2" />
                             <p className="mx-auto px-8">Or Sign In with</p>
                             <hr className="flex-1 border-t-2" />
@@ -214,7 +218,7 @@ const Register = () => {
                             </Button>
                         </Flex>
                     </Flex>
-                    <Text textAlign="center" mt="2rem">
+                    <Text textAlign="center" mt="2rem" fontSize="1rem">
                         For any further assistance, please visit our{" "}
                         <Link to="/help" className="text-[#3E3FCD]">
                             help center

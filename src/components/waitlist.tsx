@@ -32,6 +32,7 @@ const WaitList = () => {
                         fontsize: "1.5rem",
                         fontWeight: 300,
                     }}
+                    _hover={{}}
                     size="lg"
                     border="2px"
                     borderRadius="3rem"

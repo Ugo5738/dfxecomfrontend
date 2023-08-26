@@ -66,7 +66,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                             fontSize="1.5rem"
                             border="1px"
                         />
-                        <InputRightElement pt=".8rem" pr=".5rem">
+                        <InputRightElement pt=".8rem" pr="1rem">
                             <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
                         </InputRightElement>
                     </InputGroup>

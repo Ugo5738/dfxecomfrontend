@@ -37,6 +37,8 @@ const Cart = () => {
                     fontWeight="600"
                     fontSize="2.25rem"
                     py="1rem"
+                    mx="auto"
+                    w="98%"
                 >
                     Your Cart ({carts.length})
                 </Text>
@@ -45,9 +47,10 @@ const Cart = () => {
                     gap="2rem"
                     mb="3rem"
                     pb="3rem"
-                    borderY="2px"
-                    borderBottomColor="#88888880"
+                    borderTop="1px"
                     bg="bg.light"
+                    mx="auto"
+                    w="98%"
                 >
                     <Flex
                         boxShadow="2xl"
@@ -145,6 +148,7 @@ const Cart = () => {
                                     justifyContent="space-between"
                                     gap="3rem"
                                     w="full"
+                                    flexGrow="1"
                                 >
                                     <Flex
                                         alignItems="center"
@@ -187,8 +191,9 @@ const Cart = () => {
                                     </Flex>
                                     <Flex display={{ base: "none", md: "flex" }}>
                                         <Select
-                                            placeholder="Quantity"
-                                            size="lg"
+                                            size="md"
+                                            border="none"
+                                            outline="none"
                                             fontSize="1.5rem"
                                             fontWeight="700"
                                             value={cart.quantity}
@@ -211,7 +216,7 @@ const Cart = () => {
                                     flexDir="column"
                                     gap="2rem"
                                     alignItems="center"
-                                    ml={{ lg: "5%" }}
+                                    ml={{ lg: "10%" }}
                                 >
                                     <Text fontSize="2.25rem" fontWeight="700">
                                         {`$${cart.price}`}

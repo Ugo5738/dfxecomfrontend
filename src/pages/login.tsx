@@ -49,7 +49,7 @@ const Login = () => {
                     mx="auto"
                     flexDir="column"
                 >
-                    <Text fontSize="2rem" fontWeight="bold" mb="3rem">
+                    <Text fontSize="2rem" mb="3rem" w={{ base: "96%", md: "86%" }} mx="auto">
                         Welcome Back to DFX Gadgets Hub
                     </Text>
                     <form onSubmit={handleFormSubmit}>
@@ -57,7 +57,7 @@ const Login = () => {
                             alignItems="center"
                             justifyContent="center"
                             flexDir="column"
-                            w={{ base: "96%", md: "80%" }}
+                            w={{ base: "96%", md: "86%" }}
                             mx="auto"
                         >
                             <AppInput
@@ -80,11 +80,12 @@ const Login = () => {
                             <Button
                                 color={"typography.red"}
                                 alignSelf={"start"}
-                                mb="1rem"
+                                mb="2rem"
                                 bg="white"
                                 as={Link}
                                 to="/forgot-password"
                                 fontSize="1.25rem"
+                                fontWeight={400}
                             >
                                 Forgot Password?
                             </Button>
@@ -92,6 +93,8 @@ const Login = () => {
                                 type="submit"
                                 variant="primary"
                                 width="100%"
+                                borderRadius=".3rem"
+                                fontWeight="400"
                                 isLoading={loading}
                                 loadingText="Signing In"
                                 onClick={handleFormSubmit}
@@ -107,7 +110,7 @@ const Login = () => {
                         </Link>
                     </Flex>
                     <Flex flexDir="column" mt="3rem">
-                        <Flex alignItems="center">
+                        <Flex alignItems="center" w={{ base: "96%", md: "86%" }} mx="auto">
                             <hr className="flex-1 border-t-2" />
                             <p className="mx-auto px-8">Or Sign In with</p>
                             <hr className="flex-1 border-t-2" />
@@ -132,7 +135,7 @@ const Login = () => {
                             </Button>
                         </Flex>
                     </Flex>
-                    <Text textAlign="center" mt="2rem">
+                    <Text textAlign="center" mt="2rem" fontSize="1rem">
                         For any further assistance, please visit our{" "}
                         <Link to="/help" className="text-[#3E3FCD]">
                             help center

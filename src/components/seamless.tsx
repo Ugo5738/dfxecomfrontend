@@ -31,7 +31,7 @@ const Seamless = () => {
                         <img src={item.image} alt={item.title} className="w-[8rem] h-[6rem]" />
                         <Text
                             textAlign="center"
-                            fontSize={{ base: "1.5rem", sm: "2.5rem" }}
+                            fontSize={{ base: "1.5rem", sm: "2.25rem" }}
                             fontWeight="600"
                             mt="1rem"
                         >
@@ -39,8 +39,9 @@ const Seamless = () => {
                         </Text>
                         <Text
                             textAlign="center"
-                            fontSize={{ base: "1.2rem", sm: "2.25rem" }}
-                            lineHeight="3rem"
+                            fontSize={{ base: "1.2rem", sm: "2rem" }}
+                            lineHeight="2.25rem"
+                            color="#171923"
                         >
                             {item.description}
                         </Text>

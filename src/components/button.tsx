@@ -42,7 +42,7 @@ const AppButton = ({
             borderRadius={bRadius}
             isLoading={loading}
             isDisabled={disabled}
-            fontWeight={variant === "outline" ? "normal" : "bold"}
+            fontWeight="normal"
             style={style}
             fontSize="1.5rem"
             bg={

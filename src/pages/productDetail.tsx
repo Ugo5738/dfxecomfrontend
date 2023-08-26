@@ -78,7 +78,7 @@ const ProductDetail = () => {
                                 {productDetailsData.info.variants.map((variant) => (
                                     <div
                                         key={variant.image}
-                                        className={`hover:scale-105 w-full bg-white xs:p-6 rounded-xl shadow-lg cursor-pointer ${
+                                        className={`hover:scale-105 transition-all duration-300 w-full bg-white xs:p-6 rounded-xl shadow-lg cursor-pointer ${
                                             selectedImage === variant.image
                                                 ? "border-2 border-[#DF6A12]"
                                                 : ""

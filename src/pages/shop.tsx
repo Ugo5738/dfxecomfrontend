@@ -168,12 +168,12 @@ const Shop = () => {
                 {toggleFilters && (
                     <Flex
                         bg="white"
-                        pl={{ base: "2rem", md: "1rem" }}
-                        pr={{ base: "2rem", md: ".5rem" }}
+                        pl={{ base: "2rem", md: "2rem" }}
+                        pr={{ base: "2rem", md: "1rem" }}
                         py="2rem"
                         flexDir="column"
                         gap="3rem"
-                        w={{ base: "100%", md: "30%", lg: "15%" }}
+                        w={{ base: "100%", md: "30%", lg: "18%" }}
                         align="stretch"
                         position={{ base: "fixed", md: "static" }}
                         inset={{ base: "0", md: "auto" }}
@@ -189,7 +189,7 @@ const Shop = () => {
                         >
                             <MdArrowBackIosNew className="text-4xl" />
                         </Flex>
-                        <Flex flexDir="column" gap="1rem" align="start">
+                        <Flex flexDir="column" gap="1rem" align="start" pt="1rem">
                             <Text fontWeight="600" fontSize="1.75rem">
                                 Categories
                             </Text>
@@ -272,7 +272,8 @@ const Shop = () => {
                                         size="lg"
                                         colorScheme="orange"
                                         isChecked={
-                                            params.price_min === priceRange?.price_min?.toString() &&
+                                            params.price_min ===
+                                                priceRange?.price_min?.toString() &&
                                             params.price_max === priceRange?.price_max?.toString()
                                         }
                                         onChange={() => handlePriceFilter(priceRange)}
@@ -300,7 +301,14 @@ const Shop = () => {
                     </Flex>
                 )}
 
-                <Flex bg="bg.light" p={{ base: "1rem", sm: "2rem" }} flexGrow="1" flexDir="column">
+                <Flex
+                    bg="bg.light"
+                    p={{ base: "1rem", sm: "2rem" }}
+                    flexGrow="1"
+                    flexDir="column"
+                    mt="3rem"
+                    mr="1rem"
+                >
                     <Flex flexDir="column">
                         <Breadcrumb
                             spacing="4px"
@@ -389,38 +397,42 @@ const Shop = () => {
                     </Flex>
                     <Grid
                         templateColumns={{
-                            base: "repeat(1, 1fr)",
+                            base: "repeat(2, 1fr)",
                             sm: "repeat(2, 1fr)",
                             md: "repeat(3, 1fr)",
                             lg: "repeat(4, 1fr)",
                         }}
-                        mt="4rem"
+                        mt="2rem"
                         justifyContent="center"
-                        gap="3rem"
+                        gap={{ base: "1rem", sm: "2rem" }}
                     >
                         {productsInventorySuccess &&
                             productItems?.map((item) => (
                                 <Flex
                                     key={item.sku}
                                     flexDir="column"
-                                    className="hover:scale-105 w-full bg-white py-8 px-4 sm:px-8 rounded-3xl"
-                                    boxShadow="lg"
+                                    className="hover:scale-105 transition-all duration-300 w-full bg-white p-4 sm:p-8 rounded-3xl"
+                                    boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
                                     justifyContent="space-between"
                                 >
                                     <Image
                                         src={item.default_image}
                                         alt={item.product_name}
-                                        height="20rem"
+                                        height={{ base: "10rem", sm: "20rem" }}
                                         objectFit="contain"
-                                        mb="3rem"
+                                        my={{ base: "1rem", sm: "3rem", md: "0" }}
                                     />
-                                    <Text color="typography.dark" fontSize="1.5rem" minH="4rem">
+                                    <Text
+                                        color="typography.dark"
+                                        fontSize={{ base: "1rem", sm: "1.5rem" }}
+                                        minH={{ base: "1.85rem", sm: "4rem" }}
+                                    >
                                         {item.product_name}
                                     </Text>
-                                    <Flex alignItems="baseline" minH="4rem">
+                                    <Flex alignItems="baseline">
                                         <Text
                                             color="typography.dark"
-                                            fontSize="2.2rem"
+                                            fontSize={{ base: "1rem", sm: "2.2rem" }}
                                             fontWeight="600"
                                         >
                                             {`$${item.store_price}`}
@@ -428,7 +440,7 @@ const Shop = () => {
                                         {item.discount_store_price && (
                                             <Text
                                                 color="typography.red"
-                                                fontSize="1.2rem"
+                                                fontSize={{ base: ".6rem", sm: "1.2rem" }}
                                                 px="2"
                                                 textDecoration="line-through"
                                             >
@@ -436,14 +448,6 @@ const Shop = () => {
                                             </Text>
                                         )}
                                     </Flex>
-                                    {/* <AppButton
-                                        variant="primary"
-                                        borderRadius=".3rem"
-                                        height="3rem"
-                                        loadingText="Adding to cart"
-                                    >
-                                        ADD TO CART
-                                    </AppButton> */}
                                 </Flex>
                             ))}
                     </Grid>
@@ -460,8 +464,8 @@ const Shop = () => {
                             variant="outline"
                             color="bg.opaque"
                             borderRadius=".3rem"
-                            px={{ base: "1rem", sm: "2rem" }}
-                            py="1rem"
+                            h="3.5rem"
+                            w="9.5rem"
                             fontSize={{ base: "1rem", sm: "1.5rem" }}
                             border="1px solid rgba(22, 22, 22, 0.50)"
                             onClick={handlePrevPage}
@@ -485,8 +489,8 @@ const Shop = () => {
                                     color="bg.opaque"
                                     borderRadius=".3rem"
                                     m=".5rem"
-                                    px={{ base: "1rem", md: "2rem" }}
-                                    py="1rem"
+                                    h="3.5rem"
+                                    w="3.5rem"
                                     fontSize="1.5rem"
                                     border="1px solid rgba(22, 22, 22, 0.50)"
                                     onClick={() => handleSetPage(num)}
@@ -510,8 +514,8 @@ const Shop = () => {
                             variant="outline"
                             color="bg.opaque"
                             borderRadius=".3rem"
-                            px={{ base: "1rem", sm: "2rem" }}
-                            py="1rem"
+                            h="3.5rem"
+                            w="7rem"
                             fontSize={{ base: "1rem", sm: "1.5rem" }}
                             border="1px solid rgba(22, 22, 22, 0.50)"
                             onClick={handleNextPage}
