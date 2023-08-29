@@ -12,3 +12,12 @@ export const removeEmpty = (obj: ParamsType) => {
     Object.keys(obj).forEach((key) => obj[key] == null || (!obj[key] && delete obj[key]));
     return obj;
 };
+
+export const generateTransactionRef = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let autoId = "";
+    for (let i = 0; i < 15; i++) {
+        autoId += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return "dfx-" + Date.now().toLocaleString() + autoId;
+};

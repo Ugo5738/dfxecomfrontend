@@ -14,7 +14,7 @@ import {
     useMediaQuery,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Footer from "../components/footer";
 import WaitList from "../components/waitlist";
@@ -33,6 +33,7 @@ import AppButton from "../components/button";
 
 const Shop = () => {
     const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
+    const [searchParams] = useSearchParams();
     // const [categories, setCategories] = useState({});
     // const [brands, setBrands] = useState<string[]>([]);
     const [page, setPage] = useState(1);
@@ -42,7 +43,7 @@ const Shop = () => {
     const [toggleFilters, setToggleFilters] = useState(false);
     const [currentCategory, setCurrentCategory] = useState<string | null>(null);
     const [params, setParams] = useState<ParamsType>({
-        search: "",
+        search: searchParams.get("category") || "",
         page_size: 12,
         page: page,
         product_name: "",
@@ -414,6 +415,8 @@ const Shop = () => {
                                     className="hover:scale-105 transition-all duration-300 w-full bg-white p-4 sm:p-8 rounded-3xl"
                                     boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
                                     justifyContent="space-between"
+                                    as={Link}
+                                    to={`/product/${item.sku}/`}
                                 >
                                     <Image
                                         src={item.default_image}
@@ -421,6 +424,7 @@ const Shop = () => {
                                         height={{ base: "10rem", sm: "20rem" }}
                                         objectFit="contain"
                                         my={{ base: "1rem", sm: "3rem", md: "0" }}
+                                        mixBlendMode="darken"
                                     />
                                     <Text
                                         color="typography.dark"

@@ -106,3 +106,95 @@ export interface SearchProps {
     searchTerm: string;
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
+
+export interface ProductDetailType {
+    sku: string;
+    upc?: string;
+    name: string | null;
+    seo_feature?: string | null;
+    product_type?: number;
+    product?: number;
+    brand_name?: string;
+    color_name?: string;
+    storage_size?: string;
+    attribute_values?: string[];
+    is_active?: boolean;
+    is_default?: boolean;
+    retail_price?: string;
+    store_price?: string;
+    discount_store_price?: string;
+    sale_price?: string;
+    condition?: string;
+    weight?: number | null;
+    created_at?: string;
+    updated_at?: string;
+    available_colors?: string[];
+    available_storage_sizes?: string[];
+}
+
+export interface UserType {
+    accepts_newsletters: boolean;
+    accepts_terms_and_conditions: boolean;
+    created_at: string;
+    date_joined: string;
+    email: string;
+    email_verified: boolean;
+    first_name: string;
+    full_name: string;
+    id: number;
+    is_active: boolean;
+    is_staff: boolean;
+    is_superuser: boolean;
+    last_login: string | null;
+    last_name: string;
+    phone: string;
+    referral_code: string;
+    updated_at: string;
+    username: string | null;
+}
+
+export interface OrderType {
+    id: number;
+    ordered: boolean;
+    quantity: number;
+    product: ProductResultType;
+}
+
+export interface OrderSummaryType {
+    address: string | null;
+    coupon: string | null;
+    id: number;
+    ordered: boolean;
+    ordered_date: string | null;
+    payment: string | null;
+    products: OrderType[];
+    start_date: string;
+    sub_total: number;
+    total: number;
+    user: number;
+}
+
+export interface ColorsType {
+    bg: {
+        main: string;
+        light: string;
+        dark: string;
+        nav: string;
+        opaque: string;
+        blue: string;
+    };
+    brand: {
+        main: string;
+        light: string;
+        dark: string;
+        orange: string;
+    };
+    typography: {
+        dark: string;
+        red: string;
+        ash: string;
+    };
+    shadow: {
+        main: string;
+    };
+}

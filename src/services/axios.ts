@@ -38,12 +38,12 @@ axios.interceptors.response.use(
         if (error.response?.data?.detail) {
             ErrorToast(error.response.data.detail);
             if (error.response.data.detail === "Authentication credentials were not provided.") {
-                // sessionStorage.removeItem("dfx-token");
-                // window.location.href = "/login";
+                sessionStorage.removeItem("dfx-token");
+                window.location.href = "/login";
             }
             if (error.response.data.code === "token_not_valid") {
-                // sessionStorage.removeItem("dfx-token");
-                // window.location.href = "/login";
+                sessionStorage.removeItem("dfx-token");
+                window.location.href = "/login";
             }
             return null;
         } else if (error.response?.data?.email) {
@@ -51,6 +51,7 @@ axios.interceptors.response.use(
             return null;
         } else {
             ErrorToast(error.message);
+            return null;
         }
         return Promise.reject(error);
     },

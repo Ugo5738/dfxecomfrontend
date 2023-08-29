@@ -17,13 +17,13 @@ import { useEffect } from "react";
 
 const NavBar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
+    const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
 
     useEffect(() => {
-        if (isLargerThan480) {
+        if (isLargerThan768) {
             onClose();
         }
-    }, [isLargerThan480, onClose]);
+    }, [isLargerThan768, onClose]);
 
     return (
         <Flex bg={{ base: "white", md: "bg.nav" }}>

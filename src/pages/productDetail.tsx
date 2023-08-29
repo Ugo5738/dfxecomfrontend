@@ -8,14 +8,21 @@ import {
     ListItem,
     UnorderedList,
 } from "@chakra-ui/react";
+import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import Nav from "../components/nav";
 import { useState } from "react";
 import Seamless from "../components/seamless";
 import { productDetailsData } from "../utils/dummyData";
 import AppButton from "../components/button";
+import { useGetSingleProduct } from "../services/products";
+import LoadingSpinner from "../components/loading";
+import { UseAddToCartMutation } from "../services/mutation";
+import { ErrorToast, SuccessToast } from "../utils/toast";
 
 const ProductDetail = () => {
+    const { sku } = useParams<{ sku: string }>();
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const { isOpen, onToggle } = useDisclosure();
     const [selectedImage, setSelectedImage] = useState<string>(
@@ -25,6 +32,9 @@ const ProductDetail = () => {
         productDetailsData.info.storage[0].capacity,
     );
     const [selectedColor, setSelectedColor] = useState(productDetailsData.info.variants[0].color);
+    const { mutateAsync: isAddingToCart } = UseAddToCartMutation();
+    const { data: productDetail, error, isLoading, isSuccess } = useGetSingleProduct(sku!);
+    console.log("productDetail", productDetail, error, isLoading, isSuccess, sku);
 
     const handleImageClick = (image: string) => {
         setSelectedImage(image);
@@ -37,6 +47,23 @@ const ProductDetail = () => {
     const handleColorFilter = (color: string) => {
         setSelectedColor(color);
     };
+
+    const handleAddToCart = async () => {
+        const result = await isAddingToCart({ sku: sku!, quantity: 1 });
+        try {
+            if (!result) return;
+
+            if (result.status === 200 || result.status === 201) {
+                SuccessToast(result.data?.message as string);
+            }
+            navigate("/cart");
+        } catch (error) {
+            ErrorToast("An error occurred");
+            throw new Error(error as string);
+        }
+    };
+
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <Box>
@@ -88,7 +115,7 @@ const ProductDetail = () => {
                                         <img
                                             src={variant.image}
                                             alt="main product image"
-                                            className="max-h-[10rem] max-w-[10rem] min-w-12 min-h-12 w-full h-full object-cover xs:object-contain"
+                                            className="max-h-[10rem] max-w-[10rem] min-w-12 min-h-12 w-full h-full object-cover xs:object-contain mix-blend-darken"
                                         />
                                     </div>
                                 ))}
@@ -104,7 +131,7 @@ const ProductDetail = () => {
                                 <img
                                     src={selectedImage}
                                     alt="main product image"
-                                    className="max-h-[40rem] h-full w-full object-contain"
+                                    className="max-h-[40rem] h-full w-full object-contain mix-blend-darken"
                                 />
                             </Flex>
                         </Flex>
@@ -173,7 +200,9 @@ const ProductDetail = () => {
                                             h="3rem"
                                             rounded="full"
                                             cursor="pointer"
-                                            border={
+                                            border="none"
+                                            outlineOffset="2px"
+                                            outline={
                                                 selectedColor === color.color
                                                     ? "2px solid #0086D1"
                                                     : ""
@@ -183,7 +212,12 @@ const ProductDetail = () => {
                                     ))}
                                 </Flex>
                             </Flex>
-                            <AppButton variant="primary" height="3rem" loadingText="Adding to cart">
+                            <AppButton
+                                variant="primary"
+                                height="3rem"
+                                loadingText="Adding to cart"
+                                onClick={handleAddToCart}
+                            >
                                 ADD TO CART
                             </AppButton>
                             <Flex
@@ -197,7 +231,7 @@ const ProductDetail = () => {
                                         <img
                                             src="/delivery-icon.png"
                                             alt="free shipping"
-                                            className="w-16 h-16"
+                                            className="w-16 h-16 mix-blend-darken"
                                         />
                                         <Flex flexDir="column">
                                             <Text fontSize="1.5rem" fontWeight="600">
@@ -214,7 +248,7 @@ const ProductDetail = () => {
                                         <img
                                             src="/pickup-icon.png"
                                             alt="pickup"
-                                            className="w-16 h-16"
+                                            className="w-16 h-16 mix-blend-darken"
                                         />
                                         <Flex flexDir="column">
                                             <Text fontSize="1.5rem" fontWeight="600">
@@ -311,7 +345,7 @@ const ProductDetail = () => {
                 <img
                     src="/iphone-product.png"
                     alt="main product image"
-                    className="max-h-[40rem] w-full object-cover"
+                    className="max-h-[40rem] w-full object-cover mix-blend-darken"
                 />
             </Box>
             <Seamless />

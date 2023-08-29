@@ -4,7 +4,7 @@ import AppInput, { CustomPhoneInput } from "../components/input";
 import { ColorObject, SignUpFormType } from "../utils/types";
 import { useSignUpForm } from "../utils/form";
 import AppButton from "../components/button";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
 import { UseRegisterMutation } from "../services/mutation";
@@ -19,6 +19,7 @@ const mapDataToRegister = (data: SignUpFormType) => {
 
 const Register = () => {
     const color = useTheme().colors as ColorObject;
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const { mutateAsync: reg } = UseRegisterMutation();
 
@@ -33,7 +34,8 @@ const Register = () => {
             }
             if (regResult.status === 200 || regResult.status === 201) {
                 SuccessToast("Registration Successful!");
-                redirect("/login");
+                sessionStorage.setItem("dfx-user", JSON.stringify(regResult.data));
+                navigate("/login");
             }
         } catch (error) {
             ErrorToast("An error occurred");
@@ -204,17 +206,33 @@ const Register = () => {
                             gap={{ base: "1rem", sm: "3rem" }}
                             my="3rem"
                         >
-                            <Button>
-                                <img src={"/facebook-logo.png"} alt="facebook" />
+                            <Button variant="link">
+                                <img
+                                    src={"/facebook-logo.png"}
+                                    alt="facebook"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
-                            <Button>
-                                <img src={"/twitter-logo.png"} alt="twitter" />
+                            <Button variant="link">
+                                <img
+                                    src={"/twitter-logo.png"}
+                                    alt="twitter"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
-                            <Button>
-                                <img src={"/google-logo.png"} alt="google" />
+                            <Button variant="link">
+                                <img
+                                    src={"/google-logo.png"}
+                                    alt="google"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
-                            <Button>
-                                <img src={"/linkedin-logo.png"} alt="linkedin" />
+                            <Button variant="link">
+                                <img
+                                    src={"/linkedin-logo.png"}
+                                    alt="linkedin"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
                         </Flex>
                     </Flex>

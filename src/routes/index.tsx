@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
     },
     {
-        path: "/product/:id",
+        path: "/product/:sku",
         element: (
             <Suspense fallback={<LoadingSpinner />}>
                 <ProductDetail />

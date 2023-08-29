@@ -1,9 +1,4 @@
-import { type ThemeConfig, extendTheme, theme } from "@chakra-ui/react";
-
-const config: ThemeConfig = {
-    initialColorMode: "light",
-    useSystemColorMode: false,
-};
+import { extendTheme, theme } from "@chakra-ui/react";
 
 const colors = Object.freeze({
     bg: {
@@ -74,7 +69,6 @@ const styles = Object.freeze({
 });
 
 const customTheme = extendTheme({
-    config,
     colors,
     breakpoints,
     fontWeight,

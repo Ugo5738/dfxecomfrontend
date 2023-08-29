@@ -24,8 +24,8 @@ const DropdownNav = () => {
     return (
         <Flex bg="bg.nav">
             <Flex
-                alignItems={{ base: "flex-start", sm: "center" }}
-                flexDir={{ base: "column", sm: "row" }}
+                alignItems={{ base: "flex-start", md: "center" }}
+                flexDir={{ base: "column", md: "row" }}
                 color="typography.dark"
                 mx="auto"
                 w="98%"

@@ -1,8 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Button, ButtonProps, LinkProps } from "@chakra-ui/react";
 import { ReactNode, CSSProperties } from "react";
 import customTheme from "../utils/theme";
 import { Link } from "react-router-dom";
+import { ColorsType } from "../utils/types";
+
+interface ColorsObjectType {
+    colors: ColorsType;
+}
 
 interface ButtonType extends ButtonProps {
     children: ReactNode;
@@ -30,7 +34,7 @@ const AppButton = ({
     to,
     ...props
 }: ButtonType & LinkProps) => {
-    const { colors } = customTheme;
+    const { colors } = customTheme as ColorsObjectType;
     return (
         <Button
             as={to ? Link : undefined}

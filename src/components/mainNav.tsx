@@ -23,11 +23,14 @@ import { CiSearch } from "react-icons/ci";
 import { PiSignInLight } from "react-icons/pi";
 import { useState } from "react";
 import { SearchProps } from "../utils/types";
-// import { useGetUser } from "../services/auth";
+import { useGetUser } from "../services/auth";
+import { useGetOrderSummary } from "../services/order";
 
 const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
     const [toggleSearch, setToggleSearch] = useState(false);
-    // const { data: user, error, isLoading, isSuccess } = useGetUser();
+    const { data: user, isLoading } = useGetUser();
+    const { data: orderSummaryData, isSuccess } = useGetOrderSummary();
+    const { products } = orderSummaryData?.order_summary || {};
 
     return (
         <Box mx="auto" w={{ base: "100%", sm: "96%" }}>
@@ -123,65 +126,82 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                             </InputGroup>
                         </Flex>
                     </Slide>
-                    <Popover placement="bottom">
-                        <PopoverTrigger>
-                            <Image
-                                alt="Profile"
-                                src="/profile-icon.png"
-                                boxSize="2rem"
-                                cursor="pointer"
-                            />
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            <PopoverArrow bg="brand.nav" />
-                            <PopoverCloseButton color="red" fontSize="1rem" />
-                            <PopoverBody pt="3rem" px=".5rem">
-                                <Flex
-                                    alignItems="center"
-                                    justifyContent="space-between"
-                                    gap="2rem"
-                                    as={Link}
-                                    to="/login"
-                                >
-                                    <Text color="brand.dark" fontWeight="500" fontSize="1.25rem">
-                                        Sign In
-                                    </Text>
-                                    <PiSignInLight className="text-[#171923] h-12 w-12" />
-                                </Flex>
-                                <Flex
-                                    alignItems="center"
-                                    justifyContent="space-between"
-                                    gap="2rem"
-                                    as={Link}
-                                    to="/register"
-                                >
-                                    <Text color="brand.dark" fontWeight="500" fontSize="1.25rem">
-                                        Register
-                                    </Text>
-                                    <PiSignInLight className="text-[#171923] h-12 w-12" />
-                                </Flex>
-                            </PopoverBody>
-                        </PopoverContent>
-                    </Popover>
+                    {!user && !isLoading ? (
+                        <Popover placement="bottom">
+                            <PopoverTrigger>
+                                <Image
+                                    alt="Profile"
+                                    src="/profile-icon.png"
+                                    boxSize="2rem"
+                                    cursor="pointer"
+                                />
+                            </PopoverTrigger>
+                            <PopoverContent>
+                                <PopoverArrow bg="brand.nav" />
+                                <PopoverCloseButton color="red" fontSize="1rem" />
+                                <PopoverBody pt="3rem" px=".5rem">
+                                    <Flex
+                                        alignItems="center"
+                                        justifyContent="space-between"
+                                        gap="2rem"
+                                        as={Link}
+                                        to="/login"
+                                    >
+                                        <Text
+                                            color="brand.dark"
+                                            fontWeight="500"
+                                            fontSize="1.25rem"
+                                        >
+                                            Sign In
+                                        </Text>
+                                        <PiSignInLight className="text-[#171923] h-12 w-12" />
+                                    </Flex>
+                                    <Flex
+                                        alignItems="center"
+                                        justifyContent="space-between"
+                                        gap="2rem"
+                                        as={Link}
+                                        to="/register"
+                                    >
+                                        <Text
+                                            color="brand.dark"
+                                            fontWeight="500"
+                                            fontSize="1.25rem"
+                                        >
+                                            Register
+                                        </Text>
+                                        <PiSignInLight className="text-[#171923] h-12 w-12" />
+                                    </Flex>
+                                </PopoverBody>
+                            </PopoverContent>
+                        </Popover>
+                    ) : null}
                 </Flex>
-                <Flex
-                    display={{ base: "none", md: "flex" }}
-                    justifyContent="space-between"
-                    alignItems="center"
-                    gap="3rem"
-                >
-                    <AppButton
-                        variant="primary"
-                        borderRadius=".3rem"
-                        height="3.5rem"
-                        to="/register"
+                {!user && !isLoading ? (
+                    <Flex
+                        display={{ base: "none", md: "flex" }}
+                        justifyContent="space-between"
+                        alignItems="center"
+                        gap="3rem"
                     >
-                        Register
-                    </AppButton>
-                    <AppButton variant="outline" borderRadius=".3rem" height="3.5rem" to="/login">
-                        Sign In
-                    </AppButton>
-                </Flex>
+                        <AppButton
+                            variant="primary"
+                            borderRadius=".3rem"
+                            height="3.5rem"
+                            to="/register"
+                        >
+                            Register
+                        </AppButton>
+                        <AppButton
+                            variant="outline"
+                            borderRadius=".3rem"
+                            height="3.5rem"
+                            to="/login"
+                        >
+                            Sign In
+                        </AppButton>
+                    </Flex>
+                ) : null}
                 <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
                     <BsCart3 className="text-[#171923] h-12 w-12" />
                     <Text
@@ -195,7 +215,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         textAlign="center"
                         fontWeight="600"
                     >
-                        {"3"}
+                        {isSuccess ? products?.length : "0"}
                     </Text>
                 </Flex>
             </Flex>

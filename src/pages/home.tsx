@@ -188,7 +188,7 @@ const Home = () => {
                                         boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
                                         className="w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
                                         as={Link}
-                                        to={`/product/${item.product_name}`}
+                                        to={`/product/${item.sku}/`}
                                     >
                                         <Text
                                             fontSize="1.2rem"
@@ -203,7 +203,7 @@ const Home = () => {
                                         <img
                                             src={item.default_image}
                                             alt={item.product_name}
-                                            className="h-[15rem] md:h-[23rem]"
+                                            className="h-[15rem] md:h-[23rem] mix-blend-darken"
                                         />
                                     </Flex>
                                     <Flex
@@ -277,12 +277,12 @@ const Home = () => {
                                     justifyContent="center"
                                     alignItems="center"
                                     as={Link}
-                                    to={`/shop?category=${item?.name}`}
+                                    to={`/shop?category=${item?.name.toLowerCase()}`}
                                 >
                                     <img
                                         src={item?.sample_product?.image}
                                         alt={item?.name}
-                                        className="h-[14rem] md:h-[18rem] mt-6"
+                                        className="h-[14rem] md:h-[18rem] mt-6 mix-blend-darken"
                                     />
                                     <Text textAlign="center" fontSize="1.5rem" fontWeight={700}>
                                         {item?.name}

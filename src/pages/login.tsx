@@ -17,7 +17,6 @@ const Login = () => {
     const onLogin = async (data: LoginFormType) => {
         setLoading(true);
         const loginResult = await login(data);
-        // console.log("loginResult", loginResult);
         try {
             if (!loginResult) return;
 
@@ -121,17 +120,33 @@ const Login = () => {
                             gap={{ base: "1rem", sm: "3rem" }}
                             my="3rem"
                         >
-                            <Button>
-                                <img src={"/facebook-logo.png"} alt="facebook" />
+                            <Button variant="link">
+                                <img
+                                    src={"/facebook-logo.png"}
+                                    alt="facebook"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
-                            <Button>
-                                <img src={"/twitter-logo.png"} alt="twitter" />
+                            <Button variant="link">
+                                <img
+                                    src={"/twitter-logo.png"}
+                                    alt="twitter"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
-                            <Button>
-                                <img src={"/google-logo.png"} alt="google" />
+                            <Button variant="link">
+                                <img
+                                    src={"/google-logo.png"}
+                                    alt="google"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
-                            <Button>
-                                <img src={"/linkedin-logo.png"} alt="linkedin" />
+                            <Button variant="link">
+                                <img
+                                    src={"/linkedin-logo.png"}
+                                    alt="linkedin"
+                                    className="h-12 w-12 object-contain"
+                                />
                             </Button>
                         </Flex>
                     </Flex>
