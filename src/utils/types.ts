@@ -108,28 +108,46 @@ export interface SearchProps {
 }
 
 export interface ProductDetailType {
-    sku: string;
-    upc?: string;
-    name: string | null;
-    seo_feature?: string | null;
-    product_type?: number;
-    product?: number;
-    brand_name?: string;
+    attribute_values: Record<string, string>;
+    brand_name: string;
     color_name?: string;
     storage_size?: string;
-    attribute_values?: string[];
-    is_active?: boolean;
-    is_default?: boolean;
-    retail_price?: string;
-    store_price?: string;
-    discount_store_price?: string;
-    sale_price?: string;
-    condition?: string;
-    weight?: number | null;
-    created_at?: string;
-    updated_at?: string;
-    available_colors?: string[];
-    available_storage_sizes?: string[];
+    banner_image?: string;
+    shipping?: boolean;
+    onsite_pickup?: boolean;
+    condition: string;
+    discount_store_price: string;
+    images: {
+        alt_text: string | null;
+        image: string;
+        is_feature: boolean;
+    }[];
+    is_active: boolean;
+    is_default: boolean;
+    name: string | null;
+    product_details: {
+        category: number[];
+        description: string;
+        formatted_description?: string[];
+        name: string;
+        slug: string;
+        web_id: string;
+    };
+    product_type: number;
+    sale_price: string;
+    seo_feature: string | null;
+    sku: string;
+    store_price: string;
+    upc: string;
+    updated_at: string;
+    variants: Record<
+        string,
+        {
+            available_storage: Record<string, string>;
+            hex_code: string;
+        }
+    >;
+    weight: number | null;
 }
 
 export interface UserType {

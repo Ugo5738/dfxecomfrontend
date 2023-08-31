@@ -42,13 +42,15 @@ export const useGetInventoryProducts = (params?: ParamsType) => {
     return { data, error, isLoading, isSuccess, isPreviousData };
 };
 
-export const useGetSingleProduct = (sku: string, params?: ParamsType) => {
-    removeEmpty(params!);
+export const useGetSingleProduct = (sku: string) => {
     const { data, error, isLoading, isSuccess } = useQuery(
-        ["single_product", sku, params],
+        ["single_product", sku],
         async () => {
-            const res = await axios.get(URLS.PRODUCT(sku), { params });
+            const res = await axios.get(URLS.PRODUCT(sku));
             return res.data as unknown as ProductDetailType;
+        },
+        {
+            enabled: !!sku,
         },
     );
 

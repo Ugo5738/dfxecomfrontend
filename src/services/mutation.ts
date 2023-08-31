@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LoginPayloadType, RegisterPayloadType } from "../utils/types";
+import { LoginPayloadType, ProductDetailType, RegisterPayloadType } from "../utils/types";
 import axios from "./axios";
 import URLS from "./urls";
 
@@ -37,6 +37,32 @@ export const UseRemoveFromCartMutation = () => {
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["order_summary"] });
+        },
+    });
+};
+
+export const UseReduceFromCartMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (sku: string) => {
+            const res = await axios.post(URLS.REDUCE_ORDERS(sku));
+            return res;
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ["order_summary"] });
+        },
+    });
+};
+
+export const UseGetSingleProductMutation = () => {
+    const QueryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (sku: string) => {
+            const res = await axios.get(URLS.PRODUCT(sku));
+            return res.data as unknown as ProductDetailType;
+        },
+        onSuccess: async () => {
+            await QueryClient.invalidateQueries({ queryKey: ["single_product"] });
         },
     });
 };

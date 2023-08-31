@@ -165,378 +165,399 @@ const Shop = () => {
         <Box>
             <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <ScrollNav />
-            <Flex>
-                {toggleFilters && (
-                    <Flex
-                        bg="white"
-                        pl={{ base: "2rem", md: "2rem" }}
-                        pr={{ base: "2rem", md: "1rem" }}
-                        py="2rem"
-                        flexDir="column"
-                        gap="3rem"
-                        w={{ base: "100%", md: "30%", lg: "18%" }}
-                        align="stretch"
-                        position={{ base: "fixed", md: "static" }}
-                        inset={{ base: "0", md: "auto" }}
-                        minH="100vh"
-                        overflowY={{ base: "auto", md: "hidden" }}
-                        zIndex="100000"
-                    >
+            {productsInventorySuccess && (
+                <Flex>
+                    {toggleFilters && (
                         <Flex
+                            bg="white"
+                            pl={{ base: "2rem", md: "2rem" }}
+                            pr={{ base: "2rem", md: "1rem" }}
+                            py="2rem"
                             flexDir="column"
-                            cursor="pointer"
-                            display={{ base: "flex", md: "none" }}
-                            onClick={() => setToggleFilters(false)}
+                            gap="3rem"
+                            w={{ base: "100%", md: "30%", lg: "18%" }}
+                            align="stretch"
+                            position={{ base: "fixed", md: "static" }}
+                            inset={{ base: "0", md: "auto" }}
+                            minH="100vh"
+                            overflowY={{ base: "auto", md: "hidden" }}
+                            zIndex="100000"
                         >
-                            <MdArrowBackIosNew className="text-4xl" />
-                        </Flex>
-                        <Flex flexDir="column" gap="1rem" align="start" pt="1rem">
-                            <Text fontWeight="600" fontSize="1.75rem">
-                                Categories
-                            </Text>
-                            {Object.entries(products?.categories).map(
-                                ([category, subCategories]) => (
-                                    <Flex flexDir="column" key={category} gap="1rem" align="start">
-                                        <Button
-                                            variant="unstyled"
-                                            fontSize="1.5rem"
-                                            fontWeight="normal"
-                                            _hover={{ color: "brand.orange" }}
-                                            onClick={() => {
-                                                setCurrentCategory((prevCategory) =>
-                                                    prevCategory === category ? null : category,
-                                                );
-                                            }}
-                                        >
-                                            {category}
-                                        </Button>
-                                        <Collapse in={currentCategory === category} animateOpacity>
-                                            <ul>
-                                                {subCategories.map((subCategory) => (
-                                                    <li key={subCategory} className="my-2 pl-4">
-                                                        <Button
-                                                            variant="ghost"
-                                                            fontSize="1.25rem"
-                                                            fontWeight="normal"
-                                                            _active={{
-                                                                color: "brand.orange",
-                                                                fontWeight: "bold",
-                                                            }}
-                                                            isActive={params.search === subCategory}
-                                                            onClick={() => {
-                                                                handleCategoryFilter([subCategory]);
-                                                            }}
-                                                        >
-                                                            {subCategory}
-                                                        </Button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </Collapse>
-                                    </Flex>
-                                ),
-                            )}
-                        </Flex>
-                        <Flex flexDir="column" gap="1rem">
-                            <Text fontWeight="600" fontSize="1.75rem">
-                                Brands
-                            </Text>
-                            <ul>
-                                {products?.brands?.map((brand) => (
-                                    <li key={brand} className="my-2">
-                                        <Button
-                                            variant="unstyled"
-                                            fontSize="1.5rem"
-                                            fontWeight="normal"
-                                            _hover={{ color: "brand.orange" }}
-                                            onClick={() => handleBrandFilter(brand)}
-                                            _active={{
-                                                color: "brand.orange",
-                                                fontWeight: "bold",
-                                            }}
-                                            isActive={params.brand_name === brand}
-                                        >
-                                            {brand}
-                                        </Button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Flex>
-                        <Flex flexDir="column" gap="1rem">
-                            <Text fontWeight="600" fontSize="1.75rem">
-                                Prices
-                            </Text>
-                            <VStack spacing={4} align="stretch">
-                                {products?.priceRange.map((priceRange) => (
-                                    <Checkbox
-                                        key={`${priceRange.price_min}-${priceRange.price_max}`}
-                                        size="lg"
-                                        colorScheme="orange"
-                                        isChecked={
-                                            params.price_min ===
-                                                priceRange?.price_min?.toString() &&
-                                            params.price_max === priceRange?.price_max?.toString()
-                                        }
-                                        onChange={() => handlePriceFilter(priceRange)}
-                                    >
-                                        {`$${priceRange.price_min} - $${priceRange.price_max}`}
-                                    </Checkbox>
-                                ))}
-                            </VStack>
-                        </Flex>
-                        <Flex>
-                            <Button
-                                variant="outline"
-                                bg={"typography.ash"}
-                                color="white"
-                                fontSize="1.5rem"
-                                fontWeight="bold"
-                                w="full"
-                                px="1rem"
-                                onClick={handleResetFilters}
-                                _hover={{ bg: "brand.orange", color: "white" }}
+                            <Flex
+                                flexDir="column"
+                                cursor="pointer"
+                                display={{ base: "flex", md: "none" }}
+                                onClick={() => setToggleFilters(false)}
                             >
-                                Reset Filters
+                                <MdArrowBackIosNew className="text-4xl" />
+                            </Flex>
+                            <Flex flexDir="column" gap="1rem" align="start" pt="1rem">
+                                <Text fontWeight="600" fontSize="1.75rem">
+                                    Categories
+                                </Text>
+                                {Object.entries(products?.categories).map(
+                                    ([category, subCategories]) => (
+                                        <Flex
+                                            flexDir="column"
+                                            key={category}
+                                            gap="1rem"
+                                            align="start"
+                                        >
+                                            <Button
+                                                variant="unstyled"
+                                                fontSize="1.5rem"
+                                                fontWeight="normal"
+                                                _hover={{ color: "brand.orange" }}
+                                                onClick={() => {
+                                                    setCurrentCategory((prevCategory) =>
+                                                        prevCategory === category ? null : category,
+                                                    );
+                                                }}
+                                            >
+                                                {category}
+                                            </Button>
+                                            <Collapse
+                                                in={currentCategory === category}
+                                                animateOpacity
+                                            >
+                                                <ul>
+                                                    {subCategories.map((subCategory) => (
+                                                        <li key={subCategory} className="my-2 pl-4">
+                                                            <Button
+                                                                variant="ghost"
+                                                                fontSize="1.25rem"
+                                                                fontWeight="normal"
+                                                                _active={{
+                                                                    color: "brand.orange",
+                                                                    fontWeight: "bold",
+                                                                }}
+                                                                isActive={
+                                                                    params.search === subCategory
+                                                                }
+                                                                onClick={() => {
+                                                                    handleCategoryFilter([
+                                                                        subCategory,
+                                                                    ]);
+                                                                }}
+                                                            >
+                                                                {subCategory}
+                                                            </Button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </Collapse>
+                                        </Flex>
+                                    ),
+                                )}
+                            </Flex>
+                            <Flex flexDir="column" gap="1rem">
+                                <Text fontWeight="600" fontSize="1.75rem">
+                                    Brands
+                                </Text>
+                                <ul>
+                                    {products?.brands?.map((brand) => (
+                                        <li key={brand} className="my-2">
+                                            <Button
+                                                variant="unstyled"
+                                                fontSize="1.5rem"
+                                                fontWeight="normal"
+                                                _hover={{ color: "brand.orange" }}
+                                                onClick={() => handleBrandFilter(brand)}
+                                                _active={{
+                                                    color: "brand.orange",
+                                                    fontWeight: "bold",
+                                                }}
+                                                isActive={params.brand_name === brand}
+                                            >
+                                                {brand}
+                                            </Button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Flex>
+                            <Flex flexDir="column" gap="1rem">
+                                <Text fontWeight="600" fontSize="1.75rem">
+                                    Prices
+                                </Text>
+                                <VStack spacing={4} align="stretch">
+                                    {products?.priceRange.map((priceRange) => (
+                                        <Checkbox
+                                            key={`${priceRange.price_min}-${priceRange.price_max}`}
+                                            size="lg"
+                                            colorScheme="orange"
+                                            isChecked={
+                                                params.price_min ===
+                                                    priceRange?.price_min?.toString() &&
+                                                params.price_max ===
+                                                    priceRange?.price_max?.toString()
+                                            }
+                                            onChange={() => handlePriceFilter(priceRange)}
+                                        >
+                                            {`$${priceRange.price_min} - $${priceRange.price_max}`}
+                                        </Checkbox>
+                                    ))}
+                                </VStack>
+                            </Flex>
+                            <Flex>
+                                <Button
+                                    variant="outline"
+                                    bg={"typography.ash"}
+                                    color="white"
+                                    fontSize="1.5rem"
+                                    fontWeight="bold"
+                                    w="full"
+                                    px="1rem"
+                                    onClick={handleResetFilters}
+                                    _hover={{ bg: "brand.orange", color: "white" }}
+                                >
+                                    Reset Filters
+                                </Button>
+                            </Flex>
+                        </Flex>
+                    )}
+
+                    <Flex
+                        bg="bg.light"
+                        p={{ base: "1rem", sm: "2rem" }}
+                        flexGrow="1"
+                        flexDir="column"
+                        mt="3rem"
+                        mr="1rem"
+                    >
+                        <Flex flexDir="column">
+                            <Breadcrumb
+                                spacing="4px"
+                                fontSize="1.75rem"
+                                separator={<BsChevronRight className="text-gray-500" />}
+                                display={{ base: "none", md: "flex" }}
+                            >
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink
+                                        as={Link}
+                                        to="#"
+                                        textDecoration="none"
+                                        color="bg.opaque"
+                                        fontSize={{ base: "1.3rem", md: "2rem" }}
+                                    >
+                                        DFX Gadgets Hub
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink
+                                        as={Link}
+                                        to="#"
+                                        isCurrentPage
+                                        fontSize={{ base: "1.5rem", md: "2rem" }}
+                                    >
+                                        Products
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                            </Breadcrumb>
+                            <Flex alignItems="center" my="1rem">
+                                <Text fontSize="1.5rem" fontWeight="bold">
+                                    Price
+                                </Text>
+                                <Text
+                                    bg="white"
+                                    borderRadius=".3rem"
+                                    p=".5rem 1rem"
+                                    mx=".5rem"
+                                    color="bg.opaque"
+                                >{`$${current_min_price}`}</Text>
+                                <Text>-</Text>
+                                <Text
+                                    bg="white"
+                                    borderRadius=".3rem"
+                                    p=".5rem 1rem"
+                                    mx=".5rem"
+                                    color="bg.opaque"
+                                >{`$${current_max_price}`}</Text>
+                            </Flex>
+                            <Flex
+                                alignItems="center"
+                                justifyContent="space-between"
+                                gap="1rem"
+                                mt="1rem"
+                                display={{ base: "flex", md: "none" }}
+                            >
+                                <Flex flexDir="column">
+                                    <Text
+                                        fontWeight="600"
+                                        color="typography.dark"
+                                        fontSize="1.8rem"
+                                        textTransform="capitalize"
+                                    >
+                                        {params.search ||
+                                            params.product_name ||
+                                            params.brand_name ||
+                                            currentCategory ||
+                                            "All Products"}
+                                    </Text>
+                                    <Text color="typography.ash" fontSize="1.2rem">
+                                        Showing all products
+                                    </Text>
+                                </Flex>
+                                <AppButton
+                                    variant="dark"
+                                    borderRadius=".3rem"
+                                    height="3rem"
+                                    w="6rem"
+                                    justifySelf="flex-end"
+                                    ml="auto"
+                                    onClick={() => setToggleFilters((filters) => !filters)}
+                                >
+                                    Filters
+                                </AppButton>
+                            </Flex>
+                        </Flex>
+                        <Grid
+                            templateColumns={{
+                                base: "repeat(2, 1fr)",
+                                sm: "repeat(2, 1fr)",
+                                md: "repeat(3, 1fr)",
+                                lg: "repeat(4, 1fr)",
+                            }}
+                            mt="2rem"
+                            justifyContent="center"
+                            gap={{ base: "1rem", sm: "2rem" }}
+                        >
+                            {productsInventorySuccess &&
+                                productItems?.map((item) => (
+                                    <Flex
+                                        key={item.sku}
+                                        flexDir="column"
+                                        className="hover:scale-105 transition-all duration-300 w-full bg-white p-4 sm:p-8 rounded-3xl"
+                                        boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
+                                        justifyContent="space-between"
+                                        as={Link}
+                                        to={`/product/${item.sku}/`}
+                                    >
+                                        <Image
+                                            src={item.default_image}
+                                            alt={item.product_name}
+                                            height={{ base: "10rem", sm: "20rem" }}
+                                            objectFit="contain"
+                                            my={{ base: "1rem", sm: "3rem", md: "0" }}
+                                            mixBlendMode="darken"
+                                        />
+                                        <Text
+                                            color="typography.dark"
+                                            fontSize={{ base: "1rem", sm: "1.5rem" }}
+                                            minH={{ base: "1.85rem", sm: "4rem" }}
+                                        >
+                                            {item.product_name}
+                                        </Text>
+                                        <Flex alignItems="baseline">
+                                            <Text
+                                                color="typography.dark"
+                                                fontSize={{ base: "1rem", sm: "2.2rem" }}
+                                                fontWeight="600"
+                                            >
+                                                {`$${item.store_price}`}
+                                            </Text>
+                                            {item.discount_store_price && (
+                                                <Text
+                                                    color="typography.red"
+                                                    fontSize={{ base: ".6rem", sm: "1.2rem" }}
+                                                    px="2"
+                                                    textDecoration="line-through"
+                                                >
+                                                    {`$${item.discount_store_price}`}
+                                                </Text>
+                                            )}
+                                        </Flex>
+                                    </Flex>
+                                ))}
+                        </Grid>
+                        <Flex
+                            alignItems="center"
+                            justifyContent={{ base: "space-between", md: "center" }}
+                            gap="2rem"
+                            bg="white"
+                            p="1rem"
+                            mt="3rem"
+                        >
+                            <Button
+                                colorScheme="brand"
+                                variant="outline"
+                                color="bg.opaque"
+                                borderRadius=".3rem"
+                                h="3.5rem"
+                                w="9.5rem"
+                                fontSize={{ base: "1rem", sm: "1.5rem" }}
+                                border="1px solid rgba(22, 22, 22, 0.50)"
+                                onClick={handlePrevPage}
+                                isDisabled={page === 1}
+                                _active={{ bg: "brand.orange", color: "white" }}
+                                _disabled={{
+                                    pointerEvents: "none",
+                                    cursor: "not-allowed",
+                                    opacity: 0.5,
+                                }}
+                                leftIcon={<BsChevronLeft className="text-[#88888880] font-bold" />}
+                            >
+                                Previous
+                            </Button>
+                            <Box display={{ base: "none", md: "block" }}>
+                                {pages.map((num) => (
+                                    <Button
+                                        key={num + Math.random() * 1000}
+                                        colorScheme="brand"
+                                        variant="outline"
+                                        color="bg.opaque"
+                                        borderRadius=".3rem"
+                                        m=".5rem"
+                                        h="3.5rem"
+                                        w="3.5rem"
+                                        fontSize="1.5rem"
+                                        border="1px solid rgba(22, 22, 22, 0.50)"
+                                        onClick={() => handleSetPage(num)}
+                                        _active={{
+                                            bg: "brand.orange",
+                                            color: "white",
+                                            border: "none",
+                                        }}
+                                        isActive={page === num}
+                                    >
+                                        {num}
+                                    </Button>
+                                ))}
+                            </Box>
+                            <Text
+                                fontWeight="bold"
+                                fontSize="1.2rem"
+                                display={{ base: "block", md: "none" }}
+                            >
+                                <span className="text-[#DF6A12] mr-1">{page}</span>/
+                                <span className="ml-1">{count}</span>
+                            </Text>
+                            <Button
+                                colorScheme="brand"
+                                variant="outline"
+                                color="bg.opaque"
+                                borderRadius=".3rem"
+                                h="3.5rem"
+                                w="7rem"
+                                fontSize={{ base: "1rem", sm: "1.5rem" }}
+                                border="1px solid rgba(22, 22, 22, 0.50)"
+                                onClick={handleNextPage}
+                                isDisabled={page === count}
+                                _active={{ bg: "brand.orange", color: "white" }}
+                                _disabled={{
+                                    pointerEvents: "none",
+                                    cursor: "not-allowed",
+                                    opacity: 0.5,
+                                }}
+                                rightIcon={
+                                    <BsChevronRight className="text-[#88888880] font-bold" />
+                                }
+                            >
+                                Next
                             </Button>
                         </Flex>
                     </Flex>
-                )}
-
-                <Flex
-                    bg="bg.light"
-                    p={{ base: "1rem", sm: "2rem" }}
-                    flexGrow="1"
-                    flexDir="column"
-                    mt="3rem"
-                    mr="1rem"
-                >
-                    <Flex flexDir="column">
-                        <Breadcrumb
-                            spacing="4px"
-                            fontSize="1.75rem"
-                            separator={<BsChevronRight className="text-gray-500" />}
-                            display={{ base: "none", md: "flex" }}
-                        >
-                            <BreadcrumbItem>
-                                <BreadcrumbLink
-                                    as={Link}
-                                    to="#"
-                                    textDecoration="none"
-                                    color="bg.opaque"
-                                    fontSize={{ base: "1.3rem", md: "2rem" }}
-                                >
-                                    DFX Gadgets Hub
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink
-                                    as={Link}
-                                    to="#"
-                                    isCurrentPage
-                                    fontSize={{ base: "1.5rem", md: "2rem" }}
-                                >
-                                    Products
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                        </Breadcrumb>
-                        <Flex alignItems="center" my="1rem">
-                            <Text fontSize="1.5rem" fontWeight="bold">
-                                Price
-                            </Text>
-                            <Text
-                                bg="white"
-                                borderRadius=".3rem"
-                                p=".5rem 1rem"
-                                mx=".5rem"
-                                color="bg.opaque"
-                            >{`$${current_min_price}`}</Text>
-                            <Text>-</Text>
-                            <Text
-                                bg="white"
-                                borderRadius=".3rem"
-                                p=".5rem 1rem"
-                                mx=".5rem"
-                                color="bg.opaque"
-                            >{`$${current_max_price}`}</Text>
-                        </Flex>
-                        <Flex
-                            alignItems="center"
-                            justifyContent="space-between"
-                            gap="1rem"
-                            mt="1rem"
-                            display={{ base: "flex", md: "none" }}
-                        >
-                            <Flex flexDir="column">
-                                <Text
-                                    fontWeight="600"
-                                    color="typography.dark"
-                                    fontSize="1.8rem"
-                                    textTransform="capitalize"
-                                >
-                                    {params.search ||
-                                        params.product_name ||
-                                        params.brand_name ||
-                                        currentCategory ||
-                                        "All Products"}
-                                </Text>
-                                <Text color="typography.ash" fontSize="1.2rem">
-                                    Showing all products
-                                </Text>
-                            </Flex>
-                            <AppButton
-                                variant="dark"
-                                borderRadius=".3rem"
-                                height="3rem"
-                                w="6rem"
-                                justifySelf="flex-end"
-                                ml="auto"
-                                onClick={() => setToggleFilters((filters) => !filters)}
-                            >
-                                Filters
-                            </AppButton>
-                        </Flex>
-                    </Flex>
-                    <Grid
-                        templateColumns={{
-                            base: "repeat(2, 1fr)",
-                            sm: "repeat(2, 1fr)",
-                            md: "repeat(3, 1fr)",
-                            lg: "repeat(4, 1fr)",
-                        }}
-                        mt="2rem"
-                        justifyContent="center"
-                        gap={{ base: "1rem", sm: "2rem" }}
-                    >
-                        {productsInventorySuccess &&
-                            productItems?.map((item) => (
-                                <Flex
-                                    key={item.sku}
-                                    flexDir="column"
-                                    className="hover:scale-105 transition-all duration-300 w-full bg-white p-4 sm:p-8 rounded-3xl"
-                                    boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
-                                    justifyContent="space-between"
-                                    as={Link}
-                                    to={`/product/${item.sku}/`}
-                                >
-                                    <Image
-                                        src={item.default_image}
-                                        alt={item.product_name}
-                                        height={{ base: "10rem", sm: "20rem" }}
-                                        objectFit="contain"
-                                        my={{ base: "1rem", sm: "3rem", md: "0" }}
-                                        mixBlendMode="darken"
-                                    />
-                                    <Text
-                                        color="typography.dark"
-                                        fontSize={{ base: "1rem", sm: "1.5rem" }}
-                                        minH={{ base: "1.85rem", sm: "4rem" }}
-                                    >
-                                        {item.product_name}
-                                    </Text>
-                                    <Flex alignItems="baseline">
-                                        <Text
-                                            color="typography.dark"
-                                            fontSize={{ base: "1rem", sm: "2.2rem" }}
-                                            fontWeight="600"
-                                        >
-                                            {`$${item.store_price}`}
-                                        </Text>
-                                        {item.discount_store_price && (
-                                            <Text
-                                                color="typography.red"
-                                                fontSize={{ base: ".6rem", sm: "1.2rem" }}
-                                                px="2"
-                                                textDecoration="line-through"
-                                            >
-                                                {`$${item.discount_store_price}`}
-                                            </Text>
-                                        )}
-                                    </Flex>
-                                </Flex>
-                            ))}
-                    </Grid>
-                    <Flex
-                        alignItems="center"
-                        justifyContent={{ base: "space-between", md: "center" }}
-                        gap="2rem"
-                        bg="white"
-                        p="1rem"
-                        mt="3rem"
-                    >
-                        <Button
-                            colorScheme="brand"
-                            variant="outline"
-                            color="bg.opaque"
-                            borderRadius=".3rem"
-                            h="3.5rem"
-                            w="9.5rem"
-                            fontSize={{ base: "1rem", sm: "1.5rem" }}
-                            border="1px solid rgba(22, 22, 22, 0.50)"
-                            onClick={handlePrevPage}
-                            isDisabled={page === 1}
-                            _active={{ bg: "brand.orange", color: "white" }}
-                            _disabled={{
-                                pointerEvents: "none",
-                                cursor: "not-allowed",
-                                opacity: 0.5,
-                            }}
-                            leftIcon={<BsChevronLeft className="text-[#88888880] font-bold" />}
-                        >
-                            Previous
-                        </Button>
-                        <Box display={{ base: "none", md: "block" }}>
-                            {pages.map((num) => (
-                                <Button
-                                    key={num + Math.random() * 1000}
-                                    colorScheme="brand"
-                                    variant="outline"
-                                    color="bg.opaque"
-                                    borderRadius=".3rem"
-                                    m=".5rem"
-                                    h="3.5rem"
-                                    w="3.5rem"
-                                    fontSize="1.5rem"
-                                    border="1px solid rgba(22, 22, 22, 0.50)"
-                                    onClick={() => handleSetPage(num)}
-                                    _active={{ bg: "brand.orange", color: "white", border: "none" }}
-                                    isActive={page === num}
-                                >
-                                    {num}
-                                </Button>
-                            ))}
-                        </Box>
-                        <Text
-                            fontWeight="bold"
-                            fontSize="1.2rem"
-                            display={{ base: "block", md: "none" }}
-                        >
-                            <span className="text-[#DF6A12] mr-1">{page}</span>/
-                            <span className="ml-1">{count}</span>
-                        </Text>
-                        <Button
-                            colorScheme="brand"
-                            variant="outline"
-                            color="bg.opaque"
-                            borderRadius=".3rem"
-                            h="3.5rem"
-                            w="7rem"
-                            fontSize={{ base: "1rem", sm: "1.5rem" }}
-                            border="1px solid rgba(22, 22, 22, 0.50)"
-                            onClick={handleNextPage}
-                            isDisabled={page === count}
-                            _active={{ bg: "brand.orange", color: "white" }}
-                            _disabled={{
-                                pointerEvents: "none",
-                                cursor: "not-allowed",
-                                opacity: 0.5,
-                            }}
-                            rightIcon={<BsChevronRight className="text-[#88888880] font-bold" />}
-                        >
-                            Next
-                        </Button>
-                    </Flex>
                 </Flex>
-            </Flex>
+            )}
             <Seamless />
             <WaitList />
             <Footer />

@@ -11,9 +11,8 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import Nav from "../components/nav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Seamless from "../components/seamless";
-import { productDetailsData } from "../utils/dummyData";
 import AppButton from "../components/button";
 import { useGetSingleProduct } from "../services/products";
 import LoadingSpinner from "../components/loading";
@@ -25,27 +24,49 @@ const ProductDetail = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const { isOpen, onToggle } = useDisclosure();
-    const [selectedImage, setSelectedImage] = useState<string>(
-        productDetailsData.info.variants[0].image,
-    );
-    const [selectedStorage, setSelectedStorage] = useState(
-        productDetailsData.info.storage[0].capacity,
-    );
-    const [selectedColor, setSelectedColor] = useState(productDetailsData.info.variants[0].color);
+    const [productId, setProductId] = useState<string | undefined>(sku);
     const { mutateAsync: isAddingToCart } = UseAddToCartMutation();
-    const { data: productDetail, error, isLoading, isSuccess } = useGetSingleProduct(sku!);
-    console.log("productDetail", productDetail, error, isLoading, isSuccess, sku);
+    const { data: productDetail, error, isLoading, isSuccess } = useGetSingleProduct(productId!);
+    const {
+        images,
+        product_details,
+        variants,
+        store_price,
+        condition,
+        shipping,
+        onsite_pickup,
+        banner_image,
+        color_name,
+        storage_size,
+        attribute_values,
+        seo_feature,
+    } = productDetail || {};
+    const [selectedImage, setSelectedImage] = useState<string | undefined>(images?.[0].image);
+    const [selectedStorage, setSelectedStorage] = useState<string | undefined>(storage_size);
+    const [selectedColor, setSelectedColor] = useState<string | undefined>(color_name);
+
+    useEffect(() => {
+        setSelectedStorage(storage_size);
+        setSelectedColor(color_name);
+    }, [color_name, storage_size]);
 
     const handleImageClick = (image: string) => {
         setSelectedImage(image);
     };
 
-    const handleStorageFilter = (storage: string) => {
-        setSelectedStorage(storage);
+    const handleStorageFilter = (storageName: string, storageData: string) => {
+        setSelectedStorage(storageName);
+        if (!storageData) return;
+        setProductId(storageData);
+        window.location.reload();
     };
 
     const handleColorFilter = (color: string) => {
         setSelectedColor(color);
+        const newSKu = variants?.[color]?.available_storage?.[storage_size!];
+        if (!newSKu) return;
+        setProductId(sku);
+        window.location.href = `/product/${newSKu}/`;
     };
 
     const handleAddToCart = async () => {
@@ -65,289 +86,332 @@ const ProductDetail = () => {
 
     if (isLoading) return <LoadingSpinner />;
 
+    if (error) {
+        console.log(error, "error");
+    }
+
     return (
         <Box>
             <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <Box>
-                <Box mx="auto" w="98%" mb="5rem" my={{ base: "2rem", md: "5rem" }}>
-                    <Flex
-                        flexDir="column"
-                        display={{ base: "flex", md: "none" }}
-                        mb="2rem"
-                        pl="1rem"
-                    >
-                        <Text
-                            fontSize="1.5rem"
-                            fontWeight="600"
-                            color="brand.orange"
-                            textTransform="uppercase"
-                            mb=".8rem"
-                        >
-                            {productDetailsData.info.condition}
-                        </Text>
-                        <Text fontSize="2rem" fontWeight="700">
-                            {productDetailsData.info.name}
-                        </Text>
-                        <Text fontSize="1.2rem" fontWeight="600">
-                            {productDetailsData.info.description}
-                        </Text>
-                    </Flex>
-                    <Flex flexDir={{ base: "column", md: "row" }}>
-                        <Flex flexGrow="1" flexDir={{ base: "column", md: "row" }}>
-                            <Flex
-                                flexDir={{ base: "row", md: "column" }}
-                                gap={{ base: "1rem", sm: "2rem", md: "3rem" }}
-                                px={{ base: "1rem", md: "2rem" }}
-                                pb={{ md: "3rem" }}
-                                my={{ base: "2rem", md: "0" }}
-                                order={{ base: 1, md: 0 }}
-                            >
-                                {productDetailsData.info.variants.map((variant) => (
-                                    <div
-                                        key={variant.image}
-                                        className={`hover:scale-105 transition-all duration-300 w-full bg-white xs:p-6 rounded-xl shadow-lg cursor-pointer ${
-                                            selectedImage === variant.image
-                                                ? "border-2 border-[#DF6A12]"
-                                                : ""
-                                        }`}
-                                        onClick={() => handleImageClick(variant.image)}
-                                    >
-                                        <img
-                                            src={variant.image}
-                                            alt="main product image"
-                                            className="max-h-[10rem] max-w-[10rem] min-w-12 min-h-12 w-full h-full object-cover xs:object-contain mix-blend-darken"
-                                        />
-                                    </div>
-                                ))}
-                            </Flex>
-                            <Flex
-                                alignItems="center"
-                                justifyContent="center"
-                                bg="bg.light"
-                                p="2rem"
-                                flexGrow="1"
-                                order={{ base: 0, md: 1 }}
-                            >
-                                <img
-                                    src={selectedImage}
-                                    alt="main product image"
-                                    className="max-h-[40rem] h-full w-full object-contain mix-blend-darken"
-                                />
-                            </Flex>
-                        </Flex>
+            {isSuccess && (
+                <Box>
+                    <Box mx="auto" w="98%" mb="5rem" my={{ base: "2rem", md: "5rem" }}>
                         <Flex
                             flexDir="column"
-                            gap="3rem"
-                            px={{ base: "1rem", sm: "2rem" }}
-                            pb="3rem"
-                            justifyContent="space-between"
+                            display={{ base: "flex", md: "none" }}
+                            mb="2rem"
+                            pl="1rem"
                         >
-                            <Flex flexDir="column" display={{ base: "none", md: "flex" }}>
-                                <Text
-                                    fontSize="1.5rem"
-                                    fontWeight="600"
-                                    color="brand.orange"
-                                    textTransform="uppercase"
-                                    mb="1rem"
-                                >
-                                    {productDetailsData.info.condition}
-                                </Text>
-                                <Text fontSize="2.5rem" fontWeight="700">
-                                    {productDetailsData.info.name}
-                                </Text>
-                                <Text fontSize="1.5rem" fontWeight="600">
-                                    {productDetailsData.info.description}
-                                </Text>
-                            </Flex>
-                            <Flex flexDir="column" gap="2rem">
-                                <Text fontSize="2rem" fontWeight="600">
-                                    {`$${productDetailsData.info.storage[0].price}`}
-                                </Text>
-                                <Flex alignItems="center" gap="1rem">
-                                    {productDetailsData.info.storage.map((storage) => (
-                                        <Box
-                                            key={storage.id}
-                                            px="1rem"
-                                            py=".5rem"
-                                            borderRadius=".6rem"
-                                            border={
-                                                selectedStorage === storage.capacity
-                                                    ? "1px solid #DF6A12"
-                                                    : "1px solid #161616"
-                                            }
-                                            cursor="pointer"
-                                            onClick={() => handleStorageFilter(storage.capacity)}
-                                        >
-                                            <Text>{storage.capacity}</Text>
-                                        </Box>
-                                    ))}
-                                </Flex>
-                            </Flex>
-                            <Flex flexDir="column">
-                                <Text fontSize="1.75rem">
-                                    Color:{" "}
-                                    <span className="font-medium">
-                                        {productDetailsData.info.variants[0].color}
-                                    </span>
-                                </Text>
-                                <Flex alignItems="center" gap="1rem" my="1rem">
-                                    {productDetailsData.info.variants.map((color) => (
-                                        <Box
-                                            key={color.code}
-                                            bg={color.code}
-                                            p="1rem"
-                                            w="3rem"
-                                            h="3rem"
-                                            rounded="full"
-                                            cursor="pointer"
-                                            border="none"
-                                            outlineOffset="2px"
-                                            outline={
-                                                selectedColor === color.color
-                                                    ? "2px solid #0086D1"
-                                                    : ""
-                                            }
-                                            onClick={() => handleColorFilter(color.color)}
-                                        />
-                                    ))}
-                                </Flex>
-                            </Flex>
-                            <AppButton
-                                variant="primary"
-                                height="3rem"
-                                loadingText="Adding to cart"
-                                onClick={handleAddToCart}
+                            <Text
+                                fontSize="1.5rem"
+                                fontWeight="600"
+                                color="brand.orange"
+                                textTransform="uppercase"
+                                mb=".8rem"
                             >
-                                ADD TO CART
-                            </AppButton>
+                                {condition}
+                            </Text>
+                            <Text fontSize="2rem" fontWeight="700">
+                                {product_details?.name}
+                            </Text>
+                            {seo_feature && (
+                                <Text fontSize="1.5rem" fontWeight="600">
+                                    {seo_feature}
+                                </Text>
+                            )}
+                        </Flex>
+                        <Flex flexDir={{ base: "column", md: "row" }}>
+                            <Flex flexGrow="1" flexDir={{ base: "column", md: "row" }} w="full">
+                                <Flex
+                                    flexDir={{ base: "row", md: "column" }}
+                                    gap={{ base: "1rem", sm: "2rem", md: "3rem" }}
+                                    px={{ base: "1rem", md: "2rem" }}
+                                    pb={{ md: "3rem" }}
+                                    my={{ base: "2rem", md: "0" }}
+                                    order={{ base: 1, md: 0 }}
+                                >
+                                    {images?.map((item, index) => (
+                                        <div
+                                            key={`${index}-${item.alt_text}`}
+                                            className={`hover:scale-105 transition-all duration-300 w-full min-h-[6rem] min-w-[6rem] bg-white xs:p-6 rounded-xl shadow-lg cursor-pointer ${
+                                                selectedImage === item.image
+                                                    ? "border-2 border-[#DF6A12]"
+                                                    : ""
+                                            }`}
+                                            onClick={() => handleImageClick(item.image)}
+                                        >
+                                            <img
+                                                src={item.image}
+                                                alt={item.alt_text || `${index}-image`}
+                                                className="max-h-[10rem] max-w-[10rem] min-w-20 min-h-20 w-full h-full object-cover xs:object-contain mix-blend-darken"
+                                            />
+                                        </div>
+                                    ))}
+                                </Flex>
+                                <Flex
+                                    alignItems="center"
+                                    justifyContent="center"
+                                    bg="bg.light"
+                                    p="2rem"
+                                    flexGrow="1"
+                                    order={{ base: 0, md: 1 }}
+                                >
+                                    <img
+                                        src={selectedImage || images?.[0].image}
+                                        alt="main product image"
+                                        className="max-h-[40rem] h-full w-full object-contain mix-blend-darken"
+                                    />
+                                </Flex>
+                            </Flex>
                             <Flex
                                 flexDir="column"
-                                gap="2rem"
-                                borderBlock="2px solid #88888880"
-                                py="2rem"
+                                gap="3rem"
+                                px={{ base: "1rem", sm: "2rem" }}
+                                pb="3rem"
+                                justifyContent="space-between"
+                                maxW={{ md: "30rem" }}
                             >
-                                {productDetailsData.info.free_shipping && (
-                                    <Flex alignItems="center" gap="1rem">
-                                        <img
-                                            src="/delivery-icon.png"
-                                            alt="free shipping"
-                                            className="w-16 h-16 mix-blend-darken"
-                                        />
-                                        <Flex flexDir="column">
-                                            <Text fontSize="1.5rem" fontWeight="600">
-                                                Free Shipping and Returns
-                                            </Text>
-                                            <Text fontSize="1.25rem" color="bg.opaque">
-                                                Pick up your order at any DFX store close to you
-                                            </Text>
-                                        </Flex>
-                                    </Flex>
-                                )}
-                                {productDetailsData.info.pickup && (
-                                    <Flex alignItems="center" gap="1rem">
-                                        <img
-                                            src="/pickup-icon.png"
-                                            alt="pickup"
-                                            className="w-16 h-16 mix-blend-darken"
-                                        />
-                                        <Flex flexDir="column">
-                                            <Text fontSize="1.5rem" fontWeight="600">
-                                                On-site Pickup
-                                            </Text>
-                                            <Text fontSize="1.25rem" color="bg.opaque">
-                                                Pick up your order at any DFX store close to you
-                                            </Text>
-                                        </Flex>
-                                    </Flex>
-                                )}
-                            </Flex>
-                        </Flex>
-                    </Flex>
-                </Box>
-                <Box mx="auto" w="96%" my="5rem">
-                    <Text fontSize="2rem" color="typography.dark" fontWeight="600">
-                        Product Description
-                    </Text>
-                    <Flex flexDir="column" gap="1.5rem" mt="1rem">
-                        {productDetailsData.description.map((data) => (
-                            <UnorderedList key={data.id} ml="2rem">
-                                <ListItem>
-                                    <Text fontSize="1.5rem">{data.text}</Text>
-                                </ListItem>
-                            </UnorderedList>
-                        ))}
-                    </Flex>
-                </Box>
-                <Box mx="auto" w="96%">
-                    <Button
-                        onClick={onToggle}
-                        variant="link"
-                        my="1rem"
-                        fontSize="2rem"
-                        color="typography.dark"
-                    >
-                        See all details
-                    </Button>
-                    <Collapse in={isOpen} animateOpacity>
-                        <Box mb="3rem" mx="auto" w="98%">
-                            {productDetailsData.data.map((data) => (
                                 <Flex
-                                    key={data.id}
-                                    justifyContent="space-between"
-                                    gap={{ base: "3rem", sm: "10%", md: "15%" }}
-                                    my="2rem"
-                                    pr=".5rem"
+                                    flexDir="column"
+                                    display={{ base: "none", md: "flex" }}
                                     w="full"
                                 >
-                                    <Text fontSize="1.5rem" fontWeight="bold" mb="1rem" w="30%">
-                                        {data.title}
+                                    <Text
+                                        fontSize="1.5rem"
+                                        fontWeight="600"
+                                        color="brand.orange"
+                                        textTransform="uppercase"
+                                        mb="1rem"
+                                    >
+                                        {condition}
                                     </Text>
-                                    <Flex flexDir="column" flexGrow="1" w="full">
-                                        {data.details.map((detail) => (
-                                            <Box key={detail.id}>
-                                                <UnorderedList>
-                                                    <ListItem>
-                                                        <Flex flexWrap="wrap">
-                                                            <Text
-                                                                fontWeight="bold"
-                                                                whiteSpace="nowrap"
-                                                            >
-                                                                {detail.text}
-                                                            </Text>
-                                                            <span className="mx-2 text-2xl font-bold -mt-1">
-                                                                -
-                                                            </span>
-                                                            <Text>{detail.description}</Text>
-                                                        </Flex>
-                                                    </ListItem>
-                                                </UnorderedList>
-                                                {detail.more
-                                                    ? detail.more?.map((more) => (
-                                                          <Box key={more.id} ml="1.5rem">
-                                                              <UnorderedList>
-                                                                  <ListItem>
-                                                                      <Text>
-                                                                          {more.description}
-                                                                      </Text>
-                                                                  </ListItem>
-                                                              </UnorderedList>
-                                                          </Box>
-                                                      ))
-                                                    : null}
-                                            </Box>
-                                        ))}
-                                    </Flex>
+                                    <Text fontSize="2rem" fontWeight="700">
+                                        {product_details?.name}
+                                    </Text>
+                                    {seo_feature && (
+                                        <Text fontSize="1.5rem" fontWeight="600">
+                                            {seo_feature}
+                                        </Text>
+                                    )}
                                 </Flex>
-                            ))}
+                                <Flex flexDir="column" gap="2rem">
+                                    <Text fontSize="2rem" fontWeight="600">
+                                        {`$${store_price}`}
+                                    </Text>
+                                    {storage_size && (
+                                        <Flex alignItems="center" gap="1rem" flexWrap="wrap">
+                                            {variants &&
+                                                Object.entries(variants).map(
+                                                    ([variantName, variantData]) => {
+                                                        const { available_storage } = variantData;
+                                                        const isLinkedToSelectedColor =
+                                                            variantName === selectedColor;
+                                                        return Object.entries(
+                                                            available_storage,
+                                                        ).map(
+                                                            ([storageName, storageData], index) => {
+                                                                return (
+                                                                    isLinkedToSelectedColor && (
+                                                                        <Box
+                                                                            key={`${index}-${storageName}`}
+                                                                            px="1rem"
+                                                                            py=".5rem"
+                                                                            borderRadius=".6rem"
+                                                                            border={
+                                                                                selectedStorage ===
+                                                                                storageName
+                                                                                    ? "2px solid #DF6A12"
+                                                                                    : "1px solid #161616"
+                                                                            }
+                                                                            cursor="pointer"
+                                                                            onClick={() =>
+                                                                                handleStorageFilter(
+                                                                                    storageName,
+                                                                                    storageData,
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            <Text>
+                                                                                {storageName}
+                                                                            </Text>
+                                                                        </Box>
+                                                                    )
+                                                                );
+                                                            },
+                                                        );
+                                                    },
+                                                )}
+                                        </Flex>
+                                    )}
+                                </Flex>
+                                {color_name && (
+                                    <Flex flexDir="column">
+                                        <Text fontSize="1.75rem">
+                                            Color:{" "}
+                                            <span className="font-medium">
+                                                {selectedColor || color_name}
+                                            </span>
+                                        </Text>
+                                        <Flex
+                                            alignItems="center"
+                                            justifySelf="flex-start"
+                                            gap="1rem"
+                                            my="1rem"
+                                            flexWrap="wrap"
+                                        >
+                                            {variants &&
+                                                Object.entries(variants).map(
+                                                    ([variantName, variantData]) => (
+                                                        <Box
+                                                            key={variantName}
+                                                            bg={variantData.hex_code}
+                                                            p="1rem"
+                                                            w="3rem"
+                                                            h="3rem"
+                                                            rounded="full"
+                                                            cursor="pointer"
+                                                            border={
+                                                                variantName === "White" &&
+                                                                selectedColor !== variantName
+                                                                    ? "1px solid #000"
+                                                                    : "none"
+                                                            }
+                                                            outlineOffset="2px"
+                                                            outline={
+                                                                selectedColor === variantName
+                                                                    ? "2px solid #0086D1"
+                                                                    : ""
+                                                            }
+                                                            title={variantName}
+                                                            onClick={() =>
+                                                                handleColorFilter(variantName)
+                                                            }
+                                                        />
+                                                    ),
+                                                )}
+                                        </Flex>
+                                    </Flex>
+                                )}
+                                <AppButton
+                                    variant="primary"
+                                    height="3rem"
+                                    loadingText="Adding to cart"
+                                    onClick={handleAddToCart}
+                                >
+                                    ADD TO CART
+                                </AppButton>
+                                <Flex
+                                    flexDir="column"
+                                    gap="2rem"
+                                    borderBlock="2px solid #88888880"
+                                    py="2rem"
+                                >
+                                    {shipping && (
+                                        <Flex alignItems="center" gap="1rem">
+                                            <img
+                                                src="/delivery-icon.png"
+                                                alt="free shipping"
+                                                className="w-16 h-16 mix-blend-darken"
+                                            />
+                                            <Flex flexDir="column">
+                                                <Text fontSize="1.5rem" fontWeight="600">
+                                                    Free Shipping and Returns
+                                                </Text>
+                                                <Text fontSize="1.25rem" color="bg.opaque">
+                                                    Pick up your order at any DFX store close to you
+                                                </Text>
+                                            </Flex>
+                                        </Flex>
+                                    )}
+                                    {onsite_pickup && (
+                                        <Flex alignItems="center" gap="1rem">
+                                            <img
+                                                src="/pickup-icon.png"
+                                                alt="pickup"
+                                                className="w-16 h-16 mix-blend-darken"
+                                            />
+                                            <Flex flexDir="column">
+                                                <Text fontSize="1.5rem" fontWeight="600">
+                                                    On-site Pickup
+                                                </Text>
+                                                <Text fontSize="1.25rem" color="bg.opaque">
+                                                    Pick up your order at any DFX store close to you
+                                                </Text>
+                                            </Flex>
+                                        </Flex>
+                                    )}
+                                </Flex>
+                            </Flex>
+                        </Flex>
+                    </Box>
+                    <Box mx="auto" w="96%" my="5rem">
+                        <Text fontSize="2rem" color="typography.dark" fontWeight="600">
+                            Product Description
+                        </Text>
+                        <Flex flexDir="column" gap="1.5rem" mt="1rem">
+                            {product_details?.formatted_description &&
+                            product_details?.formatted_description.length > 0 ? (
+                                product_details?.formatted_description?.map((text, index) => (
+                                    <UnorderedList key={index} ml="2rem">
+                                        <ListItem>
+                                            <Text fontSize="1.5rem">{text}</Text>
+                                        </ListItem>
+                                    </UnorderedList>
+                                ))
+                            ) : (
+                                <Text fontSize="1.5rem">{product_details?.description}</Text>
+                            )}
+                        </Flex>
+                    </Box>
+                    {attribute_values && Object.keys(attribute_values).length > 0 && (
+                        <Box mx="auto" w="96%" my="5rem">
+                            <Button
+                                onClick={onToggle}
+                                variant="link"
+                                fontSize="2rem"
+                                color="typography.dark"
+                            >
+                                See all details
+                            </Button>
+                            <Collapse in={isOpen} animateOpacity>
+                                <Box mt="2rem" mx="auto" w="98%">
+                                    {Object.entries(attribute_values).map(
+                                        ([attributeName, attributeData]) => (
+                                            <Flex
+                                                key={attributeName}
+                                                justifyContent="space-between"
+                                                alignItems="center"
+                                                gap={{ base: "3rem", sm: "10%", md: "15%" }}
+                                                pr=".5rem"
+                                                w="full"
+                                            >
+                                                <Text
+                                                    fontSize="1.5rem"
+                                                    fontWeight="bold"
+                                                    mb="1rem"
+                                                    w="100%"
+                                                >
+                                                    {attributeName}
+                                                </Text>
+                                                <UnorderedList flexGrow="1" w="50%">
+                                                    <ListItem>{attributeData}</ListItem>
+                                                </UnorderedList>
+                                            </Flex>
+                                        ),
+                                    )}
+                                </Box>
+                            </Collapse>
                         </Box>
-                    </Collapse>
+                    )}
+                    {banner_image && (
+                        <img
+                            src={banner_image}
+                            alt="main product image"
+                            className="max-h-[40rem] w-full mb-8 object-cover mix-blend-darken"
+                        />
+                    )}
                 </Box>
-                <img
-                    src="/iphone-product.png"
-                    alt="main product image"
-                    className="max-h-[40rem] w-full object-cover mix-blend-darken"
-                />
-            </Box>
+            )}
             <Seamless />
             <Footer />
         </Box>

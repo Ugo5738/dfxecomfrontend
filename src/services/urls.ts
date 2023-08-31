@@ -16,6 +16,7 @@ const URLS = {
     ORDER_SUMMARY: `/order/order-summary/`,
     ADD_ORDERS: (sku: string, quantity: number) => `/order/add-to-cart/${sku}/${quantity}/`,
     REMOVE_ORDERS: (sku: string) => `/order/remove-from-cart/${sku}/`,
+    REDUCE_ORDERS: (sku: string) => `/order/remove-single-from-cart/${sku}/`,
     COUPON_ORDER: (order_id: string, coupon: string) =>
         `/order/apply-coupon/${order_id}/${coupon}/`,
     PAYMENT: `/payment/initiate-payment/`,
