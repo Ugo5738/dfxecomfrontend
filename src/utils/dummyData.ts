@@ -324,47 +324,6 @@ export const wearablesDropdownMenu = [
 ];
 
 export const products = {
-    results: [
-        {
-            sku: 1,
-            product_name: "Apple IPhone 14 Pro",
-            store_price: "199.99",
-            discount_store_price: "299.99",
-            default_image: "/iphone-14.png",
-        },
-        {
-            sku: 2,
-            product_name: "AirPods",
-            store_price: "129.99",
-            discount_store_price: "199.99",
-            default_image: "/accessories.png",
-        },
-        {
-            sku: 3,
-            product_name: "Apple MacBook Pro 2023",
-            store_price: "239.99",
-            discount_store_price: "299.99",
-            default_image: "/macbook-pro.png",
-        },
-        {
-            sku: 4,
-            product_name: "Lenovo IdeaPad Gaming 3",
-            store_price: "159.99",
-            discount_store_price: "199.99",
-            default_image: "/lenovo.png",
-        },
-    ],
-    brands: [
-        "Apple",
-        "Samsung",
-        "Google",
-        "Lenovo",
-        "Dell",
-        "HP",
-        "Microsoft",
-        "Sony",
-        "Sennheiser",
-    ],
     categories: {
         Accessories: ["Protectors", "Chargers", "Photography"],
         Computing: ["Storage", "Monitors", "Audio", "Input Devices"],

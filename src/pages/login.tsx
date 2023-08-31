@@ -6,7 +6,7 @@ import AppButton from "../components/button";
 import { UseLoginMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
 import { useState } from "react";
-import { Link, useNavigate, useSearchParams} from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 const Login = () => {
     const color = useTheme().colors as ColorObject;

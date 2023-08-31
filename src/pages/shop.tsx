@@ -23,7 +23,7 @@ import Seamless from "../components/seamless";
 import ScrollNav from "../components/scrollNav";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { products } from "../utils/dummyData";
-import { useGetProducts } from "../services/products";
+import { useGetProducts, useGetBrands, useGetCategories } from "../services/products";
 import LoadingSpinner from "../components/loading";
 import { ErrorPropsType, ParamsType, ProductResultType } from "../utils/types";
 import Error404 from "../components/error";
@@ -34,8 +34,6 @@ import AppButton from "../components/button";
 const Shop = () => {
     const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
     const [searchParams] = useSearchParams();
-    // const [categories, setCategories] = useState({});
-    // const [brands, setBrands] = useState<string[]>([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState<number[]>([]);
     const [pageCount, setPageCount] = useState<number>(0);
@@ -53,11 +51,12 @@ const Shop = () => {
         attribute: "",
         price_min: "",
         price_max: "",
-        condition: [],
+        condition: "",
     });
-
     const debouncedSearchTerm = useDebounce(searchTerm.trim(), 700);
 
+    const { data: brandsData } = useGetBrands();
+    const { data: categoriesData } = useGetCategories();
     const {
         data: productsInventory,
         error: productsInventoryError,
@@ -67,7 +66,6 @@ const Shop = () => {
         page_size: 12,
         ...params,
     });
-
     const { count, results } = productsInventory! || {};
 
     const [productItems, setProductItems] = useState<ProductResultType[] | undefined>(results);
@@ -118,15 +116,13 @@ const Shop = () => {
     };
 
     const handleResetFilters = () => {
-        // setCategories({});
-        // setBrands([]);
         setParams((prevParams) => ({
             ...prevParams,
             search: "",
             brand_name: "",
             price_min: "",
             price_max: "",
-            condition: [],
+            condition: "",
         }));
         setCurrentCategory(null);
         setProductItems(results);
@@ -153,6 +149,8 @@ const Shop = () => {
         setParams((prevParams) => ({ ...prevParams, page: page }));
     };
 
+    console.log("vv", productItems?.length);
+
     if (productsInventoryLoading) {
         return <LoadingSpinner />;
     }
@@ -175,7 +173,7 @@ const Shop = () => {
                             py="2rem"
                             flexDir="column"
                             gap="3rem"
-                            w={{ base: "100%", md: "30%", lg: "18%" }}
+                            w={{ base: "100%", md: "30%", lg: "30%" }}
                             align="stretch"
                             position={{ base: "fixed", md: "static" }}
                             inset={{ base: "0", md: "auto" }}
@@ -195,81 +193,84 @@ const Shop = () => {
                                 <Text fontWeight="600" fontSize="1.75rem">
                                     Categories
                                 </Text>
-                                {Object.entries(products?.categories).map(
-                                    ([category, subCategories]) => (
-                                        <Flex
-                                            flexDir="column"
-                                            key={category}
-                                            gap="1rem"
-                                            align="start"
+                                {categoriesData?.map((category) => (
+                                    <Flex
+                                        flexDir="column"
+                                        key={category.name}
+                                        gap="1rem"
+                                        align="start"
+                                    >
+                                        <Button
+                                            variant="unstyled"
+                                            fontSize="1.5rem"
+                                            fontWeight="normal"
+                                            _hover={{ color: "brand.orange" }}
+                                            onClick={() => {
+                                                setCurrentCategory((prevCategory) =>
+                                                    prevCategory === category.name
+                                                        ? null
+                                                        : category.name,
+                                                );
+                                            }}
                                         >
-                                            <Button
-                                                variant="unstyled"
-                                                fontSize="1.5rem"
-                                                fontWeight="normal"
-                                                _hover={{ color: "brand.orange" }}
-                                                onClick={() => {
-                                                    setCurrentCategory((prevCategory) =>
-                                                        prevCategory === category ? null : category,
-                                                    );
-                                                }}
-                                            >
-                                                {category}
-                                            </Button>
-                                            <Collapse
-                                                in={currentCategory === category}
-                                                animateOpacity
-                                            >
-                                                <ul>
-                                                    {subCategories.map((subCategory) => (
-                                                        <li key={subCategory} className="my-2 pl-4">
-                                                            <Button
-                                                                variant="ghost"
-                                                                fontSize="1.25rem"
-                                                                fontWeight="normal"
-                                                                _active={{
-                                                                    color: "brand.orange",
-                                                                    fontWeight: "bold",
-                                                                }}
-                                                                isActive={
-                                                                    params.search === subCategory
-                                                                }
-                                                                onClick={() => {
-                                                                    handleCategoryFilter([
-                                                                        subCategory,
-                                                                    ]);
-                                                                }}
-                                                            >
-                                                                {subCategory}
-                                                            </Button>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </Collapse>
-                                        </Flex>
-                                    ),
-                                )}
+                                            {category.name}
+                                        </Button>
+                                        <Collapse
+                                            in={currentCategory === category.name}
+                                            animateOpacity
+                                        >
+                                            <ul>
+                                                {category.children.map((subCategory) => (
+                                                    <li
+                                                        key={`${subCategory.id}-${subCategory.name}`}
+                                                        className="my-1 pl-2"
+                                                    >
+                                                        <Button
+                                                            variant="ghost"
+                                                            fontSize="1.25rem"
+                                                            fontWeight="normal"
+                                                            _active={{
+                                                                color: "brand.orange",
+                                                                fontWeight: "bold",
+                                                            }}
+                                                            isActive={
+                                                                params.search === subCategory.name
+                                                            }
+                                                            onClick={() => {
+                                                                handleCategoryFilter([
+                                                                    subCategory.name,
+                                                                ]);
+                                                            }}
+                                                        >
+                                                            {subCategory.name}
+                                                        </Button>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </Collapse>
+                                    </Flex>
+                                ))}
                             </Flex>
                             <Flex flexDir="column" gap="1rem">
                                 <Text fontWeight="600" fontSize="1.75rem">
                                     Brands
                                 </Text>
                                 <ul>
-                                    {products?.brands?.map((brand) => (
-                                        <li key={brand} className="my-2">
+                                    {brandsData?.results?.map((brand) => (
+                                        <li key={brand.id} className="my-2">
                                             <Button
                                                 variant="unstyled"
                                                 fontSize="1.5rem"
                                                 fontWeight="normal"
                                                 _hover={{ color: "brand.orange" }}
-                                                onClick={() => handleBrandFilter(brand)}
+                                                onClick={() => handleBrandFilter(brand.name)}
                                                 _active={{
                                                     color: "brand.orange",
                                                     fontWeight: "bold",
                                                 }}
-                                                isActive={params.brand_name === brand}
+                                                isActive={params.brand_name === brand.name}
                                             >
-                                                {brand}
+                                                {brand.name}
                                             </Button>
                                         </li>
                                     ))}
@@ -541,7 +542,7 @@ const Shop = () => {
                                 fontSize={{ base: "1rem", sm: "1.5rem" }}
                                 border="1px solid rgba(22, 22, 22, 0.50)"
                                 onClick={handleNextPage}
-                                isDisabled={page === count}
+                                isDisabled={productItems && productItems.length < 12}
                                 _active={{ bg: "brand.orange", color: "white" }}
                                 _disabled={{
                                     pointerEvents: "none",

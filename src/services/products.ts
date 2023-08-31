@@ -1,7 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "./axios";
 import URLS from "./urls";
-import { ProductDetailType, ProductType, ShopCategoriesType } from "../utils/types";
+import {
+    BrandType,
+    CategoryType,
+    ProductDetailType,
+    ProductType,
+    ShopCategoriesType,
+} from "../utils/types";
 import { ParamsType } from "./../utils/types";
 import { removeEmpty } from "../utils/format";
 
@@ -53,6 +59,24 @@ export const useGetSingleProduct = (sku: string) => {
             enabled: !!sku,
         },
     );
+
+    return { data, error, isLoading, isSuccess };
+};
+
+export const useGetBrands = () => {
+    const { data, error, isLoading, isSuccess } = useQuery(["get_brands"], async () => {
+        const res = await axios.get(URLS.BRANDS_INVENTORY);
+        return res.data as unknown as BrandType;
+    });
+
+    return { data, error, isLoading, isSuccess };
+};
+
+export const useGetCategories = () => {
+    const { data, error, isLoading, isSuccess } = useQuery(["get_categories"], async () => {
+        const res = await axios.get(URLS.CATEGORY_INVENTORY);
+        return res.data as unknown as CategoryType[];
+    });
 
     return { data, error, isLoading, isSuccess };
 };

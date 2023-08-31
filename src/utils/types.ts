@@ -83,7 +83,7 @@ export interface ParamsType {
     attribute?: string;
     price_min?: string;
     price_max?: string;
-    condition?: ("new" | "used")[];
+    condition?: "new" | "used" | "";
     page?: number;
     page_size?: number;
 }
@@ -215,4 +215,30 @@ export interface ColorsType {
     shadow: {
         main: string;
     };
+}
+
+export interface BrandType {
+    count: number;
+    next: string;
+    previous: string | null;
+    results: {
+        id: number;
+        name: string;
+    }[];
+}
+
+export interface CategoryTypeChildren {
+    id: number;
+    name: string;
+    is_active: boolean;
+    is_trending: boolean;
+    children?: CategoryTypeChildren[];
+}
+
+export interface CategoryType {
+    id: number;
+    name: string;
+    is_active: boolean;
+    is_trending: boolean;
+    children: CategoryTypeChildren[];
 }

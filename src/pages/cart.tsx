@@ -288,7 +288,7 @@ const Cart = () => {
                                                         >
                                                             {product.product_name}
                                                         </Text>
-                                                        <Text
+                                                        {/* <Text
                                                             fontSize={{
                                                                 base: "1.1rem",
                                                                 sm: "1.4rem",
@@ -297,9 +297,9 @@ const Cart = () => {
                                                         >
                                                             Color:{" "}
                                                             <span className="font-normal">
-                                                                {/* {product.color} */}RED
+                                                                RED
                                                             </span>
-                                                        </Text>
+                                                        </Text> */}
                                                         {!ordered ? (
                                                             <Text fontSize="1.2rem">In Stock</Text>
                                                         ) : (
@@ -325,6 +325,7 @@ const Cart = () => {
                                                     <Flex
                                                         display={{ base: "none", md: "flex" }}
                                                         title="Quantity"
+                                                        minW="4rem"
                                                     >
                                                         <Select
                                                             size="md"
@@ -332,7 +333,8 @@ const Cart = () => {
                                                             outline="none"
                                                             fontSize="1.5rem"
                                                             fontWeight="700"
-                                                            defaultValue={quantity}
+                                                            // defaultValue={quantity}
+                                                            value={quantity}
                                                             onChange={(e) => {
                                                                 void handleItemQuantityChange(
                                                                     product.sku,
