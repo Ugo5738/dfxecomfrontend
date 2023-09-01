@@ -39,11 +39,11 @@ axios.interceptors.response.use(
             ErrorToast(error.response.data.detail);
             if (error.response.data.detail === "Authentication credentials were not provided.") {
                 sessionStorage.removeItem("dfx-token");
-                window.location.href = `/login?redirectedFrom=${window.location.href}`;
+                window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
             }
             if (error.response.data.code === "token_not_valid") {
                 sessionStorage.removeItem("dfx-token");
-                window.location.href = `/login?redirectedFrom=${window.location.href}`;
+                window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
             }
             return null;
         } else if (error.response?.data?.email) {
