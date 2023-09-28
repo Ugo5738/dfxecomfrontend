@@ -2,7 +2,9 @@ import { Flex, Text, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoMailSharp } from "react-icons/io5";
 
+// WaitList Component
 const WaitList = () => {
+    // State to store the user's subscription email
     const [subscriptionMail, setSubscriptionMail] = useState("");
 
     return (
@@ -20,9 +22,16 @@ const WaitList = () => {
                 fontWeight={700}
                 textAlign="center"
             >
+                {/* Icon */}
                 <IoMailSharp className="text-6xl" />
+
+                {/* Title */}
                 <Text fontSize={{ base: "2rem", sm: "3rem" }}>Join the list</Text>
+
+                {/* Description */}
                 <Text>Subscribe and stay up-to-date on the latest products, gadgets and more.</Text>
+
+                {/* Input for entering email address */}
                 <Input
                     type="email"
                     placeholder="Email address"

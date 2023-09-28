@@ -1,4 +1,5 @@
 import {
+    // Import Chakra UI components and icons
     Flex,
     Text,
     Box,
@@ -16,20 +17,29 @@ import {
     Slide,
     CloseButton,
 } from "@chakra-ui/react";
-import AppButton from "./button";
-import { Link } from "react-router-dom";
-import { BsCart3 } from "react-icons/bs";
-import { CiSearch } from "react-icons/ci";
-import { PiSignInLight } from "react-icons/pi";
-import { useState } from "react";
-import { SearchProps } from "../utils/types";
-import { useGetUser } from "../services/auth";
-import { useGetOrderSummary } from "../services/order";
 
+import AppButton from "./button"; // Import a custom button component
+import { Link } from "react-router-dom"; // Import the Link component from react-router-dom for navigation
+import { BsCart3 } from "react-icons/bs"; // Import a shopping cart icon
+import { CiSearch } from "react-icons/ci"; // Import a search icon
+import { PiSignInLight } from "react-icons/pi"; // Import a sign-in icon
+import { useState } from "react"; // Import the useState hook from React
+import { SearchProps } from "../utils/types"; // Import custom types
+import { useGetUser } from "../services/auth"; // Import a custom hook for getting user data
+import { useGetOrderSummary } from "../services/order"; // Import a custom hook for getting order summary data
+
+// Define the MainNav component
 const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
+    // State for toggling search
     const [toggleSearch, setToggleSearch] = useState(false);
+
+    // Fetch user data using a custom hook
     const { data: user, isLoading } = useGetUser();
+
+    // Fetch order summary data using a custom hook
     const { data: orderSummaryData, isSuccess } = useGetOrderSummary();
+
+    // Extract products from the order summary data if available
     const { products } = orderSummaryData?.order_summary || {};
 
     return (
@@ -38,14 +48,16 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 justifyContent="space-between"
                 alignItems="center"
                 py="1rem"
-                px=".5rem"
+                px="6rem"
                 mt={{ base: ".5rem", md: "0" }}
                 color="white"
                 gap={{ base: "1rem", xs: "3rem" }}
                 w="full"
             >
+                {/* Brand logo with a link to the homepage */}
                 <Text
-                    fontSize={{ base: "2rem", md: "3rem" }}
+                    fontSize={{ base: "2rem", md: "2.5rem" }}
+                    fontFamily="body"
                     fontWeight="bold"
                     color="brand.dark"
                     whiteSpace="nowrap"
@@ -54,27 +66,35 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 >
                     DFX Logo
                 </Text>
+
+                {/* Search input (visible on larger screens) */}
                 <Flex grow="1" display={{ base: "none", md: "flex" }}>
-                    <InputGroup>
+                    <InputGroup width="70%">
+                        {/* Input for entering search term */}
                         <Input
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Search DFX"
+                            placeholder=""
                             _placeholder={{ fontsize: "1.25rem" }}
-                            w="full"
+                            w="73.8125rem"
                             rounded="6rem"
                             p="1.5rem"
-                            pr="3.5rem"
+                            // pr="3.5rem"
                             color="brand.dark"
                             fontSize="1.5rem"
                             border="1px"
                         />
+                        {/* Search icon */}
                         <InputRightElement pt=".8rem" pr="1rem">
                             <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
                         </InputRightElement>
                     </InputGroup>
                 </Flex>
+
+                {/* Spacer (visible on smaller screens) */}
                 <Spacer display={{ base: "block", md: "none" }} />
+
+                {/* Search icon and input (visible on smaller screens) */}
                 <Flex
                     display={{ base: "flex", md: "none" }}
                     justifyContent="space-between"
@@ -90,6 +110,8 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     >
                         <CiSearch className="text-[#171923] h-10 w-10" />
                     </Box>
+
+                    {/* Slide-in search input */}
                     <Slide direction="top" in={toggleSearch} style={{ zIndex: 20 }} unmountOnExit>
                         <Flex
                             w="full"
@@ -107,10 +129,11 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                                 onClick={() => setToggleSearch(false)}
                             />
                             <InputGroup>
+                                {/* Input for entering search term */}
                                 <Input
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder="Search DFX"
+                                    placeholder=""
                                     _placeholder={{ fontsize: "1.25rem" }}
                                     w="full"
                                     rounded="6rem"
@@ -120,12 +143,14 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                                     fontSize="1.5rem"
                                     border="2px"
                                 />
+                                {/* Search icon */}
                                 <InputRightElement pt=".8rem" pr=".5rem">
                                     <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
                                 </InputRightElement>
                             </InputGroup>
                         </Flex>
                     </Slide>
+                    {/* Sign-in and register options (visible on smaller screens) */}
                     {!user && !isLoading ? (
                         <Popover placement="bottom">
                             <PopoverTrigger>
@@ -140,6 +165,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                                 <PopoverArrow bg="brand.nav" />
                                 <PopoverCloseButton color="red" fontSize="1rem" />
                                 <PopoverBody pt="3rem" px=".5rem">
+                                    {/* Sign-in option */}
                                     <Flex
                                         alignItems="center"
                                         justifyContent="space-between"
@@ -156,6 +182,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                                         </Text>
                                         <PiSignInLight className="text-[#171923] h-12 w-12" />
                                     </Flex>
+                                    {/* Register option */}
                                     <Flex
                                         alignItems="center"
                                         justifyContent="space-between"
@@ -177,6 +204,8 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         </Popover>
                     ) : null}
                 </Flex>
+
+                {/* Sign-in and register buttons (visible on larger screens) */}
                 {!user && !isLoading ? (
                     <Flex
                         display={{ base: "none", md: "flex" }}
@@ -184,6 +213,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         alignItems="center"
                         gap="3rem"
                     >
+                        {/* Register button */}
                         <AppButton
                             variant="primary"
                             borderRadius=".3rem"
@@ -192,6 +222,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         >
                             Register
                         </AppButton>
+                        {/* Sign-in button */}
                         <AppButton
                             variant="outline"
                             borderRadius=".3rem"
@@ -202,6 +233,8 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         </AppButton>
                     </Flex>
                 ) : null}
+
+                {/* Cart icon and count */}
                 <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
                     <BsCart3 className="text-[#171923] h-12 w-12" />
                     <Text

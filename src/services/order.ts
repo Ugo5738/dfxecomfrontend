@@ -10,7 +10,7 @@ interface OrderSummaryResponseType {
 export const useGetOrderSummary = () => {
     const { data, error, isLoading, isSuccess } = useQuery(["order_summary"], async () => {
         const res = await axios.get(URLS.ORDER_SUMMARY);
-        return res.data as unknown as OrderSummaryResponseType;
+        return res.data as OrderSummaryResponseType;
     });
 
     return { data, error, isLoading, isSuccess };
