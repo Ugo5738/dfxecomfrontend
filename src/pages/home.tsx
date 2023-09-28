@@ -14,20 +14,19 @@ import Seamless from "../components/seamless";
 import { useGetTrendingInventory, useGetInventoryProducts } from "../services/products";
 import LoadingSpinner from "../components/loading";
 import { LegacyRef, useEffect, useRef, useState } from "react";
-import { ErrorPropsType, ParentRefType } from "../utils/types";
-import Error404 from "../components/error";
+import { ParentRefType } from "../utils/types";
 
 const Home = () => {
     const {
         data: trendingInventory,
-        error: trendingInventoryError,
+        // error: trendingInventoryError,
         isLoading: trendingInventoryLoading,
         isSuccess: trendingInventorySuccess,
     } = useGetTrendingInventory();
 
     const {
         data: inventoryProducts,
-        error: inventoryProductsError,
+        // error: inventoryProductsError,
         isLoading: inventoryProductsLoading,
         isSuccess: inventoryProductsSuccess,
     } = useGetInventoryProducts();
@@ -55,13 +54,15 @@ const Home = () => {
     }, [scrollDuration]);
 
     if (trendingInventoryLoading || inventoryProductsLoading) return <LoadingSpinner />;
-    if (
+    {
+        /* if (
         trendingInventoryError ||
         inventoryProductsError ||
         !inventoryProducts?.results ||
         !trendingInventory
     )
-        return <Error404 error={trendingInventoryError as ErrorPropsType} />;
+        return <Error404 error={trendingInventoryError as ErrorPropsType} />;*/
+    }
 
     return (
         <Box overflowX="hidden">
@@ -84,9 +85,10 @@ const Home = () => {
                         <SwiperSlide key={item.id}>
                             <Flex
                                 backgroundImage={`url(${item.image})`}
-                                backgroundSize="90% 100%"
+                                backgroundSize="contain"
                                 backgroundRepeat="no-repeat"
-                                backgroundPosition="right"
+                                backgroundPosition="center"
+                                minHeight="19rem"
                             >
                                 <Flex
                                     flexDir="column"
@@ -94,7 +96,7 @@ const Home = () => {
                                     mb={{ base: "5rem", md: "10rem" }}
                                     px="3rem"
                                     w="full"
-                                    minH="15rem"
+                                    minH="10rem"
                                 >
                                     <Text
                                         color="brand.orange"
@@ -172,7 +174,7 @@ const Home = () => {
                             ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
                         >
                             {inventoryProductsSuccess &&
-                                inventoryProducts?.results?.length > 0 &&
+                                inventoryProducts?.results?.length &&
                                 inventoryProducts?.results?.map((item) => (
                                     <Box
                                         key={item.sku}
@@ -267,7 +269,7 @@ const Home = () => {
                         flexWrap={{ base: "wrap", md: "nowrap" }}
                     >
                         {trendingInventorySuccess &&
-                            trendingInventory?.length > 0 &&
+                            trendingInventory?.length &&
                             trendingInventory?.map((item) => (
                                 <GridItem
                                     key={item?.id}

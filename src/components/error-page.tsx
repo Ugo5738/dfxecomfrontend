@@ -1,13 +1,25 @@
+/**
+ * Error Component
+ *
+ * This component is responsible for rendering an error message and handling specific error cases based on the route error.
+ * It imports and uses functions and types from the react-router-dom library to manage route errors.
+ *
+ * @returns JSX element representing the error message and options to navigate or take action.
+ */
 import { isRouteErrorResponse, useNavigate, useRouteError } from "react-router-dom";
 import { useState } from "react";
 import { ErrorPropsType } from "../utils/types";
 
 const Error = () => {
     const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>(""); // Initialize errorMessage state
+
+    // Get route error using useRouteError and cast it to ErrorPropsType
     const routerError = useRouteError() as ErrorPropsType;
 
+    // Check if the route error is a response error
     if (isRouteErrorResponse(routerError)) {
+        // Handle specific error cases based on HTTP status code
         if (routerError.status === 404) {
             setErrorMessage("This page does not exist!");
         }
@@ -21,6 +33,7 @@ const Error = () => {
         }
     }
 
+    // Render the error message and a button to navigate back home
     return (
         <div
             role="alert"
@@ -35,7 +48,7 @@ const Error = () => {
             </h1>
             <button
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/")} // Navigate to the home page
             >
                 Go Back Home
             </button>
@@ -45,6 +58,13 @@ const Error = () => {
 
 export default Error;
 
+/**
+ * ErrorFallback Component
+ *
+ * This component is a fallback error component that displays a generic error message and provides options to refresh the page or navigate back home.
+ *
+ * @returns JSX element representing the fallback error message and options to take action.
+ */
 export const ErrorFallback = () => {
     return (
         <div
@@ -57,7 +77,7 @@ export const ErrorFallback = () => {
             <button
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
                 onClick={() => {
-                    window.location.reload();
+                    window.location.reload(); // Refresh the page
                 }}
             >
                 Refresh
@@ -65,7 +85,7 @@ export const ErrorFallback = () => {
             <button
                 className=" my-8 px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
                 onClick={() => {
-                    window.location.href = "/";
+                    window.location.href = "/"; // Navigate back home by changing the window's location
                 }}
             >
                 Go Back Home

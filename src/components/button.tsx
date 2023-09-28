@@ -1,3 +1,24 @@
+/**
+ * AppButton Component
+ *
+ * This component creates a customizable button using Chakra UI's Button component.
+ * It can be used as a regular button or a link to a different route using React Router's Link component.
+ *
+ * @param {object} props - The component's properties.
+ * @param {ReactNode} props.children - The content to be displayed inside the button.
+ * @param {string} props.type - The type of the button (button, submit, reset).
+ * @param {string} props.variant - The visual style of the button (primary, secondary, tertiary, outline, dark).
+ * @param {string} props.width - The width of the button.
+ * @param {string} props.height - The height of the button.
+ * @param {string} props.bRadius - The border radius of the button.
+ * @param {boolean} props.loading - Whether the button should display a loading spinner.
+ * @param {boolean} props.disabled - Whether the button should be disabled.
+ * @param {string} props.to - The route to navigate to if the button acts as a link.
+ * @param {CSSProperties} props.style - Additional inline CSS styles for the button.
+ * @param {LinkProps} props - Additional properties for the Link component when the button acts as a link.
+ *
+ * @returns JSX element representing the customizable button.
+ */
 import { Button, ButtonProps, LinkProps } from "@chakra-ui/react";
 import { ReactNode, CSSProperties } from "react";
 import customTheme from "../utils/theme";

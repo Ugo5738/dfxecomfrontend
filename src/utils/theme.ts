@@ -1,6 +1,6 @@
 import { extendTheme, theme } from "@chakra-ui/react";
 
-const colors = Object.freeze({
+const colors = {
     bg: {
         main: "#EBEBF5",
         light: "#F4F4FF",
@@ -23,9 +23,9 @@ const colors = Object.freeze({
     shadow: {
         main: "0px 4px 20px 0px rgba(0, 0, 0, 0.25)",
     },
-});
+};
 
-const breakpoints = Object.freeze({
+const breakpoints = {
     ...theme.breakpoints,
     xs: "320px",
     sm: "480px",
@@ -33,18 +33,23 @@ const breakpoints = Object.freeze({
     lg: "1024px",
     xl: "1200px",
     "2xl": "1440px",
-});
+};
 
-const fontWeight = Object.freeze({
+const fonts = {
+    body: "'Lato', sans-serif",
+    heading: "'Raleway', sans-serif",
+};
+
+const fontWeights = {
     ...theme.fontWeights,
     normal: 400,
     medium: 500,
     semiBold: 600,
     bold: 700,
     extrabold: 800,
-});
+};
 
-const styles = Object.freeze({
+const styles = {
     global: {
         html: {
             scrollBehavior: "smooth",
@@ -55,8 +60,8 @@ const styles = Object.freeze({
             backgroundColor: "#fff",
             fontSize: "1.2rem",
             fontFamily: "'Lato', sans-serif",
-            // fontFamily: "Roboto-Mono",
         },
+        // styles for the `a`
         a: {
             color: colors.brand.dark,
         },
@@ -66,12 +71,13 @@ const styles = Object.freeze({
             boxSizing: "border-box",
         },
     },
-});
+};
 
 const customTheme = extendTheme({
     colors,
     breakpoints,
-    fontWeight,
+    fonts,
+    fontWeights,
     styles,
 });
 

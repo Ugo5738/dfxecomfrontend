@@ -3,15 +3,18 @@ import { FormControl, FormHelperText, FormLabel, Input, InputProps } from "@chak
 import type { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form";
 import { LoginFormType, SignUpFormType, CheckoutType } from "../utils/types";
 
+// Define the props for the CustomPhoneInput component
 interface CustomPhoneInputProps {
     value?: string | number | readonly string[];
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
+// Define types for form registration and errors
 type FormRegisterType<T extends FieldValues> = UseFormRegister<T>;
 type FormErrorsType<T extends FieldValues> = FieldErrors<T>;
 type StringKeys<T> = Path<T>;
 
+// Define the input component's props
 type InputType<T extends FieldValues> = Omit<InputProps, "name" | "register" | "errors"> & {
     label?: string;
     name: StringKeys<T>;
@@ -25,6 +28,7 @@ type InputType<T extends FieldValues> = Omit<InputProps, "name" | "register" | "
     value?: string;
 };
 
+// Define the AppInput component
 const AppInput = <T extends SignUpFormType | LoginFormType | CheckoutType>({
     label,
     name,
@@ -39,11 +43,13 @@ const AppInput = <T extends SignUpFormType | LoginFormType | CheckoutType>({
 }: InputType<T>) => {
     return (
         <FormControl className="flex flex-col gap-1 mb-8" maxHeight="8rem">
+            {/* Render the label if provided */}
             {label && (
                 <FormLabel htmlFor={name} color="bg.opaque" fontSize="1.5rem">
                     {label}
                 </FormLabel>
             )}
+            {/* Render the input element */}
             <Input
                 type={type}
                 id={name}
@@ -78,6 +84,7 @@ const AppInput = <T extends SignUpFormType | LoginFormType | CheckoutType>({
                 })}
                 {...props}
             />
+            {/* Render error message if there are errors */}
             {errors?.[name as string] && (
                 <FormHelperText role="alert" color={"red"} fontSize="1.2rem">
                     {errors[name as string]?.message}
@@ -89,6 +96,7 @@ const AppInput = <T extends SignUpFormType | LoginFormType | CheckoutType>({
 
 export default AppInput;
 
+// Define the CustomPhoneInput component as a forwardRef component
 export const CustomPhoneInput = forwardRef<HTMLInputElement, CustomPhoneInputProps>(
     ({ value, onChange }, ref) => (
         <Input
@@ -109,4 +117,5 @@ export const CustomPhoneInput = forwardRef<HTMLInputElement, CustomPhoneInputPro
     ),
 );
 
+// Set a display name for CustomPhoneInput
 CustomPhoneInput.displayName = CustomPhoneInput as unknown as string;
