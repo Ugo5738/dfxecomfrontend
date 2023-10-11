@@ -7,8 +7,8 @@ import LoadingSpinner from "./components/loading";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
-    removeOldestQuery,
-    PersistQueryClientProvider,
+  removeOldestQuery,
+  PersistQueryClientProvider,
 } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import React from "react";
@@ -22,34 +22,34 @@ import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
 
 function App() {
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                cacheTime: 1000 * 60 * 60 * 24,
-            },
-        },
-    });
-    const localStoragePersister = createSyncStoragePersister({
-        storage: window.localStorage,
-        retry: removeOldestQuery,
-    });
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: 1000 * 60 * 60 * 24,
+      },
+    },
+  });
+  const localStoragePersister = createSyncStoragePersister({
+    storage: window.localStorage,
+    retry: removeOldestQuery,
+  });
 
-    return (
-        <React.Fragment>
-            <ErrorBoundary fallback={<ErrorFallback />}>
-                <PersistQueryClientProvider
-                    client={queryClient}
-                    persistOptions={{ persister: localStoragePersister }}
-                >
-                    <ChakraProvider theme={customTheme}>
-                        <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
-                        <ToastContainer theme="colored" />
-                    </ChakraProvider>
-                    <ReactQueryDevtools initialIsOpen={false} />
-                </PersistQueryClientProvider>
-            </ErrorBoundary>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <PersistQueryClientProvider
+          client={queryClient}
+          persistOptions={{ persister: localStoragePersister }}
+        >
+          <ChakraProvider theme={customTheme}>
+            <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
+            <ToastContainer theme="colored" />
+          </ChakraProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </PersistQueryClientProvider>
+      </ErrorBoundary>
+    </React.Fragment>
+  );
 }
 
 export default App;
