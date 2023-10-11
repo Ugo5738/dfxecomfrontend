@@ -25,21 +25,19 @@ import { CiSearch } from "react-icons/ci"; // Import a search icon
 import { PiSignInLight } from "react-icons/pi"; // Import a sign-in icon
 import { useState } from "react"; // Import the useState hook from React
 import { SearchProps } from "../utils/types"; // Import custom types
-import { useGetUser } from "../services/auth"; // Import a custom hook for getting user data
 import { useGetOrderSummary } from "../services/order"; // Import a custom hook for getting order summary data
+import { getAuthToken } from "../utils/auth";
 
 // Define the MainNav component
 const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
     // State for toggling search
     const [toggleSearch, setToggleSearch] = useState(false);
-
-    // Fetch user data using a custom hook
-    const { data: user, isLoading } = useGetUser();
+    const isLoggedIn = getAuthToken();
 
     // Fetch order summary data using a custom hook
-    const { data: orderSummaryData, isSuccess } = useGetOrderSummary();
+    const { data: orderSummaryData, isSuccess } = useGetOrderSummary({ enabled: !!isLoggedIn });
 
-    // Extract products from the order summary data if available
+    // // Extract products from the order summary data if available
     const { products } = orderSummaryData?.order_summary || {};
 
     return (
@@ -69,14 +67,14 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
 
                 {/* Search input (visible on larger screens) */}
                 <Flex grow="1" display={{ base: "none", md: "flex" }}>
-                    <InputGroup width="70%">
+                    <InputGroup>
                         {/* Input for entering search term */}
                         <Input
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder=""
                             _placeholder={{ fontsize: "1.25rem" }}
-                            w="73.8125rem"
+                            w="full"
                             rounded="6rem"
                             p="1.5rem"
                             // pr="3.5rem"
@@ -151,7 +149,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                         </Flex>
                     </Slide>
                     {/* Sign-in and register options (visible on smaller screens) */}
-                    {!user && !isLoading ? (
+                    {!isLoggedIn ? (
                         <Popover placement="bottom">
                             <PopoverTrigger>
                                 <Image
@@ -206,7 +204,7 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 </Flex>
 
                 {/* Sign-in and register buttons (visible on larger screens) */}
-                {!user && !isLoading ? (
+                {!isLoggedIn ? (
                     <Flex
                         display={{ base: "none", md: "flex" }}
                         justifyContent="space-between"

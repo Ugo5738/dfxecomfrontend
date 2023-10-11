@@ -5,6 +5,7 @@ import { useLoginForm } from "../utils/form";
 import AppButton from "../components/button";
 import { UseLoginMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
+import { setAuthToken } from "../utils/auth";
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -25,7 +26,7 @@ const Login = () => {
             if (loginResult.status === 200) {
                 SuccessToast("Login Successful!");
             }
-            sessionStorage.setItem("dfx-token", loginResult.data?.access as string);
+            setAuthToken(loginResult.data?.access as string);
             redirectUrl ? navigate(redirectUrl) : navigate("/");
         } catch (error) {
             ErrorToast("An error occurred");

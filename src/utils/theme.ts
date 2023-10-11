@@ -36,8 +36,9 @@ const breakpoints = {
 };
 
 const fonts = {
-    body: "'Lato', sans-serif",
-    heading: "'Raleway', sans-serif",
+    ...theme.fonts,
+    body: `'Lato', sans-serif`,
+    heading: `'Raleway Variable', sans-serif`,
 };
 
 const fontWeights = {
@@ -59,7 +60,7 @@ const styles = {
             color: colors.typography.dark,
             backgroundColor: "#fff",
             fontSize: "1.2rem",
-            fontFamily: "'Lato', sans-serif",
+            fontFamily: `'Lato', sans-serif`,
         },
         // styles for the `a`
         a: {
