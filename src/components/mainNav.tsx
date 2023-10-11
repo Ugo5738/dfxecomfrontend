@@ -59,7 +59,6 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
           fontWeight="700"
           color="brand.dark"
           lineHeight="normal"
-          whiteSpace="nowrap"
           as={Link}
           to="/"
         >
