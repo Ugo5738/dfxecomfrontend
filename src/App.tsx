@@ -5,6 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import router from "./routes";
 import LoadingSpinner from "./components/loading";
 import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
     removeOldestQuery,
     PersistQueryClientProvider,
@@ -13,6 +14,12 @@ import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persist
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import { ErrorFallback } from "./components/error-page";
+import "@fontsource-variable/raleway";
+import "@fontsource/lato/100.css";
+import "@fontsource/lato/300.css";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
+import "@fontsource/lato/900.css";
 
 function App() {
     const queryClient = new QueryClient({
@@ -38,6 +45,7 @@ function App() {
                         <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
                         <ToastContainer theme="colored" />
                     </ChakraProvider>
+                    <ReactQueryDevtools initialIsOpen={false} />
                 </PersistQueryClientProvider>
             </ErrorBoundary>
         </React.Fragment>

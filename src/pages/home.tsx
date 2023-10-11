@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Flex, Text, Box, Grid, GridItem } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
@@ -10,6 +11,7 @@ import "swiper/css/autoplay";
 import AppButton from "../components/button";
 import Nav from "../components/nav";
 import WaitList from "../components/waitlist";
+
 import Seamless from "../components/seamless";
 import { useGetTrendingInventory, useGetInventoryProducts } from "../services/products";
 import LoadingSpinner from "../components/loading";
@@ -54,15 +56,6 @@ const Home = () => {
     }, [scrollDuration]);
 
     if (trendingInventoryLoading || inventoryProductsLoading) return <LoadingSpinner />;
-    {
-        /* if (
-        trendingInventoryError ||
-        inventoryProductsError ||
-        !inventoryProducts?.results ||
-        !trendingInventory
-    )
-        return <Error404 error={trendingInventoryError as ErrorPropsType} />;*/
-    }
 
     return (
         <Box overflowX="hidden">
@@ -83,24 +76,37 @@ const Home = () => {
                 >
                     {homeCarousel.map((item) => (
                         <SwiperSlide key={item.id}>
-                            <Flex
-                                backgroundImage={`url(${item.image})`}
-                                backgroundSize="contain"
-                                backgroundRepeat="no-repeat"
-                                backgroundPosition="center"
-                                minHeight="19rem"
-                            >
+                            <Flex w="100%">
+                                <Box flex="1" width="80%" height="50">
+                                    <Box
+                                        position="absolute"
+                                        top="0"
+                                        left="0"
+                                        width="96%"
+                                        height="96%"
+                                        mb="22rem"
+                                        minHeight="100px"
+                                        backgroundImage={`url(${item.image})`}
+                                        backgroundRepeat="no-repeat"
+                                        backgroundSize="cover"
+                                        backgroundPosition="center"
+                                        zIndex="1"
+                                    ></Box>
+                                </Box>
+
                                 <Flex
                                     flexDir="column"
                                     gap="1rem"
-                                    mb={{ base: "5rem", md: "10rem" }}
-                                    px="3rem"
+                                    mb={{ base: "4rem", md: "10rem" }}
+                                    px="6rem"
                                     w="full"
                                     minH="10rem"
+                                    zIndex="2"
                                 >
                                     <Text
                                         color="brand.orange"
                                         fontSize="2.5rem"
+                                        fontFamily="Raleway Variable"
                                         fontWeight="600"
                                         display={{ base: "none", md: "flex" }}
                                     >
@@ -108,25 +114,27 @@ const Home = () => {
                                     </Text>
                                     <Flex flexDir="column" display={{ base: "none", md: "flex" }}>
                                         <Text
-                                            fontSize={{ base: "2.25rem", md: "3rem" }}
-                                            fontFamily="Raleway"
+                                            fontSize={{ base: "3rem", md: "3rem" }}
+                                            fontFamily="Raleway Variable"
                                             fontWeight="600"
                                             mb="-1rem"
                                         >
                                             {item.title}
                                         </Text>
                                         <Text
-                                            fontSize={{ base: "3rem", md: "5rem" }}
-                                            fontWeight="800"
+                                            fontSize={{ base: "6rem", md: "5rem" }}
+                                            fontFamily="Lato"
+                                            fontWeight="700"
                                             whiteSpace="nowrap"
                                         >
                                             {item.header}
                                         </Text>
                                     </Flex>
                                     <Text
-                                        fontSize="2.6rem"
-                                        fontWeight="500"
+                                        fontSize="2.625rem"
+                                        fontWeight="700"
                                         lineHeight="normal"
+                                        maxW="580px"
                                         display={{ base: "none", md: "flex" }}
                                     >
                                         {item.text}
@@ -139,7 +147,7 @@ const Home = () => {
                                         display={{ base: "none", md: "flex" }}
                                         to="/shop"
                                     >
-                                        Shop Now
+                                        Shop
                                     </AppButton>
                                 </Flex>
                             </Flex>
@@ -158,12 +166,13 @@ const Home = () => {
                         <Text
                             textAlign="left"
                             color="typography.dark"
-                            fontSize={{ base: "2rem", sm: "2.5rem" }}
+                            fontSize={{ base: "3rem", sm: "2.5rem" }}
                             fontWeight="700"
                             ml={{ base: "1.5rem", sm: "3rem" }}
                         >
                             Hot Deals
                         </Text>
+
                         <Flex
                             justifyContent="center"
                             alignItems="center"
@@ -193,6 +202,11 @@ const Home = () => {
                                             as={Link}
                                             to={`/product/${item.sku}/`}
                                         >
+                                            <img
+                                                src={item.default_image}
+                                                alt={item.product_name}
+                                                className="h-[15rem] md:h-[23rem] mix-blend-darken"
+                                            />
                                             <Text
                                                 fontSize="1.2rem"
                                                 fontWeight="600"
@@ -203,11 +217,11 @@ const Home = () => {
                                             >
                                                 {item.condition}
                                             </Text>
-                                            <img
-                                                src={item.default_image}
+                                            {/* <img
+                                                src="https://dfxfolder.s3.amazonaws.com/media/inventory/iphone_13_kxK7AID.jpg"
                                                 alt={item.product_name}
                                                 className="h-[15rem] md:h-[23rem] mix-blend-darken"
-                                            />
+                                            /> */}
                                         </Flex>
                                         <Flex
                                             flexDir="column"

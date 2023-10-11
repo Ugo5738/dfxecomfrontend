@@ -288,18 +288,6 @@ const Cart = () => {
                                                         >
                                                             {product.product_name}
                                                         </Text>
-                                                        {/* <Text
-                                                            fontSize={{
-                                                                base: "1.1rem",
-                                                                sm: "1.4rem",
-                                                            }}
-                                                            fontWeight="bold"
-                                                        >
-                                                            Color:{" "}
-                                                            <span className="font-normal">
-                                                                RED
-                                                            </span>
-                                                        </Text> */}
                                                         {!ordered ? (
                                                             <Text fontSize="1.2rem">In Stock</Text>
                                                         ) : (
@@ -333,7 +321,6 @@ const Cart = () => {
                                                             outline="none"
                                                             fontSize="1.5rem"
                                                             fontWeight="700"
-                                                            // defaultValue={quantity}
                                                             value={quantity}
                                                             onChange={(e) => {
                                                                 void handleItemQuantityChange(
