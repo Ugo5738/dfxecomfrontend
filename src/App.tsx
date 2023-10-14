@@ -20,6 +20,7 @@ import "@fontsource/lato/300.css";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
+import "bootstrap/dist/js/bootstrap.js";
 
 function App() {
   const queryClient = new QueryClient({
@@ -42,7 +43,10 @@ function App() {
           persistOptions={{ persister: localStoragePersister }}
         >
           <ChakraProvider theme={customTheme}>
-            <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
+            <RouterProvider
+              router={router}
+              fallbackElement={<LoadingSpinner />}
+            />
             <ToastContainer theme="colored" />
           </ChakraProvider>
           <ReactQueryDevtools initialIsOpen={false} />

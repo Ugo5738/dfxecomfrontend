@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import AppButton from "../components/button";
-import Nav from "../components/nav";
+// import Nav from "../components/nav";
 import WaitList from "../components/waitlist";
 
 import Seamless from "../components/seamless";
@@ -17,6 +17,7 @@ import { useGetTrendingInventory, useGetInventoryProducts } from "../services/pr
 import LoadingSpinner from "../components/loading";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import { ParentRefType } from "../utils/types";
+import Header from "../layouts/Header";
 
 const Home = () => {
   const {
@@ -59,7 +60,7 @@ const Home = () => {
 
   return (
     <Box overflowX="hidden">
-      <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Box bg="bg.main" py={{ base: "3rem", sm: "5rem" }} color="typography.dark">
         <Swiper
           modules={[Pagination, A11y, Autoplay, Keyboard]}

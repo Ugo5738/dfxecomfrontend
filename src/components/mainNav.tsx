@@ -78,13 +78,14 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
               rounded="6rem"
               p="1.5rem"
               // pr="3.5rem"
+              // height="54px"
               color="brand.dark"
               fontSize="1.5rem"
               border="1px"
             />
             {/* Search icon */}
             <InputRightElement pt=".8rem" pr="1rem">
-              <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
+              <CiSearch className="text-[#171923] hover:cursor-pointer" />
             </InputRightElement>
           </InputGroup>
         </Flex>
@@ -175,7 +176,12 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     as={Link}
                     to="/register"
                   >
-                    <Text color="brand.dark" fontWeight="500" fontSize="1.25rem">
+                    <Text
+                      color="brand.dark"
+                      fontWeight="600"
+                      fontSize="20px"
+                      fontFamily="Roboto Flex"
+                    >
                       Register
                     </Text>
                     <PiSignInLight className="text-[#171923] h-12 w-12" />
@@ -195,11 +201,29 @@ const MainNav = ({ searchTerm, setSearchTerm }: SearchProps) => {
             gap="3rem"
           >
             {/* Register button */}
-            <AppButton variant="primary" borderRadius=".3rem" height="3.5rem" to="/register">
+            <AppButton
+              variant="primary"
+              borderRadius="5px"
+              fontWeight="600"
+              fontSize="20px"
+              fontFamily="Roboto Flex"
+              paddingRight="2rem"
+              paddingLeft="2rem"
+              to="/register"
+            >
               Register
             </AppButton>
             {/* Sign-in button */}
-            <AppButton variant="outline" borderRadius=".3rem" height="3.5rem" to="/login">
+            <AppButton
+              variant="outline"
+              borderRadius="5px"
+              fontWeight="400"
+              fontSize="20px"
+              fontFamily="Roboto Flex"
+              paddingRight="2rem"
+              paddingLeft="2rem"
+              to="/login"
+            >
               Sign In
             </AppButton>
           </Flex>
