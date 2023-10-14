@@ -48,14 +48,11 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     <Wrapper>
       <header className="">
         <div className="top-header container">
-          <h1 className="logo">DFX LOGO</h1>
+          <h1 className="logo m-0">
+            <Link to="/">DFX LOGO</Link>
+          </h1>
           <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
           </div>
           <div className="left">
@@ -177,7 +174,9 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             >
               <FaBars />
             </button>
-            <h1 className="logo">DFX LOGO</h1>
+            <h1 className="logo">
+              <Link to="/">DFX LOGO</Link>
+            </h1>
             <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
               <BsCart3 className="text-[#171923] h-12 w-12" />
               <Text

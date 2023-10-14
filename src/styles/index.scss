@@ -18,11 +18,11 @@ header {
       width: 50%;
       padding: 10px;
       input {
-        border: none;
+        width: 100%;
         &:focus,
         &:active {
           outline: none;
-          border: 0;
+          border: none;
         }
       }
     }
@@ -107,11 +107,10 @@ header {
       opacity: 0.75;
       margin-bottom: 1rem;
       input {
-        border: none;
         &:focus,
         &:active {
-          outline: none;
-          border: 0;
+          outline: 0;
+          border: none;
         }
       }
     }
@@ -139,7 +138,7 @@ header {
       flex-direction: column;
       gap: 1rem;
       justify-content: space-between;
-      background-color: rgba(173, 173, 211, 1);
+      background-color: rgb(224, 224, 237);
     }
     .text-end {
       display: flex;
@@ -158,6 +157,10 @@ header {
       }
     }
     .dropdown-items {
+      border-bottom: 1px solid #161616;
+      transition: 1s ease-in-out;
+      transition: 0.5s;
+
       .btn {
         h3 {
           font-weight: 700;
@@ -168,6 +171,7 @@ header {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 1rem;
+        // transition: all 1s ease-in-out;
         a {
           display: flex;
           padding: 5px 2px;
