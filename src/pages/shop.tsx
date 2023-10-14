@@ -18,9 +18,9 @@ import { Link, useSearchParams } from "react-router-dom";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Footer from "../components/footer";
 import WaitList from "../components/waitlist";
-import MainNav from "../components/mainNav";
+// import MainNav from "../components/mainNav";
 import Seamless from "../components/seamless";
-import ScrollNav from "../components/scrollNav";
+// import ScrollNav from "../components/scrollNav";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { products } from "../utils/dummyData";
 import { useGetProducts, useGetBrands, useGetCategories } from "../services/products";
@@ -30,6 +30,7 @@ import Error404 from "../components/error";
 import { useCalculateMinMaxPrice } from "../services/hooks";
 import { useDebounce } from "./../services/hooks";
 import AppButton from "../components/button";
+import Header from "../layouts/Header";
 
 const Shop = () => {
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
@@ -161,8 +162,9 @@ const Shop = () => {
 
   return (
     <Box>
-      <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <ScrollNav />
+      {/* <MainNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <ScrollNav /> */}
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {productsInventorySuccess && (
         <Flex>
           {toggleFilters && (
