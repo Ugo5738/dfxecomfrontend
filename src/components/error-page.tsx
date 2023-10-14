@@ -11,49 +11,50 @@ import { useState } from "react";
 import { ErrorPropsType } from "../utils/types";
 
 const Error = () => {
-    const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState<string>(""); // Initialize errorMessage state
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>(""); // Initialize errorMessage state
 
-    // Get route error using useRouteError and cast it to ErrorPropsType
-    const routerError = useRouteError() as ErrorPropsType;
-
-    // Check if the route error is a response error
-    if (isRouteErrorResponse(routerError)) {
-        // Handle specific error cases based on HTTP status code
-        if (routerError.status === 404) {
-            setErrorMessage("This page does not exist!");
-        }
-
-        if (routerError.status === 401) {
-            setErrorMessage("You are not authorized to see this");
-        }
-
-        if (routerError.status === 503) {
-            setErrorMessage("Looks like our API is down");
-        }
+  // Get route error using useRouteError and cast it to ErrorPropsType
+  const routerError = useRouteError() as ErrorPropsType;
+  const errorOne = routerError.status;
+  const errortwo = routerError.status;
+  const errorthr = routerError.status;
+  // Check if the route error is a response error
+  if (isRouteErrorResponse(routerError)) {
+    // Handle specific error cases based on HTTP status code
+    if (errorOne === 404) {
+      setErrorMessage("This page does not exist!");
     }
 
-    // Render the error message and a button to navigate back home
-    return (
-        <div
-            role="alert"
-            className="flex flex-col items-center justify-center h-screen bg-gray-100 px-8"
-        >
-            <h1 className="text-3xl font-bold my-8 text-black text-center">
-                {errorMessage && errorMessage}
-            </h1>
-            <h1 className="text-3xl font-bold mb-4 text-black text-center">
-                {routerError &&
-                    (routerError?.statusText || routerError?.data || routerError?.message)}
-            </h1>
-            <button
-                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
-                onClick={() => navigate("/")} // Navigate to the home page
-            >
-                Go Back Home
-            </button>
-        </div>
-    );
+    if (errortwo === 401) {
+      setErrorMessage("You are not authorized to see this");
+    }
+
+    if (errorthr === 503) {
+      setErrorMessage("Looks like our API is down");
+    }
+  }
+
+  // Render the error message and a button to navigate back home
+  return (
+    <div
+      role="alert"
+      className="flex flex-col items-center justify-center h-screen bg-gray-100 px-8"
+    >
+      <h1 className="text-3xl font-bold my-8 text-black text-center">
+        {errorMessage && errorMessage}
+      </h1>
+      <h1 className="text-3xl font-bold mb-4 text-black text-center">
+        {routerError && (routerError?.statusText || routerError?.data || routerError?.message)}
+      </h1>
+      <button
+        className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
+        onClick={() => navigate("/")} // Navigate to the home page
+      >
+        Go Back Home
+      </button>
+    </div>
+  );
 };
 
 export default Error;
@@ -66,30 +67,28 @@ export default Error;
  * @returns JSX element representing the fallback error message and options to take action.
  */
 export const ErrorFallback = () => {
-    return (
-        <div
-            role="alert"
-            className="flex flex-col items-center justify-center h-screen bg-gray-100 px-8"
-        >
-            <h1 className="text-3xl font-bold text-black mb-20 text-center">
-                Something Went Wrong!
-            </h1>
-            <button
-                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
-                onClick={() => {
-                    window.location.reload(); // Refresh the page
-                }}
-            >
-                Refresh
-            </button>
-            <button
-                className=" my-8 px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
-                onClick={() => {
-                    window.location.href = "/"; // Navigate back home by changing the window's location
-                }}
-            >
-                Go Back Home
-            </button>
-        </div>
-    );
+  return (
+    <div
+      role="alert"
+      className="flex flex-col items-center justify-center h-screen bg-gray-100 px-8"
+    >
+      <h1 className="text-3xl font-bold text-black mb-20 text-center">Something Went Wrong!</h1>
+      <button
+        className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
+        onClick={() => {
+          window.location.reload(); // Refresh the page
+        }}
+      >
+        Refresh
+      </button>
+      <button
+        className=" my-8 px-4 py-2 text-white bg-blue-500 rounded hover:bg-[#3E3FCD] focus:outline-none focus:ring-2 focus:ring-[#3E3FCD]"
+        onClick={() => {
+          window.location.href = "/"; // Navigate back home by changing the window's location
+        }}
+      >
+        Go Back Home
+      </button>
+    </div>
+  );
 };

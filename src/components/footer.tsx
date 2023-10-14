@@ -14,7 +14,7 @@ const Footer = () => {
       px={{ base: "1rem", sm: "2rem", md: "4rem" }}
     >
       {/* Render the DFX LOGO as a link to the homepage */}
-      <Flex fontSize="2.5rem" fontWeight="extrabold" mb={{ base: 0, sm: "-3rem" }}>
+      <Flex fontSize="3rem" fontWeight="extrabold" mb={{ base: 0, sm: "-3rem" }}>
         <Link to="/" className="text-black">
           DFX LOGO
         </Link>
@@ -30,12 +30,12 @@ const Footer = () => {
       >
         {/* Products section */}
         <Flex flexDir="column" gap="1rem">
-          <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
+          <Text fontSize="2rem" mb="1rem" fontWeight={600}>
             Products
           </Text>
           {/* Render links to various product pages */}
           {footerProducts.map((item) => (
-            <Link key={item.id} to={item.title} className="link">
+            <Link key={item.id} to={item.title} className="link" style={{ fontSize: "16px" }}>
               {item.title}
             </Link>
           ))}
@@ -43,12 +43,12 @@ const Footer = () => {
 
         {/* Company section */}
         <Flex flexDir="column" gap="1rem">
-          <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
+          <Text fontSize="2rem" mb="1rem" fontWeight={600}>
             Company
           </Text>
           {/* Render links to various company-related pages */}
           {footerCompany.map((item) => (
-            <Link key={item.id} to={item.title} className="link">
+            <Link key={item.id} to={item.title} className="link" style={{ fontSize: "16px" }}>
               {item.title}
             </Link>
           ))}
@@ -56,12 +56,12 @@ const Footer = () => {
 
         {/* Support section */}
         <Flex flexDir="column" gap="1rem">
-          <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
+          <Text fontSize="2rem" mb="1rem" fontWeight={600}>
             Support
           </Text>
           {/* Render links to various support-related pages */}
           {footerSupport.map((item) => (
-            <Link key={item.id} to={item.title} className="link">
+            <Link key={item.id} to={item.title} className="link" style={{ fontSize: "16px" }}>
               {item.title}
             </Link>
           ))}
@@ -69,7 +69,7 @@ const Footer = () => {
 
         {/* Follow Us section */}
         <Flex flexDir="column" gap="1rem" align={{ base: "start", md: "center" }}>
-          <Text fontSize="1.5rem" mb="1rem" fontWeight={600}>
+          <Text fontSize="2rem" mb="1rem" fontWeight={600}>
             Follow Us
           </Text>
           {/* Render social media icons as links */}

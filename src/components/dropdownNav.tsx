@@ -42,6 +42,7 @@ const DropdownNav = () => {
               fontFamily="Lato"
               fontSize="26px"
               fontWeight="700"
+              padding="0"
             >
               Mobile
             </MenuButton>
