@@ -165,8 +165,8 @@ const Home = () => {
       </Box>
       {inventoryProductsSuccess && (
         <Box bg="bg.light" overflow="hidden">
-          <Box py="5rem" mx="auto" w="100%" color="typography.dark">
-            <div className="container">
+          <div className="container">
+            <Box py="5rem" mx="auto" w="100%" color="typography.dark">
               <Text
                 textAlign="left"
                 color="typography.dark"
@@ -176,83 +176,87 @@ const Home = () => {
               >
                 Hot Deals
               </Text>
-            </div>
-
-            <Flex
-              className=""
-              justifyContent="center"
-              alignItems="center"
-              gap="2rem"
-              mt={{ base: "2rem", md: "4rem" }}
-              pl={{ base: "110rem", sm: "137rem" }}
-              overflow="hidden"
-              ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
-            >
-              {inventoryProductsSuccess &&
-                inventoryProducts?.results?.length &&
-                inventoryProducts?.results?.map((item) => (
-                  <Box
-                    key={item.sku}
-                    className="w-full pt-4"
-                    minW={{ base: "20rem", sm: "25rem" }}
-                    onMouseEnter={() => setScrollDuration(10000)}
-                    onMouseLeave={() => setScrollDuration(30)}
-                  >
-                    <Flex
-                      flexDir="column"
-                      gap="3rem"
-                      justifyContent="center"
-                      alignItems="center"
-                      boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
-                      className="w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
-                      as={Link}
-                      to={`/product/${item.sku}/`}
+              <Flex
+                className=""
+                justifyContent="center"
+                alignItems="center"
+                gap="2rem"
+                mt={{ base: "2rem", md: "4rem" }}
+                // pl={{ base: "110rem", sm: "137rem" }}
+                overflow="hidden"
+                ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
+              >
+                {inventoryProductsSuccess &&
+                  inventoryProducts?.results?.length &&
+                  inventoryProducts?.results?.map((item) => (
+                    <Box
+                      key={item.sku}
+                      className="w-full pt-4"
+                      minW={{ base: "20rem", sm: "25rem" }}
+                      onMouseEnter={() => setScrollDuration(10000)}
+                      onMouseLeave={() => setScrollDuration(30)}
                     >
-                      <img
-                        src={item.default_image}
-                        alt={item.product_name}
-                        className="h-[15rem] md:h-[23rem] mix-blend-darken"
-                      />
-                      <Text
-                        fontSize="1.2rem"
-                        fontWeight="600"
-                        color="brand.orange"
-                        justifySelf="flex-end"
-                        ml="auto"
-                        textTransform="uppercase"
+                      <Flex
+                        flexDir="column"
+                        gap="3rem"
+                        justifyContent="center"
+                        alignItems="center"
+                        boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
+                        className="w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
+                        as={Link}
+                        to={`/product/${item.sku}/`}
                       >
-                        {item.condition}
-                      </Text>
-                      {/* <img
+                        <img
+                          src={item.default_image}
+                          alt={item.product_name}
+                          className="h-[15rem] md:h-[23rem] mix-blend-darken"
+                        />
+                        <Text
+                          fontSize="1.2rem"
+                          fontWeight="600"
+                          color="brand.orange"
+                          justifySelf="flex-end"
+                          ml="auto"
+                          textTransform="uppercase"
+                        >
+                          {item.condition}
+                        </Text>
+                        {/* <img
                                                 src="https://dfxfolder.s3.amazonaws.com/media/inventory/iphone_13_kxK7AID.jpg"
                                                 alt={item.product_name}
                                                 className="h-[15rem] md:h-[23rem] mix-blend-darken"
                                             /> */}
-                    </Flex>
-                    <Flex flexDir="column" alignSelf="flex-start" alignItems="flex-start" mt="2rem">
-                      <Text fontSize="1.75rem" fontWeight={400}>
-                        {item.product_name}
-                      </Text>
-                      <Flex alignItems="baseline" flexDir="column">
-                        <Text color="typography.dark" fontSize="2rem" fontWeight="600">
-                          {`$${item.sale_price}`}
-                        </Text>
-                        {item.store_price && (
-                          <Text
-                            color="typography.ash"
-                            fontSize="1.5rem"
-                            textDecoration="line-through"
-                            fontFamily="Bebas Neue"
-                          >
-                            {`$${item.store_price}`}
-                          </Text>
-                        )}
                       </Flex>
-                    </Flex>
-                  </Box>
-                ))}
-            </Flex>
-          </Box>
+                      <Flex
+                        flexDir="column"
+                        alignSelf="flex-start"
+                        alignItems="flex-start"
+                        mt="2rem"
+                      >
+                        <Text fontSize="1.75rem" fontWeight={400}>
+                          {item.product_name}
+                        </Text>
+                        <Flex alignItems="baseline" flexDir="column">
+                          <Text color="typography.dark" fontSize="2rem" fontWeight="600">
+                            {`$${item.sale_price}`}
+                          </Text>
+                          {item.store_price && (
+                            <Text
+                              color="typography.ash"
+                              fontSize="1.5rem"
+                              textDecoration="line-through"
+                              fontFamily="Bebas Neue"
+                            >
+                              {`$${item.store_price}`}
+                            </Text>
+                          )}
+                        </Flex>
+                      </Flex>
+                    </Box>
+                  ))}
+              </Flex>
+            </Box>
+          </div>
         </Box>
       )}
       {trendingInventorySuccess && (
