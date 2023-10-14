@@ -52,12 +52,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             <Link to="/">DFX LOGO</Link>
           </h1>
           <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
           </div>
           <div className="left">
