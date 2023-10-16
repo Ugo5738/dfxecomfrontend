@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Flex, Text, Box, Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Text, Box, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
 import { homeCarousel } from "../utils/staticData";
@@ -79,13 +79,13 @@ const Home = () => {
             {homeCarousel.map((item) => (
               <SwiperSlide key={item.id}>
                 <Flex w="100%">
-                  <Box flex="1" width="80%" height="50">
+                  <Box flex="1" width="80%" height="60">
                     <Box
                       position="absolute"
                       top="0"
                       left="0"
-                      width="96%"
-                      height="96%"
+                      width="100%"
+                      height="100%"
                       mb="22rem"
                       minHeight="100px"
                       backgroundImage={`url(${item.image})`}
@@ -192,27 +192,16 @@ const Home = () => {
                     <Box
                       key={item.sku}
                       className="w-full pt-4"
-                      minW={{ base: "20rem", sm: "25rem" }}
+                      minW={{ base: "10rem", sm: "25rem" }}
                       onMouseEnter={() => setScrollDuration(10000)}
                       onMouseLeave={() => setScrollDuration(30)}
                     >
-                      <Flex
-                        flexDir="column"
-                        gap="3rem"
-                        justifyContent="center"
-                        alignItems="center"
-                        boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
-                        className="w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
-                        as={Link}
+                      <Link
+                        className="image-link w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
                         to={`/product/${item.sku}/`}
                       >
-                        <img
-                          src={item.default_image}
-                          alt={item.product_name}
-                          className="h-[15rem] md:h-[23rem] mix-blend-darken"
-                        />
                         <Text
-                          fontSize="1.2rem"
+                          fontSize="1rem"
                           fontWeight="600"
                           color="brand.orange"
                           justifySelf="flex-end"
@@ -221,19 +210,24 @@ const Home = () => {
                         >
                           {item.condition}
                         </Text>
+                        <img
+                          src={item.default_image}
+                          alt={item.product_name}
+                          className="h-[7rem] md:h-[23rem] sm:h-[9rem] mix-blend-darken"
+                        />
                         {/* <img
                                                 src="https://dfxfolder.s3.amazonaws.com/media/inventory/iphone_13_kxK7AID.jpg"
                                                 alt={item.product_name}
                                                 className="h-[15rem] md:h-[23rem] mix-blend-darken"
                                             /> */}
-                      </Flex>
+                      </Link>
                       <Flex
                         flexDir="column"
                         alignSelf="flex-start"
                         alignItems="flex-start"
                         mt="2rem"
                       >
-                        <Text fontSize="1.75rem" fontWeight={400}>
+                        <Text fontSize="1rem" fontWeight={400}>
                           {item.product_name}
                         </Text>
                         <Flex alignItems="baseline" flexDir="column">
@@ -243,7 +237,7 @@ const Home = () => {
                           {item.store_price && (
                             <Text
                               color="typography.ash"
-                              fontSize="1.5rem"
+                              fontSize="1rem"
                               textDecoration="line-through"
                               fontFamily="Bebas Neue"
                             >
@@ -273,28 +267,27 @@ const Home = () => {
             </Text>
             <Grid
               templateColumns={{
-                base: "repeat(2, 1fr)",
-                sm: "repeat(2, 1fr)",
+                base: "repeat(3, 1fr)",
+                sm: "repeat(3, 1fr)",
                 md: "repeat(3, 1fr)",
                 lg: "repeat(6, 1fr)",
               }}
               mt="4rem"
               justifyContent="center"
-              gap="3rem"
+              gap="1rem"
               // mx="2rem"
               flexWrap={{ base: "wrap", md: "nowrap" }}
             >
               {trendingInventorySuccess &&
                 trendingInventory?.length &&
                 trendingInventory?.map((item) => (
-                  <GridItem
+                  <div
                     key={item?.id}
-                    className="hover:scale-105 transition-all duration-300 w-full bg-white px-2 md:px-4 py-8 rounded-3xl"
-                    boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
+                    className=" i-grid hover:scale-105 transition-all duration-300 bg-white px-1 md:px-4 py-4 rounded-3xl"
                   >
                     <Flex
                       flexDir="column"
-                      gap="3rem"
+                      gap="1.5rem"
                       justifyContent="center"
                       alignItems="center"
                       as={Link}
@@ -303,13 +296,13 @@ const Home = () => {
                       <img
                         src={item?.sample_product?.image || "/iphone-14.png"}
                         alt={item?.name}
-                        className="h-[14rem] md:h-[18rem] mt-6 mix-blend-darken"
+                        className="h-[6rem] md:h-[12rem]  mix-blend-darken"
                       />
-                      <Text textAlign="center" fontSize="1.5rem" fontWeight={700}>
+                      <Text textAlign="center" fontSize="1.5rem" fontWeight={700} margin="0">
                         {item?.name}
                       </Text>
                     </Flex>
-                  </GridItem>
+                  </div>
                 ))}
             </Grid>
           </div>
