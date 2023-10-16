@@ -31,7 +31,7 @@ const DropdownNav = () => {
         gap="1rem"
         py="1rem"
         zIndex={10000}
-        height=" 78px"
+        height=" 50px"
       >
         <div className="container">
           <Menu isLazy>
@@ -40,7 +40,7 @@ const DropdownNav = () => {
               rightIcon={<AiFillCaretDown className="text-white" />}
               colorScheme="brand"
               fontFamily="Lato"
-              fontSize="26px"
+              fontSize="16px"
               fontWeight="700"
               padding="0"
             >
@@ -75,7 +75,7 @@ const DropdownNav = () => {
               rightIcon={<AiFillCaretDown className="text-white" />}
               colorScheme="brand"
               fontFamily="Lato"
-              fontSize="26px"
+              fontSize="16px"
               fontWeight="700"
             >
               Computing
@@ -109,7 +109,7 @@ const DropdownNav = () => {
               rightIcon={<AiFillCaretDown className="text-white" />}
               colorScheme="brand"
               fontFamily="Lato"
-              fontSize="26px"
+              fontSize="16px"
               fontWeight="700"
             >
               Accessories
@@ -143,7 +143,7 @@ const DropdownNav = () => {
               rightIcon={<AiFillCaretDown className="text-white" />}
               colorScheme="brand"
               fontFamily="Lato"
-              fontSize="26px"
+              fontSize="16px"
               fontWeight="700"
             >
               Gaming
@@ -177,7 +177,7 @@ const DropdownNav = () => {
               rightIcon={<AiFillCaretDown className="text-white" />}
               colorScheme="brand"
               fontFamily="Lato"
-              fontSize="26px"
+              fontSize="16px"
               fontWeight="700"
             >
               Wearables

@@ -38,6 +38,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const [gameOpen, setGameOpen] = useState(false);
   const [wearOpen, setWearOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
@@ -177,6 +178,25 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             <h1 className="logo">
               <Link to="/">DFX LOGO</Link>
             </h1>
+            <div className="open-search">
+              <CiSearch
+                onClick={() => setOpenSearch(!openSearch)}
+                className="text-[#171923] h-8 w-8 hover:cursor-pointer"
+              />
+              {openSearch && (
+                <div className="search">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      value={searchTerm}
+                      placeholder="search..."
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+                  {/* <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" /> */}
+                </div>
+              )}
+            </div>
             <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
               <BsCart3 className="text-[#171923] h-12 w-12" />
               <Text
@@ -193,15 +213,6 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 {isSuccess ? products?.length : "0"}
               </Text>
             </Flex>
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
           </div>
         </div>
         <div className="text d-flex align-items-center justify-content-center w-100 text-light ">

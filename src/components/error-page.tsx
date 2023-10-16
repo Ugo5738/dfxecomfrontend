@@ -16,21 +16,19 @@ const Error = () => {
 
   // Get route error using useRouteError and cast it to ErrorPropsType
   const routerError = useRouteError() as ErrorPropsType;
-  const errorOne = routerError.status;
-  const errortwo = routerError.status;
-  const errorthr = routerError.status;
+  const errorRes = routerError.status;
   // Check if the route error is a response error
   if (isRouteErrorResponse(routerError)) {
     // Handle specific error cases based on HTTP status code
-    if (errorOne === 404) {
+    if (errorRes === 404) {
       setErrorMessage("This page does not exist!");
     }
 
-    if (errortwo === 401) {
+    if (errorRes === 401) {
       setErrorMessage("You are not authorized to see this");
     }
 
-    if (errorthr === 503) {
+    if (errorRes === 503) {
       setErrorMessage("Looks like our API is down");
     }
   }

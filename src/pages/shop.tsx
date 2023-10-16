@@ -150,7 +150,7 @@ const Shop = () => {
     setParams((prevParams) => ({ ...prevParams, page: page }));
   };
 
-  //   console.log("vv", productItems?.length);
+  console.log("vv", productItems);
 
   if (productsInventoryLoading) {
     return <LoadingSpinner />;
@@ -170,7 +170,7 @@ const Shop = () => {
           {toggleFilters && (
             <Flex
               bg="white"
-              pl={{ base: "2rem", md: "2rem" }}
+              pl={{ base: "2rem", md: "3rem" }}
               pr={{ base: "2rem", md: "1rem" }}
               py="2rem"
               flexDir="column"
@@ -192,15 +192,15 @@ const Shop = () => {
                 <MdArrowBackIosNew className="text-4xl" />
               </Flex>
               <Flex flexDir="column" gap="1rem" align="start" pt="1rem">
-                <Text fontWeight="600" fontSize="1.75rem">
+                <Text fontWeight="700" fontSize="1.75rem">
                   Categories
                 </Text>
                 {categoriesData?.map((category) => (
                   <Flex flexDir="column" key={category.name} gap="1rem" align="start">
                     <Button
                       variant="unstyled"
-                      fontSize="1.5rem"
-                      fontWeight="normal"
+                      fontSize="16px"
+                      fontWeight="500"
                       _hover={{ color: "brand.orange" }}
                       onClick={() => {
                         setCurrentCategory((prevCategory) =>
@@ -211,12 +211,12 @@ const Shop = () => {
                       {category.name}
                     </Button>
                     <Collapse in={currentCategory === category.name} animateOpacity>
-                      <ul>
+                      <ul className="p-0">
                         {category.children.map((subCategory) => (
                           <li key={`${subCategory.id}-${subCategory.name}`} className="my-1 pl-2">
                             <Button
                               variant="ghost"
-                              fontSize="1.25rem"
+                              fontSize="15px"
                               fontWeight="normal"
                               _active={{
                                 color: "brand.orange",
@@ -237,7 +237,7 @@ const Shop = () => {
                 ))}
               </Flex>
               <Flex flexDir="column" gap="1rem">
-                <Text fontWeight="600" fontSize="1.75rem">
+                <Text fontWeight="700" fontSize="1.75rem">
                   Brands
                 </Text>
                 <ul>
@@ -414,7 +414,7 @@ const Shop = () => {
                     boxShadow="0px 4px 10px 0px rgba(0, 0, 0, 0.2)"
                     justifyContent="space-between"
                     as={Link}
-                    to={`/product/${item.sku}/`}
+                    to={`/product/${item?.sku}/`}
                   >
                     <Image
                       src={item?.default_image}
@@ -429,7 +429,7 @@ const Shop = () => {
                       fontSize={{ base: "1rem", sm: "1.5rem" }}
                       minH={{ base: "1.85rem", sm: "4rem" }}
                     >
-                      {item.product_name}
+                      {item?.product_name}
                     </Text>
                     <Flex alignItems="baseline">
                       <Text
@@ -437,19 +437,27 @@ const Shop = () => {
                         fontSize={{ base: "1rem", sm: "2.2rem" }}
                         fontWeight="600"
                       >
-                        {`$${item.store_price}`}
+                        {`$${item?.store_price}`}
                       </Text>
-                      {item.discount_store_price && (
+                      {item?.discount_store_price && (
                         <Text
                           color="typography.red"
                           fontSize={{ base: ".6rem", sm: "1.2rem" }}
                           px="2"
                           textDecoration="line-through"
                         >
-                          {`$${item.discount_store_price}`}
+                          {`$${item?.discount_store_price}`}
                         </Text>
                       )}
                     </Flex>
+                    <div className="d-flex align-items-center">
+                      <img src="/star.png" alt="" style={{ height: "1rem", width: "1rem" }} />
+                      <img src="/star.png" alt="" style={{ height: "1rem", width: "1rem" }} />
+                      <img src="/star.png" alt="" style={{ height: "1rem", width: "1rem" }} />
+                      <img src="/star.png" alt="" style={{ height: "1rem", width: "1rem" }} />
+                      <img src="/star.png" alt="" style={{ height: "1rem", width: "1rem" }} />
+                      <small>(48)</small>
+                    </div>
                   </Flex>
                 ))}
             </Grid>
