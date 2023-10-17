@@ -4,15 +4,15 @@ import URLS from "./urls";
 import { UserType } from "../utils/types";
 
 export const useGetUser = ({ enabled = true } = {}) => {
-    const { data, error, isLoading, isSuccess } = useQuery(
-        ["current-users"],
-        async () => {
-            const res = await axios.get(URLS.CURRENT_USER);
-            return res.data as unknown as UserType;
-        },
+  const { data, error, isLoading, isSuccess } = useQuery(
+    ["current-users"],
+    async () => {
+      const res = await axios.get(URLS.CURRENT_USER);
+      return res.data as UserType;
+    },
 
-        { enabled },
-    );
+    { enabled },
+  );
 
-    return { data, error, isLoading, isSuccess };
+  return { data, error, isLoading, isSuccess };
 };
