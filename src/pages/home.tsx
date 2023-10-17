@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Flex, Text, Box, Grid } from "@chakra-ui/react";
+import { Flex, Text, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
 import { homeCarousel } from "../utils/staticData";
