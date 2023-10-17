@@ -275,9 +275,12 @@ header {
       }
     }
   }
+  @media screen and (max-width: 920px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
   @media screen and (max-width: 720px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media screen and (max-width: 500px) {
