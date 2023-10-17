@@ -166,7 +166,7 @@ const Home = () => {
       {inventoryProductsSuccess && (
         <Box bg="bg.light" overflow="hidden">
           <div className="container">
-            <Box py="5rem" mx="auto" w="100%" color="typography.dark">
+            <Box py="2rem" mx="auto" w="100%" color="typography.dark">
               <Text
                 textAlign="left"
                 color="typography.dark"
@@ -180,9 +180,8 @@ const Home = () => {
                 className=""
                 justifyContent="center"
                 alignItems="center"
-                gap="2rem"
-                mt={{ base: "2rem", md: "4rem" }}
-                // pl={{ base: "110rem", sm: "137rem" }}
+                gap="1rem"
+                // pt={{ base: "2rem", md: "4rem" }}
                 overflow="hidden"
                 ref={parentRef as unknown as LegacyRef<HTMLDivElement>}
               >
@@ -191,13 +190,14 @@ const Home = () => {
                   inventoryProducts?.results?.map((item) => (
                     <Box
                       key={item.sku}
-                      className="w-full pt-4"
+                      className="w-full "
+                      padding={0}
                       minW={{ base: "10rem", sm: "25rem" }}
                       onMouseEnter={() => setScrollDuration(10000)}
                       onMouseLeave={() => setScrollDuration(30)}
                     >
                       <Link
-                        className="image-link w-full bg-white p-8 rounded-3xl hover:scale-105 transition-all duration-300"
+                        className="image-link w-full bg-white rounded-2xl hover:scale-105 transition-all duration-300"
                         to={`/product/${item.sku}/`}
                       >
                         <Text
@@ -213,7 +213,7 @@ const Home = () => {
                         <img
                           src={item.default_image}
                           alt={item.product_name}
-                          className="h-[7rem] md:h-[23rem] sm:h-[9rem] mix-blend-darken"
+                          className="h-[8rem] md:h-[23rem] sm:h-[9rem] mix-blend-darken"
                         />
                         {/* <img
                                                 src="https://dfxfolder.s3.amazonaws.com/media/inventory/iphone_13_kxK7AID.jpg"
@@ -225,13 +225,18 @@ const Home = () => {
                         flexDir="column"
                         alignSelf="flex-start"
                         alignItems="flex-start"
-                        mt="2rem"
+                        mt="1rem"
                       >
                         <Text fontSize="1rem" fontWeight={400}>
                           {item.product_name}
                         </Text>
                         <Flex alignItems="baseline" flexDir="column">
-                          <Text color="typography.dark" fontSize="2rem" fontWeight="600">
+                          <Text
+                            color="typography.dark"
+                            fontSize={{ base: "1rem", sm: "2rem" }}
+                            fontWeight="600"
+                            margin={0}
+                          >
                             {`$${item.sale_price}`}
                           </Text>
                           {item.store_price && (
@@ -265,29 +270,30 @@ const Home = () => {
             >
               Shop by Categories
             </Text>
-            <Grid
-              templateColumns={{
-                base: "repeat(3, 1fr)",
-                sm: "repeat(3, 1fr)",
-                md: "repeat(3, 1fr)",
-                lg: "repeat(6, 1fr)",
-              }}
-              mt="4rem"
-              justifyContent="center"
-              gap="1rem"
-              // mx="2rem"
-              flexWrap={{ base: "wrap", md: "nowrap" }}
+            <div
+              className="cat-grid"
+              // templateColumns={{
+              //   base: "repeat(3, 1fr)",
+              //   sm: "repeat(3, 1fr)",
+              //   md: "repeat(3, 1fr)",
+              //   lg: "repeat(6, 1fr)",
+              // }}
+              // mt="4rem"
+              // justifyContent="center"
+              // gap="1rem"
+              // // mx="2rem"
+              // flexWrap={{ base: "wrap", md: "nowrap" }}
             >
               {trendingInventorySuccess &&
                 trendingInventory?.length &&
                 trendingInventory?.map((item) => (
                   <div
                     key={item?.id}
-                    className=" i-grid hover:scale-105 transition-all duration-300 bg-white px-1 md:px-4 py-4 rounded-3xl"
+                    className=" i-grid hover:scale-105 transition-all duration-300 bg-white  rounded-3xl"
                   >
                     <Flex
                       flexDir="column"
-                      gap="1.5rem"
+                      gap="1rem"
                       justifyContent="center"
                       alignItems="center"
                       as={Link}
@@ -296,15 +302,21 @@ const Home = () => {
                       <img
                         src={item?.sample_product?.image || "/iphone-14.png"}
                         alt={item?.name}
-                        className="h-[6rem] md:h-[12rem]  mix-blend-darken"
+                        className="  mix-blend-darken"
                       />
-                      <Text textAlign="center" fontSize="1.5rem" fontWeight={700} margin="0">
+                      <Text
+                        textAlign="center"
+                        fontSize="16px"
+                        wordBreak="break-word"
+                        fontWeight={700}
+                        margin="0"
+                      >
                         {item?.name}
                       </Text>
                     </Flex>
                   </div>
                 ))}
-            </Grid>
+            </div>
           </div>
         </Box>
       )}

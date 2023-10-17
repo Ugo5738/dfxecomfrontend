@@ -28,7 +28,7 @@ import {
   gamingDropdownMenu,
   wearablesDropdownMenu,
 } from "../utils/dummyData";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const isLoggedIn = getAuthToken();
@@ -42,8 +42,20 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
+  const optionRef = useRef<HTMLDivElement | null>(null);
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
+      setOpenSearch(false);
+      setOpen(false);
+    }
+  };
 
   const { products } = orderSummaryData?.order_summary || {};
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => document.removeEventListener("click", handleOutsideClick);
+  });
 
   return (
     <Wrapper>
@@ -166,7 +178,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
           <DropdownNav />
         </div>
       </header>
-      <div className="mobile ">
+      <div className="mobile " ref={optionRef}>
         <div className="top container">
           <div className="top-nav">
             <button
@@ -178,7 +190,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             <h1 className="logo">
               <Link to="/">DFX LOGO</Link>
             </h1>
-            <div className="open-search">
+            <div className="open-search" ref={optionRef}>
               <CiSearch
                 onClick={() => setOpenSearch(!openSearch)}
                 className="text-[#171923] h-8 w-8 hover:cursor-pointer"

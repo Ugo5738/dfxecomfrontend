@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
-import Nav from "../components/nav";
 import { useEffect, useState } from "react";
 import Seamless from "../components/seamless";
 import AppButton from "../components/button";
@@ -18,6 +17,7 @@ import { useGetSingleProduct } from "../services/products";
 import LoadingSpinner from "../components/loading";
 import { UseAddToCartMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
+import Header from "../layouts/Header";
 
 const ProductDetail = () => {
   const { sku } = useParams<{ sku: string }>();
@@ -92,7 +92,7 @@ const ProductDetail = () => {
 
   return (
     <Box>
-      <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {isSuccess && (
         <Box>
           <Box mx="auto" w="98%" mb="5rem" my={{ base: "2rem", md: "5rem" }}>
