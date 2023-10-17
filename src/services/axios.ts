@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig, AxiosError } from "axios";
 import URLS from "./urls";
 import { ErrorToast } from "../utils/toast";
-import { clearAuthToken, clearAuthToken2, getAuthToken, getAuthToken2 } from "../utils/auth";
+import { clearAuthToken, getAuthToken, getAuthToken2 } from "../utils/auth";
 
 interface ResponseType {
   detail: string;
@@ -42,13 +42,11 @@ axios.interceptors.response.use(
       ErrorToast(error.response.data.detail);
       if (error.response.data.detail === "Authentication credentials were not provided.") {
         clearAuthToken();
-        clearAuthToken2();
 
         window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
       }
       if (error.response.data.code === "token_not_valid") {
         clearAuthToken();
-        clearAuthToken2();
         window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
       }
       return null;
