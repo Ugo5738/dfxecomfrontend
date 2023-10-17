@@ -21,7 +21,7 @@ const axiosConfigurator = (config: AxiosRequestConfig) => {
   const token = getAuthToken();
   const token2 = getAuthToken2();
 
-  if (token) {
+  if (token && token2) {
     config.headers = {
       ...(config.headers ?? {}),
       Authorization: `Bearer ${token || token2}`,
