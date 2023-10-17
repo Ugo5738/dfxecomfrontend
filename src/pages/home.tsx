@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Flex, Text, Box, Grid } from "@chakra-ui/react";
+import { Flex, Text, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
 import { homeCarousel } from "../utils/staticData";
@@ -227,7 +227,7 @@ const Home = () => {
                         alignItems="flex-start"
                         mt="1rem"
                       >
-                        <Text fontSize="1rem" fontWeight={400}>
+                        <Text fontSize={{ base: "1rem", sm: "16px" }} fontWeight={400}>
                           {item.product_name}
                         </Text>
                         <Flex alignItems="baseline" flexDir="column">
@@ -289,21 +289,25 @@ const Home = () => {
                 trendingInventory?.map((item) => (
                   <div
                     key={item?.id}
-                    className=" i-grid hover:scale-105 transition-all duration-300 bg-white  rounded-3xl"
+                    className=" i-grid hover:scale-105 transition-all duration-300 bg-white rounded-3xl"
                   >
                     <Flex
                       flexDir="column"
+                      className="flex"
                       gap="1rem"
+                      padding={0}
                       justifyContent="center"
                       alignItems="center"
                       as={Link}
                       to={`/shop?category=${item?.name.toLowerCase()}`}
                     >
-                      <img
-                        src={item?.sample_product?.image || "/iphone-14.png"}
-                        alt={item?.name}
-                        className="  mix-blend-darken"
-                      />
+                      <div className="img-holder">
+                        <img
+                          src={item?.sample_product?.image || "/iphone-14.png"}
+                          alt={item?.name}
+                          className="  mix-blend-darken"
+                        />
+                      </div>
                       <Text
                         textAlign="center"
                         fontSize="16px"
