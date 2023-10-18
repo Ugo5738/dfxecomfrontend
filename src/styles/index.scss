@@ -85,7 +85,7 @@ header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 12vh;
+      height: 7vh;
       width: 100%;
       .logo {
         font-family: Lato;
@@ -101,14 +101,16 @@ header {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 1rem 0.5rem;
-          border-radius: 5px;
-          background-color: rgb(231, 231, 231);
+          border-radius: 100px;
           // background-color: red;
-          top: 3rem;
-          right: -5rem;
+          background-color: rgb(255, 255, 255);
+          top: -4px;
+          right: -6.8rem;
           width: 300px;
           .form-group {
+            margin: 0;
+            border-radius: 100px;
+
             input {
               width: 100%;
               background: transparent;
@@ -273,6 +275,10 @@ header {
           width: 100%;
         }
       }
+      p {
+        font-size: 16px;
+        text-align: center;
+      }
     }
   }
   @media screen and (max-width: 920px) {
@@ -288,10 +294,13 @@ header {
     flex-wrap: nowrap;
     .i-grid {
       .flex {
-        padding: 10px;
         .img-holder {
-          height: 10rem;
+          height: 9rem;
           width: 100%;
+        }
+        p {
+          font-size: 12px;
+          text-align: center;
         }
       }
     }

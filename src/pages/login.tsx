@@ -5,8 +5,7 @@ import { useLoginForm } from "../utils/form";
 import AppButton from "../components/button";
 import { UseLoginMutation } from "../services/mutation";
 import { ErrorToast, SuccessToast } from "../utils/toast";
-import { setAuthToken } from "../utils/auth";
-import { setAuthToken2 } from "../utils/auth";
+import { setAuthRefreshToken, setAuthToken } from "../utils/auth";
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -21,7 +20,6 @@ const Login = () => {
   const onLogin = async (data: LoginFormType) => {
     setLoading(true);
     const loginResult = await login(data);
-
     try {
       if (!loginResult) return;
 
@@ -29,7 +27,7 @@ const Login = () => {
         SuccessToast("Login Successful!");
       }
       setAuthToken(loginResult.data?.access as string);
-      setAuthToken2(loginResult.data?.refresh as string);
+      setAuthRefreshToken(loginResult.data?.refresh as string);
 
       redirectUrl ? navigate(redirectUrl) : navigate("/");
     } catch (error) {
