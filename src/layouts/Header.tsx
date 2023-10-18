@@ -47,6 +47,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
       setOpenSearch(false);
       setOpen(false);
+      setSearchTerm("");
     }
   };
 
@@ -181,10 +182,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
       <div className="mobile " ref={optionRef}>
         <div className="top container">
           <div className="top-nav">
-            <button
-              className="hamburger ms-3 border-0 bg-transparent "
-              onClick={() => setOpen(true)}
-            >
+            <button className="hamburger  border-0 bg-transparent " onClick={() => setOpen(true)}>
               <FaBars />
             </button>
             <h1 className="logo">
@@ -192,18 +190,31 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             </h1>
             <div className="open-search" ref={optionRef}>
               <CiSearch
-                onClick={() => setOpenSearch(!openSearch)}
+                onClick={() => setOpenSearch(true)}
                 className="text-[#171923] h-8 w-8 hover:cursor-pointer"
               />
               {openSearch && (
                 <div className="search">
                   <div className="form-group">
+                    <div className="fs-1 me-2">
+                      <CiSearch />
+                    </div>
+
                     <input
                       type="text"
                       value={searchTerm}
                       placeholder="search..."
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
+                    <div
+                      className="fx fs-3 p-2 me-2"
+                      onClick={() => {
+                        setOpenSearch(false);
+                        setSearchTerm("");
+                      }}
+                    >
+                      <FaX />
+                    </div>
                   </div>
                   {/* <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" /> */}
                 </div>

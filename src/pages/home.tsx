@@ -295,7 +295,6 @@ const Home = () => {
                       flexDir="column"
                       className="flex"
                       gap="1rem"
-                      padding={0}
                       justifyContent="center"
                       alignItems="center"
                       as={Link}
@@ -308,15 +307,7 @@ const Home = () => {
                           className="  mix-blend-darken"
                         />
                       </div>
-                      <Text
-                        textAlign="center"
-                        fontSize="16px"
-                        wordBreak="break-word"
-                        fontWeight={700}
-                        margin="0"
-                      >
-                        {item?.name}
-                      </Text>
+                      <p className="m-0">{item?.name}</p>
                     </Flex>
                   </div>
                 ))}

@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL as string;
-
 const URLS = {
   API_URL,
+  REFRESH_TOKEN: "/api/auth/token",
   LOGIN: `/auth/token/`,
   REFRESH: `/auth/login/token/refresh/`,
   LOGOUT: `/auth/logout/`,

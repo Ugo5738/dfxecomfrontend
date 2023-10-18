@@ -10,8 +10,9 @@ const Footer = () => {
       bg="white"
       flexDir="column"
       gap={{ base: "2rem", sm: 0 }}
-      py="2rem"
-      px={{ base: "1rem", sm: "2rem", md: "4rem" }}
+      pb="4rem"
+      pt="2rem"
+      // px={{ base: "1rem", sm: "2rem", md: "4rem" }}
     >
       <div className="container">
         {/* Render the DFX LOGO as a link to the homepage */}
