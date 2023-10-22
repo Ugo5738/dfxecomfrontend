@@ -287,7 +287,6 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                             key={i}
                             onClick={() => {
                               setSearchTerm(sug?.product_name);
-                              setDrop(false);
                             }}
                           >
                             {sug?.product_name}{" "}

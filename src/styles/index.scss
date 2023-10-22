@@ -138,6 +138,8 @@ header {
           width: 100%;
           border-radius: 0 0 10px 10px;
           background-color: white;
+          z-index: 7;
+
           .form-group {
             display: flex;
             align-items: center;
@@ -158,6 +160,8 @@ header {
             height: 18vh;
             border: 1px solid #ccc;
             overflow: hidden;
+            z-index: 7;
+
             ul {
               li {
                 padding: 3px 5px;
