@@ -20,6 +20,8 @@ const Login = () => {
   const onLogin = async (data: LoginFormType) => {
     setLoading(true);
     const loginResult = await login(data);
+    console.log(loginResult);
+
     try {
       if (!loginResult) return;
 

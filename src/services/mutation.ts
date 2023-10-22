@@ -8,6 +8,11 @@ export const UseLoginMutation = () =>
     const res = await axios.post(URLS.LOGIN, login);
     return res;
   });
+export const UseRefreshMutation = () =>
+  useMutation(["refeshed"], async (refresh: string) => {
+    const res = await axios.post(URLS.REFRESH_TOKEN, refresh);
+    return res;
+  });
 
 export const UseRegisterMutation = () =>
   useMutation(["register"], async (register: RegisterPayloadType) => {

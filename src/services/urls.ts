@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL as string;
 const URLS = {
   API_URL,
-  REFRESH_TOKEN: "/api/auth/token",
+  REFRESH_TOKEN: "/auth/token/refresh/",
   LOGIN: `/auth/token/`,
   REFRESH: `/auth/login/token/refresh/`,
   LOGOUT: `/auth/logout/`,
@@ -12,6 +12,7 @@ const URLS = {
   PRODUCTS: `/inventory/products/`,
   TRENDING_INVENTORY: `/inventory/trending-categories/`,
   PRODUCTS_INVENTORY: `/inventory/product-inventory-sales/`,
+  SUGGESTION: (eParam: string) => `/inventory/product-suggestions/?q=${eParam}`,
   BRANDS_INVENTORY: `/inventory/brands/`,
   CATEGORY_INVENTORY: `/inventory/categories/`,
   PRODUCT: (sku: string) => `/inventory/product/${sku}/`,

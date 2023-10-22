@@ -29,6 +29,13 @@ import {
   wearablesDropdownMenu,
 } from "../utils/dummyData";
 import { useEffect, useState, useRef } from "react";
+import URLS from "../services/urls";
+import axios from "../services/axios";
+
+interface IProduct {
+  product_name: string;
+  sku: string;
+}
 
 const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const isLoggedIn = getAuthToken();
@@ -37,6 +44,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const [assesOpen, setAssesOpen] = useState(false);
   const [gameOpen, setGameOpen] = useState(false);
   const [wearOpen, setWearOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState<IProduct[]>([]);
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
@@ -48,6 +56,33 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
       setOpenSearch(false);
       setOpen(false);
       setSearchTerm("");
+    }
+  };
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value.length > 1) {
+      const eParam = e.target.value;
+      try {
+        const response = await axios.get(URLS.SUGGESTION(eParam));
+        const data = response?.data?.results as [];
+        setSuggestions(data);
+        const nextPage = response?.data?.next as string;
+        // Fetch next page, if available
+        if (nextPage) {
+          const nextPageResponse = await axios.get(nextPage);
+
+          setSuggestions((prev) => [...prev, ...(nextPageResponse?.data?.results as [])]);
+          const prev = nextPageResponse?.data?.previous as string;
+          if (prev) {
+            const prevPage = await axios.get(prev);
+            setSuggestions((prev) => [...prev, ...(prevPage?.data?.results as [])]);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+      }
+    } else {
+      setSuggestions([]);
     }
   };
 
@@ -65,9 +100,29 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
           <h1 className="logo m-0">
             <Link to="/">DFX LOGO</Link>
           </h1>
-          <div className="form-group">
-            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
+          <div className="search-item">
+            <div className="form-group">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleInputChange}
+                placeholder="Search..."
+              />
+              <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
+            </div>
+            {searchTerm && (
+              <div className="sugg">
+                <div className="sugest">
+                  <ul>
+                    {suggestions?.map((sug, i) => (
+                      <li key={i} onClick={() => setSearchTerm(sug?.product_name)}>
+                        {sug?.product_name}{" "}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
           <div className="left">
             <div className="d-flex">
@@ -204,7 +259,8 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                       type="text"
                       value={searchTerm}
                       placeholder="search..."
-                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onChange={handleInputChange}
+                      // onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <div
                       className="fx fs-3 p-2 me-2"
@@ -216,6 +272,17 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                       <FaX />
                     </div>
                   </div>
+                  {searchTerm && (
+                    <div className="sugest">
+                      <ul>
+                        {suggestions?.map((sug, i) => (
+                          <li key={i} onClick={() => setSearchTerm(sug?.product_name)}>
+                            {sug?.product_name}{" "}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {/* <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" /> */}
                 </div>
               )}

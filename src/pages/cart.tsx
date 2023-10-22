@@ -34,6 +34,7 @@ const Cart = () => {
     last_name: customer_last_name,
     phone: customer_phone_number,
   } = user || {};
+
   const { mutateAsync: addToCart } = UseAddToCartMutation();
   const { mutateAsync: removeFromCart } = UseRemoveFromCartMutation();
   const { mutateAsync: reduceFromCart } = UseReduceFromCartMutation();
