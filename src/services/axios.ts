@@ -121,7 +121,9 @@ axios.interceptors.response.use(
       }
       return null;
     } else if (error.response?.data?.email) {
-      ErrorToast(error.response.data.email[0]);
+      // ErrorToast(error.response.data.email[0]);
+      console.log(error.response.data.email[0]);
+
       return null;
     } else {
       // ErrorToast(error.message);

@@ -48,8 +48,13 @@ header {
         padding: 1rem;
         z-index: 7;
         ul {
+          z-index: 7;
+
           li {
+            z-index: 7;
+
             padding: 3px 5px;
+            cursor: pointer;
           }
         }
       }
@@ -156,6 +161,7 @@ header {
             ul {
               li {
                 padding: 3px 5px;
+                cursor: pointer;
               }
             }
           }

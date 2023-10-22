@@ -47,6 +47,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const [suggestions, setSuggestions] = useState<IProduct[]>([]);
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
+  const [drop, setDrop] = useState(false);
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
@@ -55,29 +56,29 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
       setOpenSearch(false);
       setOpen(false);
-      setSearchTerm("");
     }
   };
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setDrop(Boolean(e.target.value));
     if (e.target.value.length > 1) {
       const eParam = e.target.value;
       try {
         const response = await axios.get(URLS.SUGGESTION(eParam));
         const data = response?.data?.results as [];
         setSuggestions(data);
-        const nextPage = response?.data?.next as string;
+        // const nextPage = response?.data?.next as string;
         // Fetch next page, if available
-        if (nextPage) {
-          const nextPageResponse = await axios.get(nextPage);
+        // if (nextPage) {
+        //   const nextPageResponse = await axios.get(nextPage);
 
-          setSuggestions((prev) => [...prev, ...(nextPageResponse?.data?.results as [])]);
-          const prev = nextPageResponse?.data?.previous as string;
-          if (prev) {
-            const prevPage = await axios.get(prev);
-            setSuggestions((prev) => [...prev, ...(prevPage?.data?.results as [])]);
-          }
-        }
+        //   setSuggestions((prev) => [...prev, ...(nextPageResponse?.data?.results as [])]);
+        //   const prev = nextPageResponse?.data?.previous as string;
+        //   if (prev) {
+        //     const prevPage = await axios.get(prev);
+        //     setSuggestions((prev) => [...prev, ...(prevPage?.data?.results as [])]);
+        //   }
+        // }
       } catch (error) {
         console.error("Error fetching suggestions:", error);
       }
@@ -110,12 +111,18 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
               />
               <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
             </div>
-            {searchTerm && (
+            {drop && (
               <div className="sugg">
                 <div className="sugest">
                   <ul>
                     {suggestions?.map((sug, i) => (
-                      <li key={i} onClick={() => setSearchTerm(sug?.product_name)}>
+                      <li
+                        key={i}
+                        onClick={() => {
+                          setSearchTerm(sug?.product_name);
+                          setDrop(false);
+                        }}
+                      >
                         {sug?.product_name}{" "}
                       </li>
                     ))}
@@ -276,7 +283,13 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     <div className="sugest">
                       <ul>
                         {suggestions?.map((sug, i) => (
-                          <li key={i} onClick={() => setSearchTerm(sug?.product_name)}>
+                          <li
+                            key={i}
+                            onClick={() => {
+                              setSearchTerm(sug?.product_name);
+                              setDrop(false);
+                            }}
+                          >
                             {sug?.product_name}{" "}
                           </li>
                         ))}
