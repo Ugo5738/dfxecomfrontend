@@ -63,7 +63,7 @@
 
 import Axios, { AxiosRequestConfig, AxiosError } from "axios";
 import URLS from "./urls";
-import { ErrorToast } from "../utils/toast";
+// import { ErrorToast } from "../utils/toast";
 import { clearAuthToken, getAuthRefreshToken, getAuthToken, setAuthToken } from "../utils/auth";
 
 interface ResponseType {
@@ -100,7 +100,9 @@ axios.interceptors.response.use(
       return Promise.reject(new Error("You are not connected to the internet."));
     }
     if (error.response?.data?.detail) {
-      ErrorToast(error.response.data.detail);
+      // ErrorToast(error.response.data.detail);
+      console.log(error.response.data.detail);
+
       if (error.response.data.detail === "Authentication credentials were not provided.") {
         clearAuthToken();
         window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
@@ -121,7 +123,9 @@ axios.interceptors.response.use(
       }
       return null;
     } else if (error.response?.data?.email) {
-      ErrorToast(error.response.data.email[0]);
+      // ErrorToast(error.response.data.email[0]);
+      console.log(error.response.data.email[0]);
+
       return null;
     } else {
       // ErrorToast(error.message);

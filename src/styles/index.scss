@@ -48,8 +48,13 @@ header {
         padding: 1rem;
         z-index: 7;
         ul {
+          z-index: 7;
+
           li {
+            z-index: 7;
+
             padding: 3px 5px;
+            cursor: pointer;
           }
         }
       }
@@ -133,6 +138,8 @@ header {
           width: 100%;
           border-radius: 0 0 10px 10px;
           background-color: white;
+          z-index: 7;
+
           .form-group {
             display: flex;
             align-items: center;
@@ -153,9 +160,12 @@ header {
             height: 18vh;
             border: 1px solid #ccc;
             overflow: hidden;
+            z-index: 7;
+
             ul {
               li {
                 padding: 3px 5px;
+                cursor: pointer;
               }
             }
           }
