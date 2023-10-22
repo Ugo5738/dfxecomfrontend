@@ -30,7 +30,7 @@ const DropdownNav = () => {
         w="100%"
         gap="1rem"
         py="1rem"
-        zIndex={10000}
+        zIndex={2}
         height=" 50px"
       >
         <div className="container">

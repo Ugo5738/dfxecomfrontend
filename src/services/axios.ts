@@ -73,10 +73,8 @@ interface ResponseType {
   messages: Record<string, string>[];
 }
 
-const apiBaseUrl = URLS.API_URL;
-
 const axios = Axios.create({
-  baseURL: apiBaseUrl,
+  baseURL: URLS.API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -95,20 +93,6 @@ const axiosConfigurator = (config: AxiosRequestConfig) => {
 
 axios.interceptors.request.use(axiosConfigurator as never);
 
-// Create a separate Axios instance for token refreshing
-const refreshAxios = Axios.create({
-  baseURL: apiBaseUrl,
-});
-
-const refreshConfigurator = (config: AxiosRequestConfig) => {
-  config.headers = {
-    "Content-Type": "application/x-www-form-urlencoded", // Adjust as needed
-  };
-  return config;
-};
-
-refreshAxios.interceptors.request.use(refreshConfigurator as never);
-
 axios.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<ResponseType>) => {
@@ -121,13 +105,9 @@ axios.interceptors.response.use(
         clearAuthToken();
         window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
       } else if (error.response.data.code === "token_not_valid") {
-        // Token is invalid, attempt to refresh it
-
         try {
           const response = await refreshAccessToken();
           const res = response?.data?.access as string;
-
-          // Update the access token and retry the original request
 
           setAuthToken(res);
           error.config!.headers.Authorization = `Bearer ${res}`;
@@ -137,7 +117,6 @@ axios.interceptors.response.use(
             clearAuthToken();
             window.location.href = `/login?redirectedFrom=${window.location.pathname}`;
           }
-          // Handle refresh token error, e.g., clearAuthToken() and redirect to login
         }
       }
       return null;
@@ -145,7 +124,11 @@ axios.interceptors.response.use(
       ErrorToast(error.response.data.email[0]);
       return null;
     } else {
-      ErrorToast(error.message);
+      // ErrorToast(error.message);
+      if (error?.message) {
+        console.log(error?.message);
+      }
+
       return null;
     }
     return Promise.reject(error);

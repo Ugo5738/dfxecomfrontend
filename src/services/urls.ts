@@ -12,6 +12,7 @@ const URLS = {
   PRODUCTS: `/inventory/products/`,
   TRENDING_INVENTORY: `/inventory/trending-categories/`,
   PRODUCTS_INVENTORY: `/inventory/product-inventory-sales/`,
+  SUGGESTION: (eParam: string) => `/inventory/product-suggestions/?q=${eParam}`,
   BRANDS_INVENTORY: `/inventory/brands/`,
   CATEGORY_INVENTORY: `/inventory/categories/`,
   PRODUCT: (sku: string) => `/inventory/product/${sku}/`,
