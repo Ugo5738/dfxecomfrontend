@@ -67,18 +67,18 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
         const response = await axios.get(URLS.SUGGESTION(eParam));
         const data = response?.data?.results as [];
         setSuggestions(data);
-        // const nextPage = response?.data?.next as string;
+        const nextPage = response?.data?.next as string;
         // Fetch next page, if available
-        // if (nextPage) {
-        //   const nextPageResponse = await axios.get(nextPage);
+        if (nextPage) {
+          const nextPageResponse = await axios.get(nextPage);
 
-        //   setSuggestions((prev) => [...prev, ...(nextPageResponse?.data?.results as [])]);
-        //   const prev = nextPageResponse?.data?.previous as string;
-        //   if (prev) {
-        //     const prevPage = await axios.get(prev);
-        //     setSuggestions((prev) => [...prev, ...(prevPage?.data?.results as [])]);
-        //   }
-        // }
+          setSuggestions((prev) => [...prev, ...(nextPageResponse?.data?.results as [])]);
+          const prev = nextPageResponse?.data?.previous as string;
+          if (prev) {
+            const prevPage = await axios.get(prev);
+            setSuggestions((prev) => [...prev, ...(prevPage?.data?.results as [])]);
+          }
+        }
       } catch (error) {
         console.error("Error fetching suggestions:", error);
       }
