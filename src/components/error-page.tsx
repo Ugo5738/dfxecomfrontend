@@ -1,11 +1,3 @@
-/**
- * Error Component
- *
- * This component is responsible for rendering an error message and handling specific error cases based on the route error.
- * It imports and uses functions and types from the react-router-dom library to manage route errors.
- *
- * @returns JSX element representing the error message and options to navigate or take action.
- */
 import { isRouteErrorResponse, useNavigate, useRouteError } from "react-router-dom";
 import { useState } from "react";
 import { ErrorPropsType } from "../utils/types";
