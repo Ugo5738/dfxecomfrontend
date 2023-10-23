@@ -101,7 +101,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
           <h1 className="logo m-0">
             <Link to="/">DFX LOGO</Link>
           </h1>
-          <div className="search-item">
+          <div className="search-item" ref={optionRef}>
             <div className="form-group">
               <input
                 type="text"
@@ -553,4 +553,320 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
 };
 
 export default Header;
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  header {
+    width: 100%;
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      height: 80px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 1);
+      .search-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        z-index: 7;
+
+        .form-group {
+          display: flex;
+          align-items: center;
+          border-radius: 100px;
+          border: 1px solid #161616;
+          opacity: 0.75;
+          width: 100%;
+          padding: 10px;
+          input {
+            width: 100%;
+            font-size: 16px;
+            &:focus,
+            &:active {
+              outline: none;
+              border: none;
+            }
+          }
+        }
+        .sugg {
+          position: absolute;
+          top: 5rem;
+          width: 100%;
+          height: 22vh;
+          border: 1px solid #ccc;
+          overflow: hidden;
+          background-color: #fff;
+          border-radius: 10px;
+          padding: 1rem;
+          z-index: 7;
+          ul {
+            z-index: 7;
+
+            li {
+              z-index: 7;
+
+              padding: 3px 5px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .logo {
+        font-family: Lato;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+      .left {
+        display: flex;
+        gap: 2rem;
+      }
+    }
+    .text {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: Lato;
+      height: 40px;
+      background-color: rgba(62, 63, 205, 1);
+    }
+
+    @media screen and (max-width: 760px) {
+      display: none;
+      .top-header {
+        // height: 5vh;
+        .logo {
+          font-size: 20px;
+        }
+        .form-group {
+          display: none;
+        }
+      }
+      .left {
+        .d-flex {
+          display: none;
+        }
+      }
+      .text {
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+  .mobile {
+    display: none;
+    position: relative;
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-direction: column;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 1);
+      &-nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 8.5vh;
+        width: 100%;
+        .logo {
+          font-family: Lato;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+        .open-search {
+          .search {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            padding: 1rem 5px 5px 5px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            border-radius: 0 0 10px 10px;
+            background-color: white;
+            z-index: 7;
+
+            .form-group {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: rgb(255, 255, 255);
+              margin: 0;
+              border-radius: 100px;
+
+              input {
+                width: 100%;
+                background: transparent;
+                font-size: 16px;
+              }
+            }
+            .sugest {
+              width: 100%;
+              border-radius: 10px;
+              height: 18vh;
+              border: 1px solid #ccc;
+              overflow: hidden;
+              z-index: 7;
+
+              ul {
+                li {
+                  padding: 3px 5px;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+        .hamburger {
+          font-size: 20px;
+        }
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        border-radius: 100px;
+        border: 1px solid #161616;
+        width: 100%;
+        padding: 3px;
+        opacity: 0.75;
+        margin-bottom: 1rem;
+        input {
+          &:focus,
+          &:active {
+            outline: 0;
+            border: none;
+          }
+        }
+      }
+    }
+    .text {
+      font-size: 18px;
+      font-weight: 600;
+      font-family: Lato;
+      height: 50px;
+      background-color: rgba(62, 63, 205, 1);
+    }
+    .dropdowns {
+      min-height: 100vh;
+      min-width: 80vw;
+      display: flex;
+      transition: 1s ease-in-out;
+      transition: 0.5s;
+      flex-direction: column;
+      justify-content: space-between;
+      display: none;
+      &-item {
+        margin-top: 4rem;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        justify-content: space-between;
+        // background-color: rgb(224, 224, 237);
+      }
+      .text-end {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 1rem;
+        z-index: 5;
+        .logo {
+          font-family: Lato;
+          font-size: 30px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+      }
+      .dropdown-items {
+        border-bottom: 1px solid #161616;
+        transition: 1s ease-in-out;
+        transition: 0.5s;
+
+        .btn {
+          h3 {
+            font-weight: 700;
+            font-size: 18px;
+          }
+        }
+        .mobile-open {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+          // transition: all 1s ease-in-out;
+          a {
+            display: flex;
+            padding: 5px 2px;
+          }
+        }
+        .comp-open {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+          // transition: all 1s ease-in-out;
+          a {
+            display: flex;
+            padding: 5px 2px;
+          }
+        }
+        .assec-open {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+          // transition: all 1s ease-in-out;
+          a {
+            display: flex;
+            padding: 5px 2px;
+          }
+        }
+        .game-open {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+          // transition: all 1s ease-in-out;
+          a {
+            display: flex;
+            padding: 5px 2px;
+          }
+        }
+        .wear-open {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+          // transition: all 1s ease-in-out;
+          a {
+            display: flex;
+            padding: 5px 2px;
+          }
+        }
+      }
+      @media screen and (max-width: 760px) {
+        justify-content: space-between;
+        position: absolute;
+        display: block;
+        background-color: white;
+        top: 0;
+        z-index: 3;
+
+        &.close {
+          left: -1000px;
+        }
+
+        &.open {
+          left: 0;
+        }
+      }
+    }
+    @media screen and (max-width: 760px) {
+      display: block;
+    }
+  }
+`;
