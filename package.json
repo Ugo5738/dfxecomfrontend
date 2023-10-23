@@ -77,7 +77,7 @@
   },
   "homepage": "https://github.com/Ugo5738/dfxecomfrontend#readme",
   "engines": {
-    "node": ">=18",
-    "npm": ">=8"
+    "node": "18.x",
+    "npm": "8.x"
   }
 }
