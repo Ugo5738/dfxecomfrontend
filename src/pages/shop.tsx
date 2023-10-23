@@ -218,7 +218,7 @@ const Shop = () => {
                   inset={{ base: "0", md: "auto" }}
                   minH="100vh"
                   overflowY={{ base: "auto", md: "hidden" }}
-                  zIndex="100000"
+                  zIndex="5"
                 >
                   <Flex
                     flexDir="column"
