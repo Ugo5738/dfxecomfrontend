@@ -531,4 +531,30 @@ const Cart = () => {
 export default Cart;
 const Wrapper = styled.div`
   background-color: #ebebf5;
+  .action-btn {
+    width: 50vw;
+    background-color: #adadd3;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+  .order {
+    .o-text {
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+    &-inner {
+      background: #fff;
+      border-radius: 5px;
+      padding: 1rem;
+      font-size: 16px;
+      font-weight: 600;
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
 `;
