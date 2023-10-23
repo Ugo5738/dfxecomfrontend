@@ -47,11 +47,12 @@ const DropdownNav = () => {
               >
                 Mobile
               </MenuButton>
-              <MenuList mx="1rem">
+              <MenuList mx="1rem" zIndex={10}>
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   gap={{ base: "1.5rem", sm: "3rem" }}
                   px="1rem"
+                  zIndex={10000}
                 >
                   {mobileDropdownMenu.map((item) => (
                     <GridItem key={item.id}>
@@ -85,7 +86,7 @@ const DropdownNav = () => {
               >
                 Computing
               </MenuButton>
-              <MenuList mx="1rem">
+              <MenuList mx="1rem" zIndex={10}>
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   gap={{ base: "1.5rem", sm: "3rem" }}
@@ -123,7 +124,7 @@ const DropdownNav = () => {
               >
                 Accessories
               </MenuButton>
-              <MenuList mx="1rem">
+              <MenuList mx="1rem" zIndex={10}>
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   gap={{ base: "1.5rem", sm: "3rem" }}
@@ -161,7 +162,7 @@ const DropdownNav = () => {
               >
                 Gaming
               </MenuButton>
-              <MenuList mx="1rem">
+              <MenuList mx="1rem" zIndex={10}>
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   gap={{ base: "1.5rem", sm: "3rem" }}
@@ -199,7 +200,7 @@ const DropdownNav = () => {
               >
                 Wearables
               </MenuButton>
-              <MenuList mx="1rem">
+              <MenuList mx="1rem" zIndex={10}>
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   gap={{ base: "1.5rem", sm: "3rem" }}
