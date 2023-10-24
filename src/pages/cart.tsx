@@ -349,7 +349,7 @@ const Cart = () => {
                                 {product?.store_price && (
                                   <Text
                                     color="typography.ash"
-                                    fontSize="1rem"
+                                    fontSize="14px"
                                     textDecoration="line-through"
                                     margin={0}
                                     fontFamily="Bebas Neue"

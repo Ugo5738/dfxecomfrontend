@@ -56,6 +56,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
       setOpenSearch(false);
       setOpen(false);
+      setDrop(false);
     }
   };
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +102,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
           <h1 className="logo m-0">
             <Link to="/">DFX LOGO</Link>
           </h1>
-          <div className="search-item" ref={optionRef}>
+          <div className="search-item">
             <div className="form-group">
               <input
                 type="text"
@@ -112,7 +113,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
               <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
             </div>
             {drop && (
-              <div className="sugg">
+              <div className="sugg" ref={optionRef}>
                 <div className="sugest">
                   <ul>
                     {suggestions?.map((sug, i) => (
@@ -279,8 +280,8 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                       <FaX />
                     </div>
                   </div>
-                  {searchTerm && (
-                    <div className="sugest">
+                  {drop && (
+                    <div className="sugest" ref={optionRef}>
                       <ul>
                         {suggestions?.map((sug, i) => (
                           <li
@@ -593,15 +594,20 @@ const Wrapper = styled.div`
           position: absolute;
           top: 5rem;
           width: 100%;
-          height: 22vh;
+          height: 25vh;
           border: 1px solid #ccc;
-          overflow: hidden;
+          overflow-y: scroll;
           background-color: #fff;
           border-radius: 10px;
+          &::-webkit-scrollbar {
+            overflow: hidden;
+          }
+
           padding: 1rem;
           z-index: 7;
           ul {
             z-index: 7;
+            padding: 0;
 
             li {
               z-index: 7;
@@ -709,12 +715,17 @@ const Wrapper = styled.div`
             .sugest {
               width: 100%;
               border-radius: 10px;
-              height: 18vh;
+              height: 23vh;
               border: 1px solid #ccc;
-              overflow: hidden;
+              overflow-y: scroll;
+              &::-webkit-scrollbar {
+                overflow: hidden;
+              }
               z-index: 7;
 
               ul {
+                padding: 0;
+
                 li {
                   padding: 3px 5px;
                   cursor: pointer;
