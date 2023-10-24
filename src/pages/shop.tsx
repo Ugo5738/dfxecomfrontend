@@ -519,7 +519,7 @@ const Shop = () => {
                         <Flex alignItems="baseline">
                           <Text
                             color="typography.dark"
-                            fontSize={{ base: "1rem", sm: "2.2rem" }}
+                            fontSize={{ base: "14px", sm: "16px" }}
                             fontWeight="600"
                           >
                             {`$${item?.store_price}`}
@@ -527,7 +527,7 @@ const Shop = () => {
                           {item?.discount_store_price && (
                             <Text
                               color="typography.red"
-                              fontSize={{ base: ".6rem", sm: "1.2rem" }}
+                              fontSize={{ base: "14px", sm: "14px" }}
                               px="2"
                               textDecoration="line-through"
                             >
