@@ -13,7 +13,7 @@ import AppButton from "../components/button";
 import WaitList from "../components/waitlist";
 
 import Seamless from "../components/seamless";
-import { useGetTrendingInventory, useGetInventoryProducts } from "../services/products";
+import { useGetTrendingInventory, useGetInventorySalesProducts } from "../services/products";
 import LoadingSpinner from "../components/loading";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import { ParentRefType } from "../utils/types";
@@ -33,7 +33,7 @@ const Home = () => {
     // error: inventoryProductsError,
     isLoading: inventoryProductsLoading,
     isSuccess: inventoryProductsSuccess,
-  } = useGetInventoryProducts();
+  } = useGetInventorySalesProducts();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [scrollDuration, setScrollDuration] = useState(30);

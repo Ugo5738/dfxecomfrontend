@@ -34,12 +34,12 @@ export const useGetProducts = (params?: ParamsType) => {
   return { data, error, isLoading, isSuccess, isPreviousData };
 };
 
-export const useGetInventoryProducts = (params?: ParamsType) => {
+export const useGetInventorySalesProducts = (params?: ParamsType) => {
   removeEmpty(params!);
   const { data, error, isLoading, isSuccess, isPreviousData } = useQuery(
     ["products_inventory", params],
     async () => {
-      const res = await axios.get(URLS.PRODUCTS_INVENTORY, { params });
+      const res = await axios.get(URLS.PRODUCTS_INVENTORY_SALES, { params });
       return res?.data as ProductType;
     },
     { keepPreviousData: true },
