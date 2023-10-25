@@ -43,14 +43,14 @@ const Shop = () => {
   const [toggleFilters, setToggleFilters] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
-  const [storage, setStorage] = useState('');
-  const [color, setColor] = useState('');
-  const [brand, setBrand] = useState('');
-  const [attribute_name, setAttributeName] = useState('');
-  const [attribute_value, setAttributeValue] = useState('');
+  // const [storage, setStorage] = useState('');
+  // const [color, setColor] = useState('');
+  // const [brand, setBrand] = useState('');
+  // const [attribute_name, setAttributeName] = useState('');
+  // const [attribute_value, setAttributeValue] = useState('');
   const [price_min, setPriceMin] = useState('');
   const [price_max, setPriceMax] = useState('');
-  const [condition, setCondition] = useState('');
+  // const [condition, setCondition] = useState('');
 
   const [params, setParams] = useState<ParamsType>({
     category: searchParams.get("category") || "",
@@ -129,34 +129,34 @@ const Shop = () => {
       setProductItems(filteredProducts);
   };
 
-  const handleFilterChange = (filterType: string, value: string) => {
-      switch (filterType) {
-          case 'storage':
-              setStorage(value);
-              break;
-          case 'color':
-              setColor(value);
-              break;
-          case 'attribute_name':
-              setAttributeName(value);
-              break;
-          case 'attribute_value':
-              setAttributeValue(value);
-              break;
-          case 'price_min':
-              setPriceMin(value);
-              break;
-          case 'price_max':
-              setPriceMax(value);
-              break;
-          case 'condition':
-              setCondition(value);
-              break;
-          default:
-              break;
-      }
-      setParams((prevParams) => ({ ...prevParams, [filterType]: value }));
-  };
+  // const handleFilterChange = (filterType: string, value: string) => {
+  //     switch (filterType) {
+  //         case 'storage':
+  //             setStorage(value);
+  //             break;
+  //         case 'color':
+  //             setColor(value);
+  //             break;
+  //         case 'attribute_name':
+  //             setAttributeName(value);
+  //             break;
+  //         case 'attribute_value':
+  //             setAttributeValue(value);
+  //             break;
+  //         case 'price_min':
+  //             setPriceMin(value);
+  //             break;
+  //         case 'price_max':
+  //             setPriceMax(value);
+  //             break;
+  //         case 'condition':
+  //             setCondition(value);
+  //             break;
+  //         default:
+  //             break;
+  //     }
+  //     setParams((prevParams) => ({ ...prevParams, [filterType]: value }));
+  // };
 
   const handleApplyPriceFilter = () => {
       setParams((prevParams) => ({
