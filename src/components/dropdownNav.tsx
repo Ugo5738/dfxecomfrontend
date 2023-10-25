@@ -15,6 +15,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 import styled from "styled-components";
 import { useState, useEffect } from 'react';
 import URLS from '../services/urls';
+import { getShopURLWithCategory } from '../utils/urlUtils';
 
 interface CategoryChild {
   id: number;
@@ -59,7 +60,7 @@ const DropdownNav = () => {
                             alt={child.name}
                             mr="12px"
                         />
-                        <Link to={`/shop?category=${encodeURIComponent(child.name)}`}>
+                        <Link to={getShopURLWithCategory(child.name)}>
                             <span>{child.name}</span>
                         </Link>
                         {child.children.length > 0 && (
