@@ -151,7 +151,7 @@ const Home = () => {
                         to="/shop"
                         fontFamily="Roboto Slab"
                       >
-                        Shop
+                        Shop Now
                       </AppButton>
                     </Flex>
                   </Flex>

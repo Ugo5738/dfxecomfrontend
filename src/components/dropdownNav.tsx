@@ -14,6 +14,7 @@ import {
 import { AiFillCaretDown } from "react-icons/ai";
 import styled from "styled-components";
 import { useState, useEffect } from 'react';
+import URLS from '../services/urls';
 
 interface CategoryChild {
   id: number;
@@ -31,7 +32,7 @@ const DropdownNav = () => {
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        const API_ENDPOINT = `${import.meta.env.VITE_API_URL}/inventory/categories/`;
+        const API_ENDPOINT = `${URLS.API_URL}${URLS.CATEGORY_INVENTORY}`;
         fetch(API_ENDPOINT)
             .then(response => response.json())
             .then(data => {
