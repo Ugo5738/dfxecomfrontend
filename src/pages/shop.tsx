@@ -42,8 +42,18 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [toggleFilters, setToggleFilters] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
+
+  // const [storage, setStorage] = useState('');
+  // const [color, setColor] = useState('');
+  // const [brand, setBrand] = useState('');
+  // const [attribute_name, setAttributeName] = useState('');
+  // const [attribute_value, setAttributeValue] = useState('');
+  const [price_min, setPriceMin] = useState('');
+  const [price_max, setPriceMax] = useState('');
+  // const [condition, setCondition] = useState('');
+
   const [params, setParams] = useState<ParamsType>({
-    search: searchParams.get("category") || "",
+    category: searchParams.get("category") || "",
     page_size: 12,
     page: page,
     product_name: "",
@@ -110,13 +120,55 @@ const Shop = () => {
   }, [isLargerThan768]);
 
   const handleCategoryFilter = (subCategories: string[]) => {
-    setParams((prevParams) => ({ ...prevParams, search: subCategories[0], brand_name: "" }));
+    setParams((prevParams) => ({ ...prevParams, category: subCategories[0] }));
   };
 
   const handleBrandFilter = (brand: string) => {
-    setParams((prevParams) => ({ ...prevParams, brand_name: brand, search: "" }));
-    const filteredProducts = productItems?.filter((item) => item.product_name === brand);
-    setProductItems(filteredProducts);
+      setParams((prevParams) => ({ ...prevParams, brand_name: brand }));
+      const filteredProducts = productItems?.filter((item) => item.product_name === brand);
+      setProductItems(filteredProducts);
+  };
+
+  // const handleFilterChange = (filterType: string, value: string) => {
+  //     switch (filterType) {
+  //         case 'storage':
+  //             setStorage(value);
+  //             break;
+  //         case 'color':
+  //             setColor(value);
+  //             break;
+  //         case 'attribute_name':
+  //             setAttributeName(value);
+  //             break;
+  //         case 'attribute_value':
+  //             setAttributeValue(value);
+  //             break;
+  //         case 'price_min':
+  //             setPriceMin(value);
+  //             break;
+  //         case 'price_max':
+  //             setPriceMax(value);
+  //             break;
+  //         case 'condition':
+  //             setCondition(value);
+  //             break;
+  //         default:
+  //             break;
+  //     }
+  //     setParams((prevParams) => ({ ...prevParams, [filterType]: value }));
+  // };
+
+  const handleApplyPriceFilter = () => {
+      setParams((prevParams) => ({
+          ...prevParams,
+          price_min: price_min,
+          price_max: price_max
+      }));
+
+      const filteredProducts = productItems?.filter((item) => 
+          Number(item.store_price) >= Number(price_min) && Number(item.store_price) <= Number(price_max)
+      );
+      setProductItems(filteredProducts);
   };
 
   // const handlePriceFilter = (priceRange: { price_min?: number; price_max?: number }) => {
@@ -328,27 +380,38 @@ const Shop = () => {
                       </ul>
                     )}
                     <div className="underline"></div>
-                  </Flex>
+                  </Flex>                  
                   <Flex flexDir="column" gap="1rem">
-                    <Text fontWeight="600" fontSize="1.75rem">
-                      Prices ($)
-                    </Text>
-                    <div className="row">
-                      <div className="form-group col-6">
-                        <label htmlFor="">MIN.</label>
-                        <input type="number" placeholder="1,500" />
+                      <Text fontWeight="600" fontSize="1.75rem">
+                          Prices ($)
+                      </Text>
+                      <div className="row">
+                          <div className="form-group col-6">
+                              <label htmlFor="minPrice">MIN.</label>
+                              <input
+                                  type="number"
+                                  placeholder="1,500"
+                                  value={price_min}
+                                  onChange={(e) => setPriceMin(e.target.value)}
+                              />
+                          </div>
+                          <div className="form-group col-6">
+                              <label htmlFor="maxPrice">MAX.</label>
+                              <input 
+                                  type="number"
+                                  placeholder="1,000,000"
+                                  value={price_max}
+                                  onChange={(e) => setPriceMax(e.target.value)}
+                              />
+                          </div>
                       </div>
-                      <div className="form-group col-6">
-                        <label htmlFor="">MAX.</label>
-                        <input type="number" placeholder="1,000,000" />
+                      <button onClick={handleApplyPriceFilter}>Apply</button>
+                      <div className="lines">
+                          <div className="circle"></div>
+                          <div className="line"></div>
+                          <div className="circle"></div>
                       </div>
-                    </div>
-                    <div className="lines">
-                      <div className="circle"></div>
-                      <div className="line"></div>
-                      <div className="circle"></div>
-                    </div>
-                    <div className="linehr"></div>
+                      <div className="linehr"></div>
                     {/* <VStack spacing={4} align="stretch">
                     {products?.priceRange.map((priceRange) => (
                       <Checkbox

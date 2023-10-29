@@ -75,6 +75,7 @@ export interface ProductType {
 }
 
 export interface ParamsType {
+  category?: string;
   search?: string;
   product_name?: string;
   brand_name?: string;
