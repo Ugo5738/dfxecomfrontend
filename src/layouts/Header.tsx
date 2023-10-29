@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prettier/prettier */
 import { CiSearch } from "react-icons/ci";
 import {
@@ -13,7 +14,7 @@ import {
 import { BsCart3 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useGetOrderSummary } from "../services/order";
-import { getAuthToken } from "../utils/auth";
+import { clearAuthRefreshToken, clearAuthToken, getAuthToken } from "../utils/auth";
 import { PiSignInLight } from "react-icons/pi";
 import { FaBars } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
@@ -48,6 +49,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [drop, setDrop] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
@@ -57,7 +59,14 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
       setOpenSearch(false);
       setOpen(false);
       setDrop(false);
+      setDropdown(false);
     }
+  };
+  const logout = () => {
+    clearAuthRefreshToken();
+    clearAuthToken();
+    setDropdown(false);
+    window.location.href = "/login";
   };
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -233,6 +242,36 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 {isSuccess ? products?.length : "0"}
               </Text>
             </Flex>
+            <nav className="ms-3">
+              <ul className="nav">
+                <li className="nav-item profile-image">
+                  <div className="pro-holder">{"DFX"}</div>
+                  <div className="dropdown" ref={optionRef}>
+                    <button
+                      type="button"
+                      className="d-flex align-items-center"
+                      onClick={() => setDropdown(!dropdown)}
+                    >
+                      {"DFX"} <i className="fas fa-chevron-down"></i>
+                    </button>
+                    {dropdown && (
+                      <ul className="dropdown-menus">
+                        <li>
+                          <button className="dropdown-item" onClick={logout}>
+                            Logout
+                          </button>
+                        </li>
+                        <li>
+                          <Link className="dropdown-item" to="/profile">
+                            profile
+                          </Link>
+                        </li>
+                      </ul>
+                    )}
+                  </div>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
         <div className="text d-flex align-items-center justify-content-center w-100 text-light ">
@@ -251,7 +290,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             <h1 className="logo">
               <Link to="/">DFX LOGO</Link>
             </h1>
-            <div className="open-search" ref={optionRef}>
+            <div className="open-search ms-5" ref={optionRef}>
               <CiSearch
                 onClick={() => setOpenSearch(true)}
                 className="text-[#171923] h-8 w-8 hover:cursor-pointer"
@@ -288,6 +327,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                             key={i}
                             onClick={() => {
                               setSearchTerm(sug?.product_name);
+                              setDrop(false);
                             }}
                           >
                             {sug?.product_name}{" "}
@@ -300,22 +340,31 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 </div>
               )}
             </div>
-            <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
-              <BsCart3 className="text-[#171923] h-12 w-12" />
-              <Text
-                rounded="full"
-                bg="typography.red"
-                color="white"
-                h="2rem"
-                w="2rem"
-                ml="-3"
-                mt="-2"
-                textAlign="center"
-                fontWeight="600"
-              >
-                {isSuccess ? products?.length : "0"}
-              </Text>
-            </Flex>
+            <div className="d-flex align-items-center">
+              <Flex as={Link} ml={{ xs: "-1rem", md: "0" }} to="/cart">
+                <BsCart3 className="text-[#171923] h-10 w-10" />
+                <Text
+                  rounded="full"
+                  bg="typography.red"
+                  color="white"
+                  h="2rem"
+                  w="2rem"
+                  ml="-3"
+                  mt="-2"
+                  textAlign="center"
+                  fontWeight="600"
+                >
+                  {isSuccess ? products?.length : "0"}
+                </Text>
+              </Flex>
+              <nav className="ms-2">
+                <ul className="nav">
+                  <li className="nav-item profile-image">
+                    <div className="pro-holder">{"DFX"}</div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
         <div className="text d-flex align-items-center justify-content-center w-100 text-light ">
@@ -514,7 +563,26 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
-            ) : null}
+            ) : (
+              <div>
+                <button
+                  onClick={logout}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#df6a12",
+                    fontWeight: "600",
+                    color: "#fff",
+                    width: "100%",
+                    borderRadius: "10px",
+                    padding: "9px 1rem",
+                  }}
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
 
             {!isLoggedIn ? (
               <Flex justifyContent="space-between" alignItems="center" gap="3rem">
@@ -582,7 +650,7 @@ const Wrapper = styled.div`
           padding: 10px;
           input {
             width: 100%;
-            font-size: 16px;
+            font-size: 18px;
             &:focus,
             &:active {
               outline: none;
@@ -594,7 +662,7 @@ const Wrapper = styled.div`
           position: absolute;
           top: 5rem;
           width: 100%;
-          height: 25vh;
+          height: 32vh;
           border: 1px solid #ccc;
           overflow-y: scroll;
           background-color: #fff;
@@ -611,7 +679,8 @@ const Wrapper = styled.div`
 
             li {
               z-index: 7;
-
+              font-size: 18px;
+              font-weight: 600;
               padding: 3px 5px;
               cursor: pointer;
             }
@@ -628,6 +697,55 @@ const Wrapper = styled.div`
       .left {
         display: flex;
         gap: 2rem;
+      }
+      nav {
+        width: auto;
+        .profile-image {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          .pro-holder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            width: 4rem;
+            height: 4rem;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: #ccc;
+            border: 1px solid #848383;
+          }
+          button {
+            background-color: transparent;
+            border: 0;
+          }
+        }
+        .dropdown {
+          position: relative;
+          .dropdown-menus {
+            position: absolute;
+            top: 3rem;
+            left: -2rem;
+            border: 1px solid #e3e2e2;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 16px;
+            li {
+              padding: 0 2.5rem;
+              margin-bottom: 1rem;
+            }
+          }
+        }
+        @media screen and (max-width: 760px) {
+          .dropdown {
+            display: none;
+          }
+          /* .avatar {
+              margin-right: 1rem;
+            } */
+        }
       }
     }
     .text {
@@ -709,13 +827,13 @@ const Wrapper = styled.div`
               input {
                 width: 100%;
                 background: transparent;
-                font-size: 16px;
+                font-size: 18px;
               }
             }
             .sugest {
               width: 100%;
               border-radius: 10px;
-              height: 23vh;
+              height: 100vh;
               border: 1px solid #ccc;
               overflow-y: scroll;
               &::-webkit-scrollbar {
@@ -727,7 +845,8 @@ const Wrapper = styled.div`
                 padding: 0;
 
                 li {
-                  padding: 3px 5px;
+                  padding: 1rem 1.5rem;
+                  font-size: 18px;
                   cursor: pointer;
                 }
               }
@@ -736,6 +855,39 @@ const Wrapper = styled.div`
         }
         .hamburger {
           font-size: 20px;
+        }
+        nav {
+          width: auto;
+          .profile-image {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            .pro-holder {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-weight: 600;
+
+              width: 4rem;
+              height: 4rem;
+              padding: 0.5rem;
+              border-radius: 50%;
+              background-color: #ccc;
+              border: 1px solid #848383;
+            }
+            button {
+              background-color: transparent;
+              border: 0;
+            }
+          }
+          @media screen and (max-width: 900px) {
+            .dropdown {
+              display: none;
+            }
+            /* .avatar {
+              margin-right: 1rem;
+            } */
+          }
         }
       }
       .form-group {
