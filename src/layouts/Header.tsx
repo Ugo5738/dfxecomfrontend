@@ -22,13 +22,13 @@ import AppButton from "../components/button";
 import DropdownNav from "../components/dropdownNav";
 import { SearchProps } from "../utils/types";
 import styled from "styled-components";
-import {
-  mobileDropdownMenu,
-  computingDropdownMenu,
-  accessoriesDropdownMenu,
-  gamingDropdownMenu,
-  wearablesDropdownMenu,
-} from "../utils/dummyData";
+// import {
+//   mobileDropdownMenu,
+//   computingDropdownMenu,
+//   accessoriesDropdownMenu,
+//   gamingDropdownMenu,
+//   wearablesDropdownMenu,
+// } from "../utils/dummyData";
 import { useEffect, useState, useRef } from "react";
 import URLS from "../services/urls";
 import axios from "../services/axios";
@@ -38,13 +38,35 @@ interface IProduct {
   sku: string;
 }
 
+interface CategoryChild {
+  id: number;
+  name: string;
+  is_active: boolean;
+  is_trending: boolean;
+  image?: string; // Assuming image can be optional
+  children: CategoryChild[]; // Assuming children is an array of CategoryChild
+}
+
+interface Category {
+  id: number;
+  name: string;
+  children: CategoryChild[];
+}
+
+const maxDepth = 1;
+
 const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const isLoggedIn = getAuthToken();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [compOpen, setCompOpen] = useState(false);
-  const [assesOpen, setAssesOpen] = useState(false);
-  const [gameOpen, setGameOpen] = useState(false);
-  const [wearOpen, setWearOpen] = useState(false);
+  // const [mobileMenuItems, setMobileMenuItems] = useState([]);
+  // const [mobileOpen, setMobileOpen] = useState(false);
+  // const [compOpen, setCompOpen] = useState(false);
+  // const [assesOpen, setAssesOpen] = useState(false);
+  // const [gameOpen, setGameOpen] = useState(false);
+  // const [wearOpen, setWearOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [openCategories, setOpenCategories] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState<Error | null>(null); 
   const [suggestions, setSuggestions] = useState<IProduct[]>([]);
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -103,6 +125,91 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
 
     return () => document.removeEventListener("click", handleOutsideClick);
   });
+
+  const toggleCategoryOpen = (categoryId: number) => {
+    if (openCategories.includes(categoryId)) {
+      setOpenCategories(openCategories.filter(id => id !== categoryId));
+    } else {
+      setOpenCategories([...openCategories, categoryId]);
+    }
+  };
+  
+  const isCategoryOpen = (categoryId: number) => {
+    return openCategories.includes(categoryId);
+  };
+
+  // This function handles the recursion for categories and their children
+  const renderCategories = (categories, depth = 0) => {
+    if (depth > maxDepth) return null; // Stop rendering if max depth is exceeded
+  
+    return categories.map(category => (
+      <div className={`dropdown-items depth-${depth}`} key={category.id}>
+        <button className="btn" onClick={() => toggleCategoryOpen(category.id)}>
+          {depth === 0 ? (
+            <h3 className="m-0">{category.name}</h3> // Top-level style
+          ) : (
+            <h5 className="m-0">{category.name}</h5> // Sub-level style
+          )}
+        </button>
+        {depth < 1 && isCategoryOpen(category.id) && ( // Check the depth to decide if to render children
+          <div className={`category-open depth-${depth}`}>
+            {category.children.map(item => (
+              <div key={item.id}>
+                <h5 title={item.name}>
+                  <Link to={`/shop/${item.name}`}>
+                    {item.image && (
+                      <Image
+                        boxSize="2rem"
+                        borderRadius="full"
+                        src={item.image}
+                        alt={item.name}
+                        mr="12px"
+                      />
+                    )}
+                    <span>{item.name}</span>
+                  </Link>
+                </h5>
+                {/* Render the next level of categories only if depth is less than 1 */}
+                {depth < 1 && item.children && renderCategories(item.children, depth + 1)}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    ));
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`${URLS.API_URL}${URLS.CATEGORY_INVENTORY}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setCategories(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error('An unexpected error occurred'));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.toString()}</div>;
+  }
 
   return (
     <Wrapper>
@@ -376,142 +483,8 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             <FaX />
           </div>
           <div className="dropdowns-item">
-            <div className="dropdown-items">
-              <button className="btn" onClick={() => setMobileOpen(!mobileOpen)}>
-                <h3 className="m-0">Mobile</h3>
-              </button>
-              {mobileOpen && (
-                <div className="mobile-open">
-                  {mobileDropdownMenu.map((item) => (
-                    <div key={item.id}>
-                      <h5 title={item.category}>
-                        {item.items.map((item) => (
-                          <Link key={item.id} to={`/shop/${item.title}`}>
-                            <Image
-                              boxSize="2rem"
-                              borderRadius="full"
-                              src={item.image}
-                              alt={item.title}
-                              mr="12px"
-                            />
-                            <span>{item.title}</span>
-                          </Link>
-                        ))}
-                      </h5>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="dropdown-items">
-              <button className="btn" onClick={() => setCompOpen(!compOpen)}>
-                <h3 className="m-0"> Computing</h3>
-              </button>
-
-              {compOpen && (
-                <div className="comp-open">
-                  {computingDropdownMenu.map((item) => (
-                    <div key={item.id}>
-                      <h5 title={item.category} className="m-0">
-                        {item.items.map((item) => (
-                          <Link key={item.id} to={`/shop/${item.title}`}>
-                            <Image
-                              boxSize="2rem"
-                              borderRadius="full"
-                              src={item.image}
-                              alt={item.title}
-                              mr="12px"
-                            />
-                            <span>{item.title}</span>
-                          </Link>
-                        ))}
-                      </h5>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="dropdown-items">
-              <button className="btn" onClick={() => setAssesOpen(!assesOpen)}>
-                <h3 className="m-0"> Accessories</h3>
-              </button>
-              {assesOpen && (
-                <div className="assec-open">
-                  {accessoriesDropdownMenu.map((item) => (
-                    <div key={item.id}>
-                      <h5 title={item.category} className="m-0">
-                        {item.items.map((item) => (
-                          <Link key={item.id} to={`/shop/${item.title}`}>
-                            <Image
-                              boxSize="2rem"
-                              borderRadius="full"
-                              src={item.image}
-                              alt={item.title}
-                              mr="12px"
-                            />
-                            <span>{item.title}</span>
-                          </Link>
-                        ))}
-                      </h5>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="dropdown-items">
-              <button className="btn" onClick={() => setGameOpen(!gameOpen)}>
-                <h3 className="m-0">Gaming</h3>
-              </button>
-              {gameOpen && (
-                <div className="game-open">
-                  {gamingDropdownMenu.map((item) => (
-                    <div key={item.id}>
-                      <h5 className="m-0" title={item.category}>
-                        {item.items.map((item) => (
-                          <Link key={item.id} to={`/shop/${item.title}`}>
-                            <Image
-                              boxSize="2rem"
-                              borderRadius="full"
-                              src={item.image}
-                              alt={item.title}
-                              mr="12px"
-                            />
-                            <span>{item.title}</span>
-                          </Link>
-                        ))}
-                      </h5>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="dropdown-items">
-              <button className="btn" onClick={() => setWearOpen(!wearOpen)}>
-                <h3 className="m-0">Wearables</h3>
-              </button>
-              {wearOpen && (
-                <div className="wear-open">
-                  {wearablesDropdownMenu.map((item) => (
-                    <div key={item.id}>
-                      <h5 title={item.category} className="m-0">
-                        {item.items.map((item) => (
-                          <Link key={item.id} to={`/shop/${item.title}`}>
-                            <Image
-                              boxSize="2rem"
-                              borderRadius="full"
-                              src={item.image}
-                              alt={item.title}
-                              mr="12px"
-                            />
-                            <span>{item.title}</span>
-                          </Link>
-                        ))}
-                      </h5>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Invoke the recursive function to render categories up to the max depth */}
+            {renderCategories(categories)}
           </div>
           <div className="d-fle mt-5 p-3">
             {!isLoggedIn ? (
@@ -950,67 +923,61 @@ const Wrapper = styled.div`
         }
       }
       .dropdown-items {
-        border-bottom: 1px solid #161616;
-        transition: 1s ease-in-out;
         transition: 0.5s;
+        
+        &.depth-0 {
+          border-bottom: 1px solid #161616; // Border for top-level categories only
+          padding-left: 5px; // Increase left padding for top-level categories to push them further to the right
 
-        .btn {
-          h3 {
-            font-weight: 700;
-            font-size: 18px;
+          .btn {
+            h3 {
+              font-weight: 700;
+              font-size: 18px; // Style for top-level category names
+            }
           }
         }
-        .mobile-open {
+        
+        &.depth-1 {
+          padding-left: 40px; // Left padding for sub-categories
+            
+          .btn {
+            h5 {
+              font-size: 1em;
+              font-weight: normal; // Style for sub-level category names
+            }
+          }
+        }
+      
+        .category-open {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           grid-gap: 1rem;
-          // transition: all 1s ease-in-out;
+      
           a {
             display: flex;
             padding: 5px 2px;
+
+            span {
+              margin-left: 20px; // Adjust this value as needed to move the span to the right
+            }
           }
-        }
-        .comp-open {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-gap: 1rem;
-          // transition: all 1s ease-in-out;
-          a {
-            display: flex;
-            padding: 5px 2px;
+      
+          .depth-0 {
+            .btn h3 {
+              font-size: 1.2em;
+              font-weight: bold; // Reinforce style for top-level category names if needed
+            }
           }
-        }
-        .assec-open {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-gap: 1rem;
-          // transition: all 1s ease-in-out;
-          a {
-            display: flex;
-            padding: 5px 2px;
-          }
-        }
-        .game-open {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-gap: 1rem;
-          // transition: all 1s ease-in-out;
-          a {
-            display: flex;
-            padding: 5px 2px;
-          }
-        }
-        .wear-open {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-gap: 1rem;
-          // transition: all 1s ease-in-out;
-          a {
-            display: flex;
-            padding: 5px 2px;
+      
+          .depth-1 {
+            .btn h5 {
+              font-size: 1em;
+              font-weight: normal; // Reinforce style for sub-level category names if needed
+            }
           }
         }
       }
+          
       @media screen and (max-width: 760px) {
         justify-content: space-between;
         position: absolute;

@@ -145,8 +145,8 @@ export default DropdownNav;
 const Wrapper = styled.div`
   .dropdown-nav {
     width: 100%;
-    @media screen and (max-width: 760px) {
-      display: none;
+    @media screen and (max-width: 768px) {
+      width: 100%;
     }
   }
 `;
