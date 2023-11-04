@@ -22,16 +22,11 @@ import AppButton from "../components/button";
 import DropdownNav from "../components/dropdownNav";
 import { SearchProps } from "../utils/types";
 import styled from "styled-components";
-// import {
-//   mobileDropdownMenu,
-//   computingDropdownMenu,
-//   accessoriesDropdownMenu,
-//   gamingDropdownMenu,
-//   wearablesDropdownMenu,
-// } from "../utils/dummyData";
 import { useEffect, useState, useRef } from "react";
 import URLS from "../services/urls";
 import axios from "../services/axios";
+import { getShopURLWithCategory } from "../utils/urlUtils";
+import { useLocation } from 'react-router-dom';
 
 interface IProduct {
   product_name: string;
@@ -57,12 +52,6 @@ const maxDepth = 1;
 
 const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const isLoggedIn = getAuthToken();
-  // const [mobileMenuItems, setMobileMenuItems] = useState([]);
-  // const [mobileOpen, setMobileOpen] = useState(false);
-  // const [compOpen, setCompOpen] = useState(false);
-  // const [assesOpen, setAssesOpen] = useState(false);
-  // const [gameOpen, setGameOpen] = useState(false);
-  // const [wearOpen, setWearOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [openCategories, setOpenCategories] = useState<number[]>([]);
   const [loading, setLoading] = useState(true); 
@@ -72,6 +61,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const [openSearch, setOpenSearch] = useState(false);
   const [drop, setDrop] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const location = useLocation();
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
@@ -144,19 +134,24 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   
     return categories.map(category => (
       <div className={`dropdown-items depth-${depth}`} key={category.id}>
-        <button className="btn" onClick={() => toggleCategoryOpen(category.id)}>
-          {depth === 0 ? (
-            <h3 className="m-0">{category.name}</h3> // Top-level style
-          ) : (
-            <h5 className="m-0">{category.name}</h5> // Sub-level style
-          )}
-        </button>
-        {depth < 1 && isCategoryOpen(category.id) && ( // Check the depth to decide if to render children
+        {depth === 0 ? (
+          // For top-level categories, use a button to toggle the open state
+          <button className="btn" onClick={() => toggleCategoryOpen(category.id)}>
+            <h3 className="m-0">{category.name}</h3>
+          </button>
+        ) : (
+          // For sub-categories, use a link instead of a button
+          <Link to={getShopURLWithCategory(category.name)}>
+            <h5 className="m-0">{category.name}</h5>
+          </Link>
+        )}
+        
+        {isCategoryOpen(category.id) && (
           <div className={`category-open depth-${depth}`}>
             {category.children.map(item => (
               <div key={item.id}>
-                <h5 title={item.name}>
-                  <Link to={`/shop/${item.name}`}>
+                <Link to={getShopURLWithCategory(item.name)} title={item.name}>
+                  <h5 className="m-0">
                     {item.image && (
                       <Image
                         boxSize="2rem"
@@ -167,10 +162,9 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                       />
                     )}
                     <span>{item.name}</span>
-                  </Link>
-                </h5>
-                {/* Render the next level of categories only if depth is less than 1 */}
-                {depth < 1 && item.children && renderCategories(item.children, depth + 1)}
+                  </h5>
+                </Link>
+                {renderCategories(item.children, depth + 1)}
               </div>
             ))}
           </div>
@@ -178,7 +172,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
       </div>
     ));
   };
-
+  
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
@@ -199,9 +193,13 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
         setLoading(false);
       }
     };
+    
+    // Parse the URL query parameters
+    // const query = new URLSearchParams(location.search);
+    // const categoryParam = query.get('category');
 
     fetchCategories();
-  }, []);
+  }, [location]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -958,7 +956,8 @@ const Wrapper = styled.div`
             padding: 5px 2px;
 
             span {
-              margin-left: 20px; // Adjust this value as needed to move the span to the right
+              margin-left: 20px; 
+              font-weight: bold;
             }
           }
       
