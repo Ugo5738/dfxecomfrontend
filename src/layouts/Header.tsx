@@ -48,6 +48,11 @@ interface Category {
   children: CategoryChild[];
 }
 
+interface User {
+  id: number;
+  first_name: string;
+}
+
 const maxDepth = 1;
 
 const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
@@ -60,20 +65,22 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [drop, setDrop] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [dropdown, setDropdown] = useState(false);
+  const optionRef = useRef(null);
+  // const optionRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
-  const optionRef = useRef<HTMLDivElement | null>(null);
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
-      setOpenSearch(false);
-      setOpen(false);
-      setDrop(false);
-      setDropdown(false);
-    }
-  };
+  // const handleOutsideClick = (e: MouseEvent) => {
+  //   if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
+  //     setOpenSearch(false);
+  //     setOpen(false);
+  //     setDrop(false);
+  //     setDropdown(false);
+  //   }
+  // };
   const logout = () => {
     clearAuthRefreshToken();
     clearAuthToken();
@@ -110,11 +117,11 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   };
 
   const { products } = orderSummaryData?.order_summary || {};
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideClick);
+  // useEffect(() => {
+  //   document.addEventListener("click", handleOutsideClick);
 
-    return () => document.removeEventListener("click", handleOutsideClick);
-  });
+  //   return () => document.removeEventListener("click", handleOutsideClick);
+  // });
 
   const toggleCategoryOpen = (categoryId: number) => {
     if (openCategories.includes(categoryId)) {
@@ -127,6 +134,46 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const isCategoryOpen = (categoryId: number) => {
     return openCategories.includes(categoryId);
   };
+
+  const fetchUserDetails = async () => {
+    const token = getAuthToken(); // This should retrieve the token from sessionStorage
+    if (!token) {
+      console.error('No auth token available');
+      // Handle the case where there is no token—maybe redirect to login page
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${URLS.API_URL}${URLS.CURRENT_USER}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        if (response.status === 401) {
+          // If the token is expired or invalid, handle the logic to refresh it or re-authenticate
+          // You might want to call `clearAuthToken()` here and redirect to the login
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setCurrentUser(data);
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      // Additional logic to handle the error
+    }
+  };
+  
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+  
+  useEffect(() => {
+    console.log('Current user state:', currentUser);
+  }, [currentUser]);
 
   // This function handles the recursion for categories and their children
   const renderCategories = (categories, depth = 0) => {
@@ -349,32 +396,34 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             </Flex>
             <nav className="ms-3">
               <ul className="nav">
-                <li className="nav-item profile-image">
-                  <div className="pro-holder">{"DFX"}</div>
-                  <div className="dropdown" ref={optionRef}>
-                    <button
-                      type="button"
-                      className="d-flex align-items-center"
-                      onClick={() => setDropdown(!dropdown)}
-                    >
-                      {"DFX"} <i className="fas fa-chevron-down"></i>
-                    </button>
-                    {dropdown && (
-                      <ul className="dropdown-menus">
-                        <li>
-                          <button className="dropdown-item" onClick={logout}>
-                            Logout
-                          </button>
-                        </li>
-                        <li>
-                          <Link className="dropdown-item" to="/profile">
-                            profile
-                          </Link>
-                        </li>
-                      </ul>
-                    )}
-                  </div>
-                </li>
+                {currentUser && (
+                  <li className="nav-item profile-image">
+                    <div className="dropdown" ref={optionRef}>
+                      <button
+                        type="button"
+                        className="d-flex align-items-center btn-user-name"
+                        style={{ fontSize: '1.6rem' }}
+                        onClick={() => setDropdown(!dropdown)}
+                      >
+                        {currentUser.first_name} <i className="fas fa-chevron-down ml-2"></i>
+                      </button>
+                      {dropdown && (
+                        <ul className="dropdown-menus" style={{ marginTop: '0.5rem' }}>
+                          <li>
+                            <button className="dropdown-item" onClick={logout}>
+                              Logout
+                            </button>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" to="/profile">
+                              Profile
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
@@ -464,9 +513,34 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
               </Flex>
               <nav className="ms-2">
                 <ul className="nav">
-                  <li className="nav-item profile-image">
-                    <div className="pro-holder">{"DFX"}</div>
-                  </li>
+                  {currentUser && (
+                    <li className="nav-item profile-image">
+                      <div className="dropdown" ref={optionRef}>
+                        <button
+                          type="button"
+                          className="d-flex align-items-center btn-user-name"
+                          style={{ fontSize: '1.6rem' }}
+                          onClick={() => setDropdown(!dropdown)}
+                        >
+                          {currentUser.first_name} <i className="fas fa-chevron-down ml-2"></i>
+                        </button>
+                        {dropdown && (
+                          <ul className="dropdown-menus" style={{ marginTop: '0.5rem' }}>
+                            <li>
+                              <button className="dropdown-item" onClick={logout}>
+                                Logout
+                              </button>
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/profile">
+                                Profile
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+                  )}
                 </ul>
               </nav>
             </div>
@@ -675,18 +749,6 @@ const Wrapper = styled.div`
           display: flex;
           align-items: center;
           gap: 1rem;
-          .pro-holder {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 600;
-            width: 4rem;
-            height: 4rem;
-            padding: 1rem;
-            border-radius: 50%;
-            background-color: #ccc;
-            border: 1px solid #848383;
-          }
           button {
             background-color: transparent;
             border: 0;
@@ -833,19 +895,6 @@ const Wrapper = styled.div`
             display: flex;
             align-items: center;
             gap: 1rem;
-            .pro-holder {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-weight: 600;
-
-              width: 4rem;
-              height: 4rem;
-              padding: 0.5rem;
-              border-radius: 50%;
-              background-color: #ccc;
-              border: 1px solid #848383;
-            }
             button {
               background-color: transparent;
               border: 0;
