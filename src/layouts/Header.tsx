@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prettier/prettier */
 import { CiSearch } from "react-icons/ci";
+import { FaUserCircle } from 'react-icons/fa';
 import {
   Flex,
   Text,
@@ -73,6 +74,9 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const { data: orderSummaryData, isSuccess } = useGetOrderSummary({
     enabled: !!isLoggedIn,
   });
+  const userIsAdmin = () => {
+    return currentUser && currentUser.first_name === 'Admin';
+  };
   // const handleOutsideClick = (e: MouseEvent) => {
   //   if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
   //     setOpenSearch(false);
@@ -419,6 +423,13 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                               Profile
                             </Link>
                           </li>
+                            {userIsAdmin() && (
+                              <li>
+                                 <a className="dropdown-item" href="https://dfxbackend-155eb2e6f79f.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
+                                  Order
+                                </a>
+                              </li>
+                            )}
                         </ul>
                       )}
                     </div>
@@ -512,36 +523,43 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 </Text>
               </Flex>
               <nav className="ms-2">
-                <ul className="nav">
-                  {currentUser && (
-                    <li className="nav-item profile-image">
-                      <div className="dropdown" ref={optionRef}>
-                        <button
-                          type="button"
-                          className="d-flex align-items-center btn-user-name"
-                          style={{ fontSize: '1.6rem' }}
-                          onClick={() => setDropdown(!dropdown)}
-                        >
-                          {currentUser.first_name} <i className="fas fa-chevron-down ml-2"></i>
-                        </button>
-                        {dropdown && (
-                          <ul className="dropdown-menus" style={{ marginTop: '0.5rem' }}>
+              <ul className="nav">
+                {currentUser && (
+                  <li className="nav-item profile-image">
+                    <div className="dropdown" ref={optionRef}>
+                      <button
+                        type="button"
+                        className="d-flex align-items-center btn-user-name"
+                        style={{ fontSize: '1.6rem' }}
+                        onClick={() => setDropdown(!dropdown)}
+                      >
+                        <FaUserCircle size={24} />
+                      </button>
+                      {dropdown && (
+                        <ul className="dropdown-menus" style={{ marginTop: '0.5rem' }}>
+                          <li>
+                            <button className="dropdown-item" onClick={logout}>
+                              Logout
+                            </button>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" to="/profile">
+                              Profile
+                            </Link>
+                          </li>
+                          {userIsAdmin() && (
                             <li>
-                              <button className="dropdown-item" onClick={logout}>
-                                Logout
-                              </button>
+                                <a className="dropdown-item" href="https://dfxbackend-155eb2e6f79f.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
+                                Order
+                              </a>
                             </li>
-                            <li>
-                              <Link className="dropdown-item" to="/profile">
-                                Profile
-                              </Link>
-                            </li>
-                          </ul>
-                        )}
-                      </div>
-                    </li>
-                  )}
-                </ul>
+                          )}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                )}
+              </ul>
               </nav>
             </div>
           </div>
@@ -900,9 +918,26 @@ const Wrapper = styled.div`
               border: 0;
             }
           }
+          .dropdown {
+            position: relative;
+            .dropdown-menus {
+              position: absolute;
+              top: 3rem;
+              left: -2rem;
+              border: 1px solid #e3e2e2;
+              padding: 10px;
+              border-radius: 5px;
+              background-color: #fff;
+              font-size: 16px;
+              li {
+                padding: 0 2.5rem;
+                margin-bottom: 1rem;
+              }
+            }
+          }
           @media screen and (max-width: 900px) {
             .dropdown {
-              display: none;
+              display: block;
             }
             /* .avatar {
               margin-right: 1rem;
