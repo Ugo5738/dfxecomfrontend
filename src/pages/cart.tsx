@@ -22,6 +22,8 @@ import { PaystackButton } from "react-paystack";
 import { InfoToast } from "./../utils/toast";
 import Header from "../layouts/Header";
 import styled from "styled-components";
+import { getAuthToken } from "../utils/auth";
+import URLS from "../services/urls";
 
 const PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string;
 
@@ -44,6 +46,42 @@ const Cart = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const shippingFee = 0;
 
+  // Function to send payment data to backend using fetch
+  const sendPaymentDataToBackend = async (paymentData) => {
+    const token = getAuthToken(); // This should retrieve the token from sessionStorage
+    if (!token) {
+      console.error('No auth token available');
+      // Handle the case where there is no token—maybe redirect to login page
+      return;
+    }
+
+    try {
+      const response = await fetch(`${URLS.API_URL}${URLS.PAYMENT}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (response.ok) {
+        // If you don't need to use the response data, you can remove the line below
+        // const data = await response.json(); // Removed this line
+
+        SuccessToast('Payment verified and data sent to backend');
+        window.location.href = "/order-confirmation"; // Redirect to a confirmation page
+      } else {
+        // Handle HTTP errors
+        console.error('HTTP error:', response.status);
+        // Handle error (e.g., display error message)
+      }
+    } catch (error) {
+      console.error('Error sending payment data to backend:', error);
+      // Handle network or other errors
+    }
+  };
+  
   const paymentBtnProps = useMemo(() => {
     return {
       publicKey: PUBLIC_KEY,
@@ -62,9 +100,13 @@ const Cart = () => {
           },
         ],
       },
-      onSuccess: () => {
-        SuccessToast("Payment Successful, you will be redirected to the order page");
-        window.location.href = "/";
+      // onSuccess: () => {
+      //   SuccessToast("Payment Successful, you will be redirected to the order page");
+      //   window.location.href = "/";
+      // },
+      onSuccess: (response) => {
+        // Assuming 'response' contains the payment details from Paystack
+        sendPaymentDataToBackend(response);
       },
       onClose: () => InfoToast("Payment Cancelled"),
     };
