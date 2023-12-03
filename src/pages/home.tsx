@@ -239,7 +239,7 @@ const Home = () => {
                               fontWeight="600"
                               margin={0}
                             >
-                              {`$${item.sale_price}`}
+                              {`₦${item.sale_price}`}
                             </Text>
                             {item.store_price && (
                               <Text
@@ -248,7 +248,7 @@ const Home = () => {
                                 textDecoration="line-through"
                                 fontFamily="Bebas Neue"
                               >
-                                {`$${item.store_price}`}
+                                {`₦${item.store_price}`}
                               </Text>
                             )}
                           </Flex>

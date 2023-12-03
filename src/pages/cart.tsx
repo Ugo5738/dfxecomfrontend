@@ -70,7 +70,7 @@ const Cart = () => {
         // const data = await response.json(); // Removed this line
 
         SuccessToast('Payment verified and data sent to backend');
-        window.location.href = "/order-confirmation"; // Redirect to a confirmation page
+        window.location.href = "/order-confirmation"; // Redirect to a confirmation page 
       } else {
         // Handle HTTP errors
         console.error('HTTP error:', response.status);
@@ -87,6 +87,7 @@ const Cart = () => {
       publicKey: PUBLIC_KEY,
       email: customer_email!,
       amount: total! * 100,
+      // amount: 100,
       firstname: customer_first_name,
       lastname: customer_last_name,
       phone: customer_phone_number,
@@ -106,6 +107,7 @@ const Cart = () => {
       // },
       onSuccess: (response) => {
         // Assuming 'response' contains the payment details from Paystack
+        console.log("Payment successful. Response from Paystack:");
         sendPaymentDataToBackend(response);
       },
       onClose: () => InfoToast("Payment Cancelled"),
@@ -184,18 +186,18 @@ const Cart = () => {
               <div className="order-inner">
                 <div className="right">
                   <p>Subtotal</p>
-                  <p>{`$${sub_total!.toFixed(2)}`}</p>
+                  <p>{`₦${sub_total!.toFixed(2)}`}</p>
                 </div>
                 <div className="right">
                   <p>Shipping</p>
-                  <p>{shippingFee === 0 ? "Free" : `$${shippingFee as number}`}</p>
+                  <p>{shippingFee === 0 ? "Free" : `₦${shippingFee as number}`}</p>
                 </div>
                 <div className="right">
                   <p>
                     <strong>Total</strong>
                   </p>
                   <p>
-                    <strong>{`$${total!.toFixed(2)}`}</strong>
+                    <strong>{`₦${total!.toFixed(2)}`}</strong>
                   </p>
                 </div>
               </div>
@@ -267,7 +269,7 @@ const Cart = () => {
                                 </Text>
                               </Flex>
                               <Text fontSize="1.3rem" justifySelf="flex-end">
-                                {`$${product.store_price}`}
+                                {`₦${product.store_price}`}
                               </Text>
                             </Flex>
                           </React.Fragment>
@@ -288,7 +290,7 @@ const Cart = () => {
                     fontSize="1.5rem"
                   >
                     <Text>Sub Total</Text>
-                    <Text>{`$${sub_total!.toFixed(2)}`}</Text>
+                    <Text>{`₦${sub_total!.toFixed(2)}`}</Text>
                   </Flex>
                   <PaystackButton {...paymentBtnProps} className="w-full">
                     <Flex
@@ -386,7 +388,7 @@ const Cart = () => {
                                   fontWeight="500"
                                   display={{ base: "block", md: "none" }}
                                 >
-                                  {`$${product.store_price}`}
+                                  {`₦${product.store_price}`}
                                 </Text>
                                 {product?.store_price && (
                                   <Text
@@ -397,7 +399,7 @@ const Cart = () => {
                                     fontFamily="Bebas Neue"
                                     textColor="#E54335"
                                   >
-                                    {`$${product?.store_price}`}
+                                    {`₦${product?.store_price}`}
                                   </Text>
                                 )}
                               </Flex>
@@ -435,7 +437,7 @@ const Cart = () => {
                             ml={{ lg: "5%" }}
                           >
                             <Text fontSize="2.25rem" fontWeight="700">
-                              {`$${product.store_price}`}
+                              {`₦${product.store_price}`}
                             </Text>
                             <AppButton
                               type="button"
@@ -521,11 +523,11 @@ const Cart = () => {
               >
                 <Flex alignItems="center" justifyContent="space-between" gap="3rem">
                   <Text>Sub Total</Text>
-                  <Text>{`$${sub_total!.toFixed(2)}`}</Text>
+                  <Text>{`₦${sub_total!.toFixed(2)}`}</Text>
                 </Flex>
                 <Flex alignItems="center" justifyContent="space-between" gap="3rem">
                   <Text>Shipping Fee</Text>
-                  <Text>{shippingFee === 0 ? "Free" : `$${shippingFee as number}`}</Text>
+                  <Text>{shippingFee === 0 ? "Free" : `₦${shippingFee as number}`}</Text>
                 </Flex>
               </Flex>
               <Flex
@@ -538,7 +540,7 @@ const Cart = () => {
                 px="2rem"
               >
                 <Text>Total</Text>
-                <Text>{`$${total!.toFixed(2)}`}</Text>
+                <Text>{`₦${total!.toFixed(2)}`}</Text>
               </Flex> */}
                 <Flex mx="auto" w="80%" mt="3rem" display={{ base: "flex", md: "none" }}>
                   <PaystackButton {...paymentBtnProps} className="w-full">
@@ -600,3 +602,12 @@ const Wrapper = styled.div`
     }
   }
 `;
+
+
+message: "Approved"
+redirecturl: "?trxref=T755221753699049&reference=T755221753699049"
+reference: "T755221753699049"
+status: "success"
+trans: "3311510557"
+transaction: "3311510557"
+trxref: "T755221753699049"

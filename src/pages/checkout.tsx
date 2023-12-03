@@ -123,11 +123,11 @@ const Checkout = () => {
                             >
                                 <Flex alignItems="center" justifyContent="space-between" gap="3rem">
                                     <Text>Sub Total</Text>
-                                    <Text>{`$${"569.97"}`}</Text>
+                                    <Text>{`₦${"569.97"}`}</Text>
                                 </Flex>
                                 <Flex alignItems="center" justifyContent="space-between" gap="3rem">
                                     <Text>Shipping Fee</Text>
-                                    <Text>{`$${0}`}</Text>
+                                    <Text>{`₦${0}`}</Text>
                                 </Flex>
                             </Flex>
                             <Flex
@@ -140,7 +140,7 @@ const Checkout = () => {
                                 w="full"
                             >
                                 <Text>Total</Text>
-                                <Text>{`$${"569.97"}`}</Text>
+                                <Text>{`₦${"569.97"}`}</Text>
                             </Flex>
                             <AppButton
                                 type="submit"

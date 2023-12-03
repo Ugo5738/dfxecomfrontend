@@ -425,7 +425,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                           </li>
                             {userIsAdmin() && (
                               <li>
-                                 <a className="dropdown-item" href="https://dfxbackend-155eb2e6f79f.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
+                                 <a className="dropdown-item" href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
                                   Order
                                 </a>
                               </li>
@@ -549,7 +549,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                           </li>
                           {userIsAdmin() && (
                             <li>
-                                <a className="dropdown-item" href="https://dfxbackend-155eb2e6f79f.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
+                                <a className="dropdown-item" href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
                                 Order
                               </a>
                             </li>

@@ -424,7 +424,7 @@ const Shop = () => {
                         }
                         onChange={() => handlePriceFilter(priceRange)}
                       >
-                        {`$${priceRange.price_min} - $${priceRange.price_max}`}
+                        {`₦${priceRange.price_min} - ₦${priceRange.price_max}`}
                       </Checkbox>
                     ))}
                   </VStack> */}
@@ -495,7 +495,7 @@ const Shop = () => {
                       p=".5rem 1rem"
                       mx=".5rem"
                       color="bg.opaque"
-                    >{`$${current_min_price}`}</Text>
+                    >{`₦${current_min_price}`}</Text>
                     <Text>-</Text>
                     <Text
                       bg="white"
@@ -503,7 +503,7 @@ const Shop = () => {
                       p=".5rem 1rem"
                       mx=".5rem"
                       color="bg.opaque"
-                    >{`$${current_max_price}`}</Text>
+                    >{`₦${current_max_price}`}</Text>
                   </Flex>
                   <Flex
                     alignItems="center"
@@ -585,7 +585,7 @@ const Shop = () => {
                             fontSize={{ base: "14px", sm: "16px" }}
                             fontWeight="600"
                           >
-                            {`$${item?.store_price}`}
+                            {`₦${item?.store_price}`}
                           </Text>
                           {item?.discount_store_price && (
                             <Text
@@ -594,7 +594,7 @@ const Shop = () => {
                               px="2"
                               textDecoration="line-through"
                             >
-                              {`$${item?.discount_store_price}`}
+                              {`₦${item?.discount_store_price}`}
                             </Text>
                           )}
                         </Flex>
