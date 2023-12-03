@@ -185,7 +185,7 @@ const ProductDetail = () => {
                 </Flex>
                 <Flex flexDir="column" gap="2rem">
                   <Text fontSize="2rem" fontWeight="600">
-                    {`$${store_price}`}
+                    {`₦${store_price}`}
                   </Text>
                   {storage_size && (
                     <Flex alignItems="center" gap="1rem" flexWrap="wrap">
