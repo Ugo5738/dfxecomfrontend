@@ -391,6 +391,7 @@ const Cart = () => {
                                   {`₦${product.store_price}`}
                                 </Text>
                                 {product?.store_price && (
+                                
                                   <Text
                                     color="typography.ash"
                                     fontSize="14px"
@@ -602,12 +603,3 @@ const Wrapper = styled.div`
     }
   }
 `;
-
-
-message: "Approved"
-redirecturl: "?trxref=T755221753699049&reference=T755221753699049"
-reference: "T755221753699049"
-status: "success"
-trans: "3311510557"
-transaction: "3311510557"
-trxref: "T755221753699049"

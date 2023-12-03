@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prettier/prettier */
 import { CiSearch } from "react-icons/ci";
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle } from "react-icons/fa";
 import {
   Flex,
   Text,
@@ -27,7 +27,7 @@ import { useEffect, useState, useRef } from "react";
 import URLS from "../services/urls";
 import axios from "../services/axios";
 import { getShopURLWithCategory } from "../utils/urlUtils";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 interface IProduct {
   product_name: string;
@@ -60,8 +60,8 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const isLoggedIn = getAuthToken();
   const [categories, setCategories] = useState<Category[]>([]);
   const [openCategories, setOpenCategories] = useState<number[]>([]);
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState<Error | null>(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const [suggestions, setSuggestions] = useState<IProduct[]>([]);
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -75,7 +75,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     enabled: !!isLoggedIn,
   });
   const userIsAdmin = () => {
-    return currentUser && currentUser.first_name === 'Admin';
+    return currentUser && currentUser.first_name === "Admin";
   };
   // const handleOutsideClick = (e: MouseEvent) => {
   //   if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
@@ -129,12 +129,12 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
 
   const toggleCategoryOpen = (categoryId: number) => {
     if (openCategories.includes(categoryId)) {
-      setOpenCategories(openCategories.filter(id => id !== categoryId));
+      setOpenCategories(openCategories.filter((id) => id !== categoryId));
     } else {
       setOpenCategories([...openCategories, categoryId]);
     }
   };
-  
+
   const isCategoryOpen = (categoryId: number) => {
     return openCategories.includes(categoryId);
   };
@@ -142,20 +142,20 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
   const fetchUserDetails = async () => {
     const token = getAuthToken(); // This should retrieve the token from sessionStorage
     if (!token) {
-      console.error('No auth token available');
+      console.error("No auth token available");
       // Handle the case where there is no token—maybe redirect to login page
       return;
     }
-    
+
     try {
       const response = await fetch(`${URLS.API_URL}${URLS.CURRENT_USER}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          "Content-Type": "application/json",
+        },
       });
-  
+
       if (!response.ok) {
         if (response.status === 401) {
           // If the token is expired or invalid, handle the logic to refresh it or re-authenticate
@@ -166,24 +166,24 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
       const data = await response.json();
       setCurrentUser(data);
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      console.error("Error fetching user details:", error);
       // Additional logic to handle the error
     }
   };
-  
+
   useEffect(() => {
     fetchUserDetails();
   }, []);
-  
+
   useEffect(() => {
-    console.log('Current user state:', currentUser);
+    console.log("Current user state:", currentUser);
   }, [currentUser]);
 
   // This function handles the recursion for categories and their children
   const renderCategories = (categories, depth = 0) => {
     if (depth > maxDepth) return null; // Stop rendering if max depth is exceeded
-  
-    return categories.map(category => (
+
+    return categories.map((category) => (
       <div className={`dropdown-items depth-${depth}`} key={category.id}>
         {depth === 0 ? (
           // For top-level categories, use a button to toggle the open state
@@ -196,10 +196,10 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
             <h5 className="m-0">{category.name}</h5>
           </Link>
         )}
-        
+
         {isCategoryOpen(category.id) && (
           <div className={`category-open depth-${depth}`}>
-            {category.children.map(item => (
+            {category.children.map((item) => (
               <div key={item.id}>
                 <Link to={getShopURLWithCategory(item.name)} title={item.name}>
                   <h5 className="m-0">
@@ -223,14 +223,14 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
       </div>
     ));
   };
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
       try {
         const response = await fetch(`${URLS.API_URL}${URLS.CATEGORY_INVENTORY}`);
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setCategories(data);
@@ -238,13 +238,13 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
         if (err instanceof Error) {
           setError(err);
         } else {
-          setError(new Error('An unexpected error occurred'));
+          setError(new Error("An unexpected error occurred"));
         }
       } finally {
         setLoading(false);
       }
     };
-    
+
     // Parse the URL query parameters
     // const query = new URLSearchParams(location.search);
     // const categoryParam = query.get('category');
@@ -297,7 +297,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
               </div>
             )}
           </div>
-          <div className="left">
+          <div className="left flex items-center">
             <div className="d-flex">
               {!isLoggedIn ? (
                 <Popover placement="bottom">
@@ -399,26 +399,24 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
               </Text>
             </Flex>
             <nav className="ms-3">
-              <ul className="nav">
+              <ul className="relative">
                 {currentUser && (
-                  <li className="nav-item profile-image">
-                    <div className="dropdown" ref={optionRef}>
+                  <li>
+                    <div className="" ref={optionRef}>
                       <button
                         type="button"
-                        className="d-flex align-items-center btn-user-name"
-                        style={{ fontSize: '1.6rem' }}
+                        // className="d-flex align-items-center btn-user-name"
+                        // style={{ fontSize: "1.6rem" }}
                         onClick={() => setDropdown(!dropdown)}
                       >
                         {currentUser.first_name} <i className="fas fa-chevron-down ml-2"></i>
                       </button>
                       {dropdown && (
-                        <ul className="dropdown-menus" style={{ marginTop: '0.5rem' }}>
-                          <li>
-                            <button className="dropdown-item" onClick={logout}>
-                              Logout
-                            </button>
+                        <ul className="absolute bg-white top-8 shadow rounded py-4 -left-20 w-[10rem] text-2xl">
+                          <li className="pb-2 cursor-pointer">
+                            <button onClick={logout}>Logout</button>
                           </li>
-                          <li>
+                          <li className="pb-2 cursor-pointer">
                             <Link className="dropdown-item" to="/profile">
                               Profile
                             </Link>
@@ -523,43 +521,49 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 </Text>
               </Flex>
               <nav className="ms-2">
-              <ul className="nav">
-                {currentUser && (
-                  <li className="nav-item profile-image">
-                    <div className="dropdown" ref={optionRef}>
-                      <button
-                        type="button"
-                        className="d-flex align-items-center btn-user-name"
-                        style={{ fontSize: '1.6rem' }}
-                        onClick={() => setDropdown(!dropdown)}
-                      >
-                        <FaUserCircle size={24} />
-                      </button>
-                      {dropdown && (
-                        <ul className="dropdown-menus" style={{ marginTop: '0.5rem' }}>
-                          <li>
-                            <button className="dropdown-item" onClick={logout}>
-                              Logout
-                            </button>
-                          </li>
-                          <li>
-                            <Link className="dropdown-item" to="/profile">
-                              Profile
-                            </Link>
-                          </li>
-                          {userIsAdmin() && (
-                            <li>
-                                <a className="dropdown-item" href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/order-management/inventory-dashboard/" target="_blank" rel="noopener noreferrer">
-                                Order
-                              </a>
+                <ul className="nav relative">
+                  {currentUser && (
+                    <li className="nav-item profile-image">
+                      <div className="relative" ref={optionRef}>
+                        <button
+                          title="dropdownButton"
+                          type="button"
+                          className="d-flex align-items-center btn-user-name"
+                          style={{ fontSize: "1.6rem" }}
+                          onClick={() => setDropdown(!dropdown)}
+                        >
+                          <FaUserCircle size={24} />
+                        </button>
+                        {dropdown && (
+                          <ul className="absolute -left-24 shadow text-2xl top-10 bg-white rounded py-4 px-8">
+                            <li className="pb-2">
+                              <button onClick={logout} className="cursor-pointer">
+                                Logout
+                              </button>
                             </li>
-                          )}
-                        </ul>
-                      )}
-                    </div>
-                  </li>
-                )}
-              </ul>
+                            <li className="pb-2">
+                              <Link className="dropdown-item" to="/profile">
+                                Profile
+                              </Link>
+                            </li>
+                            {userIsAdmin() && (
+                              <li>
+                                <a
+                                  className="dropdown-item"
+                                  href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/order-management/inventory-dashboard/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Order
+                                </a>
+                              </li>
+                            )}
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+                  )}
+                </ul>
               </nav>
             </div>
           </div>
@@ -1006,7 +1010,7 @@ const Wrapper = styled.div`
       }
       .dropdown-items {
         transition: 0.5s;
-        
+
         &.depth-0 {
           border-bottom: 1px solid #161616; // Border for top-level categories only
           padding-left: 5px; // Increase left padding for top-level categories to push them further to the right
@@ -1018,10 +1022,10 @@ const Wrapper = styled.div`
             }
           }
         }
-        
+
         &.depth-1 {
           padding-left: 40px; // Left padding for sub-categories
-            
+
           .btn {
             h5 {
               font-size: 1em;
@@ -1029,29 +1033,29 @@ const Wrapper = styled.div`
             }
           }
         }
-      
+
         .category-open {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           grid-gap: 1rem;
-      
+
           a {
             display: flex;
             padding: 5px 2px;
 
             span {
-              margin-left: 20px; 
+              margin-left: 20px;
               font-weight: bold;
             }
           }
-      
+
           .depth-0 {
             .btn h3 {
               font-size: 1.2em;
               font-weight: bold; // Reinforce style for top-level category names if needed
             }
           }
-      
+
           .depth-1 {
             .btn h5 {
               font-size: 1em;
@@ -1060,7 +1064,7 @@ const Wrapper = styled.div`
           }
         }
       }
-          
+
       @media screen and (max-width: 760px) {
         justify-content: space-between;
         position: absolute;
