@@ -30,7 +30,7 @@ const URLS = {
   PAYMENT: `/payment/initiate-payment/`,
 
   // ORDER MANAGEMENT
-  DASHBOARD: `/order-management/inventory-dashboard/`,
+  // DASHBOARD: `/order-management/inventory-dashboard/`,
   ORDER_LIST: `/order-management/inventory-order-list/`,
   PRODUCT_LIST: `/order-management/inventory-product-list/`,
 };
