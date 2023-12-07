@@ -405,8 +405,8 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                     <div className="" ref={optionRef}>
                       <button
                         type="button"
-                        // className="d-flex align-items-center btn-user-name"
-                        // style={{ fontSize: "1.6rem" }}
+                        className="d-flex align-items-center btn-user-name"
+                        style={{ fontSize: "1.6rem" }}
                         onClick={() => setDropdown(!dropdown)}
                       >
                         {currentUser.first_name} <i className="fas fa-chevron-down ml-2"></i>
@@ -421,10 +421,13 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                               Profile
                             </Link>
                           </li>
-                            {userIsAdmin() && (
+                            {userIsAdmin() && (                              
                               <li>
                                  <a className="dropdown-item" href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/order-management/inventory-order-list/" target="_blank" rel="noopener noreferrer">
                                   Order
+                                </a>
+                                <a className="dropdown-item" href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/inventory/update-done/" target="_blank" rel="noopener noreferrer">
+                                  Products
                                 </a>
                               </li>
                             )}
@@ -555,6 +558,14 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                                   rel="noopener noreferrer"
                                 >
                                   Order
+                                </a>
+                                <a
+                                  className="dropdown-item"
+                                  href="https://dfx-new-ef6dfb73e89a.herokuapp.com/api/inventory/update-done/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Products
                                 </a>
                               </li>
                             )}
