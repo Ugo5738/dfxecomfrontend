@@ -86,8 +86,8 @@ const Cart = () => {
     return {
       publicKey: PUBLIC_KEY,
       email: customer_email!,
-      amount: total! * 100,
-      // amount: 100,
+      // amount: total! * 100,
+      amount: 100,
       firstname: customer_first_name,
       lastname: customer_last_name,
       phone: customer_phone_number,
