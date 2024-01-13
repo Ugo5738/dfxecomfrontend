@@ -75,7 +75,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     enabled: !!isLoggedIn,
   });
   const userIsAdmin = () => {
-    return currentUser && currentUser.first_name === "Admin";
+    return currentUser && currentUser.first_name === "admin";
   };
   // const handleOutsideClick = (e: MouseEvent) => {
   //   if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
