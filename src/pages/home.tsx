@@ -27,7 +27,7 @@ const Home = () => {
     isLoading: trendingInventoryLoading,
     isSuccess: trendingInventorySuccess,
   } = useGetTrendingInventory();
-
+  
   const {
     data: inventoryProducts,
     // error: inventoryProductsError,
@@ -300,7 +300,7 @@ const Home = () => {
                         justifyContent="center"
                         alignItems="center"
                         as={Link}
-                        to={`/shop?category=${item?.name.toLowerCase()}`}
+                        to={`/shop?category=${item?.name}`}
                       >
                         <div className="img-holder">
                           <img
