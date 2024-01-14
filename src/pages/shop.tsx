@@ -12,7 +12,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Footer from "../components/footer";
 import WaitList from "../components/waitlist";
@@ -34,6 +34,7 @@ import Header from "../layouts/Header";
 import styled from "styled-components";
 
 const Shop = () => {
+  const navigate = useNavigate();
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState(1);
@@ -51,6 +52,10 @@ const Shop = () => {
   const [price_min, setPriceMin] = useState('');
   const [price_max, setPriceMax] = useState('');
   // const [condition, setCondition] = useState('');
+
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/shop?category=${categoryName}`);
+  };
 
   const [params, setParams] = useState<ParamsType>({
     category: searchParams.get("category") || "",
@@ -241,14 +246,10 @@ const Shop = () => {
               <div
                 key={cat?.id}
                 className="inner"
-                onClick={() => {
-                  setCurrentCategory((prevCategory) =>
-                    prevCategory === cat.name ? null : cat.name,
-                  );
-                }}
+                onClick={() => handleCategoryClick(cat.name)}
               >
                 <div className="img">
-                  <img src={cat?.img} alt="" />
+                  <img src={cat?.img} alt={cat?.name} />
                 </div>
                 <p>{cat?.name}</p>
               </div>
