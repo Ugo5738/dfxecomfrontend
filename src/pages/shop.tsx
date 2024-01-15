@@ -338,7 +338,7 @@ const Shop = () => {
                                     isActive={params.search === subCategory.name}
                                     onClick={() => {
                                       handleCategoryFilter([subCategory.name]);
-                                      setToggleFilters((filters) => !filters);
+                                      // setToggleFilters((filters) => !filters);
                                     }}
                                   >
                                     {subCategory.name}
@@ -376,7 +376,7 @@ const Shop = () => {
                               _hover={{ color: "brand.orange" }}
                               onClick={() => {
                                 handleBrandFilter(brand?.name);
-                                setToggleFilters((filters) => !filters);
+                                // setToggleFilters((filters) => !filters);
                               }}
                               _active={{
                                 color: "brand.orange",
@@ -547,7 +547,7 @@ const Shop = () => {
                       w="6rem"
                       justifySelf="flex-end"
                       ml="auto"
-                      onClick={() => setToggleFilters((filters) => !filters)}
+                      // onClick={() => setToggleFilters((filters) => !filters)}
                     >
                       Filters
                     </AppButton>
