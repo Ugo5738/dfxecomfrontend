@@ -12,7 +12,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Footer from "../components/footer";
 import WaitList from "../components/waitlist";
@@ -34,12 +34,15 @@ import Header from "../layouts/Header";
 import styled from "styled-components";
 
 const Shop = () => {
+  const navigate = useNavigate();
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState<number[]>([]);
   const [pageCount, setPageCount] = useState<number>(0);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const initialSearchTerm = searchParams.get("search") || "";
+  const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
+  // const [searchTerm, setSearchTerm] = useState<string>("");
   const [toggleFilters, setToggleFilters] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
@@ -51,6 +54,10 @@ const Shop = () => {
   const [price_min, setPriceMin] = useState('');
   const [price_max, setPriceMax] = useState('');
   // const [condition, setCondition] = useState('');
+
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/shop?category=${categoryName}`);
+  };
 
   const [params, setParams] = useState<ParamsType>({
     category: searchParams.get("category") || "",
@@ -77,7 +84,7 @@ const Shop = () => {
   } = useGetProducts({
     page_size: 12,
     ...params,
-  });
+  }, searchTerm);
   const { count, results } = productsInventory! || {};
   const [productItems, setProductItems] = useState<ProductResultType[] | undefined>(results);
   const { current_min_price, current_max_price } = useCalculateMinMaxPrice(productItems!);
@@ -101,6 +108,10 @@ const Shop = () => {
       setProductItems(productsInventory?.results);
     }
   }, [productsInventory]);
+  
+  useEffect(() => {
+    setSearchTerm(searchParams.get("search") || "");
+  }, [searchParams]);
 
   useEffect(() => {
     if (!debouncedSearchTerm) return;
@@ -241,14 +252,10 @@ const Shop = () => {
               <div
                 key={cat?.id}
                 className="inner"
-                onClick={() => {
-                  setCurrentCategory((prevCategory) =>
-                    prevCategory === cat.name ? null : cat.name,
-                  );
-                }}
+                onClick={() => handleCategoryClick(cat.name)}
               >
                 <div className="img">
-                  <img src={cat?.img} alt="" />
+                  <img src={cat?.img} alt={cat?.name} />
                 </div>
                 <p>{cat?.name}</p>
               </div>

@@ -20,12 +20,13 @@ export const useGetTrendingInventory = () => {
   return { data, error, isLoading, isSuccess };
 };
 
-export const useGetProducts = (params?: ParamsType) => {
+export const useGetProducts = (params?: ParamsType, searchTerm?: string) => {
   removeEmpty(params!);
   const { data, error, isLoading, isSuccess, isPreviousData } = useQuery(
-    ["products", params],
+    ["products", params, searchTerm],
     async () => {
-      const res = await axios.get(URLS.PRODUCTS, { params });
+      // Ensure that the search query parameter is always included and up-to-date
+      const res = await axios.get(URLS.PRODUCTS, { params: {...params, search: searchTerm} });
       return res?.data as ProductType;
     },
     { keepPreviousData: true },
