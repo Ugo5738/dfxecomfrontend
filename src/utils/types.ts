@@ -78,7 +78,7 @@ export interface ParamsType {
   category?: string;
   search?: string;
   product_name?: string;
-  brand_name?: string;
+  brand?: string;
   color?: string;
   storage?: string;
   attribute?: string;
