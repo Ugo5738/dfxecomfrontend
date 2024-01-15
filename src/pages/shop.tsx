@@ -42,7 +42,6 @@ const Shop = () => {
   const [pageCount, setPageCount] = useState<number>(0);
   const initialSearchTerm = searchParams.get("search") || "";
   const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
-  // const [searchTerm, setSearchTerm] = useState<string>("");
   const [toggleFilters, setToggleFilters] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
@@ -64,7 +63,7 @@ const Shop = () => {
     page_size: 12,
     page: page,
     product_name: "",
-    brand_name: "",
+    brand: "",
     color: "",
     storage: "",
     attribute: "",
@@ -106,6 +105,8 @@ const Shop = () => {
   useEffect(() => {
     if (productsInventory && productsInventory?.results?.length > 0) {
       setProductItems(productsInventory?.results);
+    } else {
+      setProductItems([]);
     }
   }, [productsInventory]);
   
@@ -129,13 +130,16 @@ const Shop = () => {
       setToggleFilters(false);
     }
   }, [isLargerThan768]);
-
+ 
   const handleCategoryFilter = (subCategories: string[]) => {
-    setParams((prevParams) => ({ ...prevParams, category: subCategories[0] }));
+    setParams((prevParams) => {
+      const updatedParams = { ...prevParams, category: subCategories[0] };
+      return updatedParams;
+    });
   };
 
   const handleBrandFilter = (brand: string) => {
-      setParams((prevParams) => ({ ...prevParams, brand_name: brand }));
+      setParams((prevParams) => ({ ...prevParams, brand: brand }));
       const filteredProducts = productItems?.filter((item) => item.product_name === brand);
       setProductItems(filteredProducts);
   };
@@ -194,7 +198,7 @@ const Shop = () => {
     setParams((prevParams) => ({
       ...prevParams,
       search: "",
-      brand_name: "",
+      brand: "",
       price_min: "",
       price_max: "",
       condition: "",
@@ -378,7 +382,7 @@ const Shop = () => {
                                 color: "brand.orange",
                                 fontWeight: "bold",
                               }}
-                              isActive={params.brand_name === brand.name}
+                              isActive={params.brand === brand.name}
                             >
                               {brand.name}
                             </Button>
@@ -528,7 +532,7 @@ const Shop = () => {
                       >
                         {params.search ||
                           params.product_name ||
-                          params.brand_name ||
+                          params.brand ||
                           currentCategory ||
                           "All Products"}
                       </Text>
