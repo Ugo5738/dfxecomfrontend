@@ -40,7 +40,9 @@ const Shop = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState<number[]>([]);
   const [pageCount, setPageCount] = useState<number>(0);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const initialSearchTerm = searchParams.get("search") || "";
+  const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
+  // const [searchTerm, setSearchTerm] = useState<string>("");
   const [toggleFilters, setToggleFilters] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
@@ -82,7 +84,7 @@ const Shop = () => {
   } = useGetProducts({
     page_size: 12,
     ...params,
-  });
+  }, searchTerm);
   const { count, results } = productsInventory! || {};
   const [productItems, setProductItems] = useState<ProductResultType[] | undefined>(results);
   const { current_min_price, current_max_price } = useCalculateMinMaxPrice(productItems!);
@@ -106,6 +108,10 @@ const Shop = () => {
       setProductItems(productsInventory?.results);
     }
   }, [productsInventory]);
+  
+  useEffect(() => {
+    setSearchTerm(searchParams.get("search") || "");
+  }, [searchParams]);
 
   useEffect(() => {
     if (!debouncedSearchTerm) return;

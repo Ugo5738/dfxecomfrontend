@@ -91,6 +91,7 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     setDropdown(false);
     window.location.href = "/login";
   };
+
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setDrop(Boolean(e.target.value));
@@ -118,6 +119,18 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
     } else {
       setSuggestions([]);
     }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      // Redirect to the search page
+      window.location.href = `/shop?search=${searchTerm}`;
+    }
+  };
+
+  const handleSearchIconClick = () => {
+    // Execute search logic here
+    window.location.href = `/shop?search=${searchTerm}`;
   };
 
   const { products } = orderSummaryData?.order_summary || {};
@@ -273,9 +286,13 @@ const Header = ({ searchTerm, setSearchTerm }: SearchProps) => {
                 type="text"
                 value={searchTerm}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder="Search..."
               />
-              <CiSearch className="text-[#171923] h-8 w-8 hover:cursor-pointer" />
+              <CiSearch 
+                className="text-[#171923] h-8 w-8 hover:cursor-pointer" 
+                onClick={handleSearchIconClick}
+              />
             </div>
             {drop && (
               <div className="sugg" ref={optionRef}>
